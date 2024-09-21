@@ -60,8 +60,7 @@ iface = gr.Interface(
     ],
     outputs=gr.Markdown(label="Titulares Generados"),
     title="Generador de Titulares",
-    description="Usa el poder de Gemini AI para crear titulares atractivos. Ajusta los parámetros para generar titulares que capturen la atención de tu audiencia.",
-    show_progress=True  # Agregar la barra de progreso
+    description="Usa el poder de Gemini AI para crear titulares atractivos. Ajusta los parámetros para generar titulares que capturen la atención de tu audiencia."
 )
 
 # Lanza la interfaz
