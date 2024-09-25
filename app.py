@@ -46,6 +46,12 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
 
     model = genai.GenerativeModel(model_choice)
 
+    # System Prompt - Instrucción en inglés para el modelo
+    system_instruction = f"""
+    You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
+    Generate unusual, creative, and fascinating bullets that capture readers' attention and using {mention_instruction} when you can mention the {product}. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
+    """
+
     # Crear el prompt para generar bullets
     full_prompt = f"""
     {system_instruction}
