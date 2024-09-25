@@ -1,3 +1,8 @@
-gradio
+streamlit
 google-generativeai
 python-dotenv
+langchain
+PyPDF2
+chromadb
+pdf2image
+faiss-cpu
