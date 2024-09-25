@@ -64,7 +64,12 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
     * Asking a Question: 'Did you know that...' 
     * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
-    Using {mention_instruction} when you want to mention {product}.
+    Use the following mention instructions to guide your writing: {mention_instruction}
+    Using the mention type '{product_mention}' to guide how to mention the product in the benefits or bullets. Ensure to adapt your writing based on this mention type:
+    - Direct: Clearly highlight the product as the solution.
+    - Indirect: Subtly suggest the product without naming it.
+    - Metaphorical: Use a metaphor to connect the product to the solution.
+    Please create the bullets now.
     """
 
     response = model.generate_content([full_prompt])
