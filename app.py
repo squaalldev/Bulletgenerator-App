@@ -1,71 +1,104 @@
-import gradio as gr
-import google.generativeai as genai
-import os
 from dotenv import load_dotenv
-from gradio import Markdown
-import textwrap
+import streamlit as st
+import os
+import google.generativeai as genai
+import random
 
-# Cargar variables de entorno
 load_dotenv()
 
-# Configurar la API de Google Gemini
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-def to_markdown(text):
-    text = text.replace('•', '  *')  # Convertir los puntos en listas con asteriscos
-    return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+# Función para obtener una mención del producto de manera probabilística
+def get_random_product_mention():
+    mentions = ["Directa", "Indirecta", "Metafórica"]
+    probabilities = [0.34, 0.33, 0.33]  
+    return random.choices(mentions, probabilities)[0]
 
-def generate_bullets(number_of_bullets, target_audience, product, temperature):
-    # Crear la configuración del modelo
-    generation_config = {
-        "temperature": temperature,
-        "top_p": 0.95,
-        "top_k": 64,
-        "max_output_tokens": 2048,
-        "response_mime_type": "text/plain",
+# Función para obtener una cantidad de bullets
+def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
+    product_mention = get_random_product_mention()
+    model_choice = "gemini-1.5-flash"  
+
+    model = genai.GenerativeModel(model_choice)
+
+    # Crear el prompt para generar bullets
+    full_prompt = f"""
+    You are a marketing expert specializing in writing persuasive and impactful benefit bullets for {target_audience}. Write {num_bullets} creative and engaging bullets that highlight the key benefits of {product}. Each bullet should emotionally resonate with the audience, creating a strong connection between the product's features and the problems it solves. The tone should be {creativity}, ensuring each benefit clearly addresses their needs and desires. Use {product_mention} mention.
+    """
+
+    response = model.generate_content([full_prompt])
+
+    if response and response.parts:
+        return response.parts[0].text
+    else:
+        raise ValueError("Lo sentimos, intenta con una combinación diferente de entradas.")
+
+# Inicializar la aplicación Streamlit
+st.set_page_config(page_title="Generador de Bullets", layout="wide")
+
+# Inicializar el estado de la expansión del acordeón
+if "accordion_expanded" not in st.session_state:
+    st.session_state["accordion_expanded"] = False
+
+def toggle_accordion():
+    st.session_state["accordion_expanded"] = not st.session_state["accordion_expanded"]
+
+# Centrar el título y el subtítulo
+st.markdown("<h1 style='text-align: center;'>Generador de Bullets</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Crea bullets efectivos que conecten emocionalmente con tu audiencia.</h4>", unsafe_allow_html=True)
+
+# Añadir CSS personalizado para el botón
+st.markdown("""
+    <style>
+    div.stButton > button {
+        background-color: #FFCC00;
+        color: black;
+        width: 90%;
+        height: 60px;
+        font-weight: bold;
+        font-size: 22px;
+        text-transform: uppercase;
+        border: 1px solid #000000;
+        border-radius: 8px;
+        display: block;
+        margin: 0 auto;
     }
+    div.stButton > button:hover {
+        background-color: #FFD700;
+        color: black;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        generation_config=generation_config,
-        system_instruction="Eres un copywriter de clase mundial, con experiencia en la creación de beneficios que conectan síntomas con problemas. Tu habilidad radica en comprender profundamente las emociones, deseos y desafíos de una audiencia específica, lo que te permite diseñar estrategias de marketing personalizadas que resuenan y motivan la acción. Sabes cómo utilizar estructuras probadas para atraer a tu audiencia objetivo, generando interés y logrando una conexión poderosa que impulsa los resultados deseados en campañas publicitarias y de contenido. Responde en español, en tipo lista numerada. Haz bullets inusuales, creativos y fascinantes que atrapen la atención de los lectores. No menciones el producto directamente en los beneficios o bullets. No expliques los bullets, ni los categorices, solo enlistalos. Al responder escribe un encabezado que diga: 'Estos son tus bullets para convencer a {target_audience}'."
-    )
+# Crear dos columnas para el layout (40% y 60%)
+col1, col2 = st.columns([2, 3])
 
-    chat_session = model.start_chat(
-        history=[
-            {
-                "role": "user",
-                "parts": [
-                    f"Tu tarea es crear {number_of_bullets} beneficios o bullets que conecten el síntoma con el problema que tienen los {target_audience}, y que incrementen el deseo de adquirir el {product}"
-                    "La idea es que los bullets sean de este tipo: "
-                    "* Bien y mal: 'Botiquín del baño es el mejor lugar para guardar la medicina, ¿verdad? Incorrecto Es el peor. Los hechos están en la página 10.' "
-                    "* El mejor/El Peor: 'El mejor tiempo verbal que existe para dar la sensación a tus clientes que ya te han comprado.' "
-                    "* Historias: 'La historia del...', 'Los misterios de...', 'La leyenda de...' "
-                    "* Truco: 'Un sistema tonto para escribir copy sin tratar de convencer de que me compren.' "
-                    "* El de la verdad: 'La verdad que nunca te han dicho en el colegio, la escuela, ni en tu casa de cómo vivir de la música.' "
-                    "* Haciendo una pregunta: '¿Sabías que...' "
-                    "* Cuando: '¿Cuándo es buena idea decirle a una chica que te gusta? Si no lo dices justo en ese momento, despídete de que la conozcas íntimamente.' "
-                ],
-            },
-        ]
-    )
+with col1:
+    # Campos de entrada
+    target_audience = st.text_input("¿Quién es tu público objetivo?")
+    product = st.text_input("¿Qué producto tienes en mente?")
 
-    response = chat_session.send_message("Genera los beneficios o bullets")  # Enviar mensaje para obtener la respuesta
-    return to_markdown(response.text)  # Usar to_markdown para formatear la respuesta
+    # Acordeón para personalizar los bullets
+    with st.expander("Personaliza tus bullets", expanded=st.session_state["accordion_expanded"]):
+        num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
+        creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
 
-# Configurar la interfaz de usuario con Gradio
-iface = gr.Interface(
-    fn=generate_bullets,
-    inputs=[
-        gr.Dropdown(choices=[str(i) for i in range(1, 11)], label="Número de Bullets", value="5"),
-        gr.Textbox(label="Público Objetivo", placeholder="Ejemplo: Estudiantes Universitarios"),
-        gr.Textbox(label="Producto", placeholder="Ejemplo: Curso de Inglés"),
-        gr.Slider(minimum=0, maximum=1, value=0, step=0.1, label="Creatividad")
-    ],
-    outputs=gr.Markdown(label="Bullets Generados"),
-    title="Generador de Bullets",
-    description="Usa el poder de Gemini AI para crear bullets atractivos que conecten síntomas con problemas. Ajusta los parámetros para generar bullets que capturen la atención de tu audiencia."
-)
+    # Botón de enviar
+    submit = st.button("Generar Bullets", on_click=toggle_accordion)
 
-# Lanza la interfaz
-iface.launch()
+# Mostrar los bullets generados
+if submit:
+    if target_audience and product:
+        try:
+            # Obtener la respuesta del modelo
+            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
+            col2.markdown("""
+                <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
+                    <h4>Aquí están tus bullets:</h4>
+                    <p>{}</p>
+                </div>
+            """.format(generated_bullets), unsafe_allow_html=True)
+        except ValueError as e:
+            col2.error(f"Error: {str(e)}")
+    else:
+        col2.error("Por favor, proporciona el público objetivo y el producto.")
