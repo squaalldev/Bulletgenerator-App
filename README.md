@@ -6,4 +6,5 @@ emoji: 🏆
 colorFrom: red
 colorTo: yellow
 pinned: true
+sdk_version: 1.38.0
 ---
