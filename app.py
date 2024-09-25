@@ -18,7 +18,8 @@ def get_random_product_mention():
 
 # System Prompt - Instrucción en inglés para el modelo
 system_instruction = """
-You are a world-class copywriter with expertise in creating benefits that connect symptoms to problems. Your skill lies in deeply understanding the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection that drives desired results in advertising and content campaigns. Respond in Spanish, using numbered lists. Create unusual, creative, and fascinating bullets that capture readers' attention. Do not mention the product directly in the benefits or bullets.
+You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
+Generate unusual, creative, and fascinating bullets that capture readers' attention without mentioning the product directly. Respond in Spanish and use a numbered list format. Do not include explanations or categories.
 """
 
 # Función para obtener una cantidad de bullets
@@ -28,14 +29,19 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
 
     model = genai.GenerativeModel(model_choice)
 
-    # Crear el prompt para generar bullets con la instrucción del sistema
+    # Crear el prompt para generar bullets
     full_prompt = f"""
     {system_instruction}
-    Audience: {target_audience}
-    Product: {product}
-    Number of bullets: {num_bullets}
-    Creativity: {creativity}
-    Use {product_mention} mention.
+    Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
+    Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
+    * Good and Bad: 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
+    * The Best/The Worst: 'The best verb tense that gives your clients the feeling they've already bought from you.' 
+    * Stories: 'The story of...', 'The mysteries of...', 'The legend of...' 
+    * Trick: 'A simple system to write copy without trying to convince them to buy.' 
+    * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
+    * Asking a Question: 'Did you know that...' 
+    * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
+    Feel free to include a mention of {product_mention} where appropriate.
     """
 
     response = model.generate_content([full_prompt])
