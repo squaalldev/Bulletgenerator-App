@@ -41,6 +41,7 @@ Generate unusual, creative, and fascinating bullets that capture readers' attent
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
     product_mention = get_random_product_mention()
+    mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
     model = genai.GenerativeModel(model_choice)
@@ -57,7 +58,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
     * Asking a Question: 'Did you know that...' 
     * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
-   {mention_instruction}.
+    {mention_instruction}.
     """
 
     response = model.generate_content([full_prompt])
