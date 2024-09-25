@@ -118,14 +118,13 @@ with col1:
     # Campos de entrada
     target_audience = st.text_input("¿Quién es tu público objetivo?")
     product = st.text_input("¿Qué producto tienes en mente?")
-
-    # Acordeón para personalizar los bullets
-    with st.expander("Personaliza tus bullets", expanded=st.session_state["accordion_expanded"]):
-        num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
-        creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
+    
+    # Campos de personalización sin acordeón
+    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
+    creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
 
     # Botón de enviar
-    submit = st.button("Generar Bullets", on_click=toggle_accordion)
+    submit = st.button("Generar Bullets")
 
 # Mostrar los bullets generados
 if submit:
@@ -143,3 +142,4 @@ if submit:
             col2.error(f"Error: {str(e)}")
     else:
         col2.error("Por favor, proporciona el público objetivo y el producto.")
+
