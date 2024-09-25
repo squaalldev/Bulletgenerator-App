@@ -49,7 +49,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     # System Prompt - Instrucción en inglés para el modelo
     system_instruction = f"""
     You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
-    Generate unusual, creative, and fascinating bullets that capture readers' attention and using {mention_instruction} when you can mention the {product}. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
+    Generate unusual, creative, and fascinating bullets that capture readers' attention. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
     """
 
     # Crear el prompt para generar bullets
@@ -64,7 +64,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
     * Asking a Question: 'Did you know that...' 
     * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
-    {mention_instruction}.
+    Using {mention_instruction} when you want to mention {product}.
     """
 
     response = model.generate_content([full_prompt])
