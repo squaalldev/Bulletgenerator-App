@@ -4,8 +4,10 @@ import os
 import google.generativeai as genai
 import random
 
+# Cargar las variables de entorno
 load_dotenv()
 
+# Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Función para obtener una mención del producto de manera probabilística
@@ -14,16 +16,26 @@ def get_random_product_mention():
     probabilities = [0.34, 0.33, 0.33]  
     return random.choices(mentions, probabilities)[0]
 
+# System Prompt - Instrucción en inglés para el modelo
+system_instruction = """
+You are a world-class copywriter with expertise in creating benefits that connect symptoms to problems. Your skill lies in deeply understanding the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection that drives desired results in advertising and content campaigns. Respond in Spanish, using numbered lists. Create unusual, creative, and fascinating bullets that capture readers' attention. Do not mention the product directly in the benefits or bullets.
+"""
+
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
     product_mention = get_random_product_mention()
-    model_choice = "gemini-1.5-flash"  
+    model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
     model = genai.GenerativeModel(model_choice)
 
-    # Crear el prompt para generar bullets
+    # Crear el prompt para generar bullets con la instrucción del sistema
     full_prompt = f"""
-    You are a marketing expert specializing in writing persuasive and impactful benefit bullets for {target_audience}. Write {num_bullets} creative and engaging bullets that highlight the key benefits of {product}. Each bullet should emotionally resonate with the audience, creating a strong connection between the product's features and the problems it solves. The tone should be {creativity}, ensuring each benefit clearly addresses their needs and desires. Use {product_mention} mention.
+    {system_instruction}
+    Audience: {target_audience}
+    Product: {product}
+    Number of bullets: {num_bullets}
+    Creativity: {creativity}
+    Use {product_mention} mention.
     """
 
     response = model.generate_content([full_prompt])
@@ -92,12 +104,12 @@ if submit:
         try:
             # Obtener la respuesta del modelo
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
-            col2.markdown("""
+            col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Aquí están tus bullets:</h4>
-                    <p>{}</p>
+                    <p>{generated_bullets}</p>
                 </div>
-            """.format(generated_bullets), unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         except ValueError as e:
             col2.error(f"Error: {str(e)}")
     else:
