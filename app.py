@@ -16,6 +16,22 @@ def get_random_product_mention():
     probabilities = [0.34, 0.33, 0.33]  
     return random.choices(mentions, probabilities)[0]
 
+# Crear la instrucción de mención basada en la opción seleccionada
+def get_mention_instruction(product_mention, product):
+    if product_mention == "Directa":
+        return f"""
+        Directly introduce the product '{product}' as the clear solution to the problem the reader is facing. Ensure that the product is presented in a way that highlights its key benefits and demonstrates how it directly addresses the issue at hand. The mention should feel natural and seamlessly integrated into the narrative.
+        """
+    elif product_mention == "Indirecta":
+        return f"""
+        Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly. Weave the product's core benefits into the description of how the reader can overcome the issue, creating an implicit connection between the solution and the product. Ensure the mention is subtle but clear enough to guide the reader towards the product.
+        """
+    elif product_mention == "Metafórica":
+        return f"""
+        Introduce the product '{product}' using a metaphor, connecting it symbolically to the solution the reader needs. The metaphor should relate to the problem being discussed and should creatively suggest how the product offers a resolution without explicitly stating its name. The metaphor should evoke the benefits of the product in a memorable and thought-provoking way.
+        """
+    return ""
+
 # System Prompt - Instrucción en inglés para el modelo
 system_instruction = """
 You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
@@ -41,7 +57,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
     * Asking a Question: 'Did you know that...' 
     * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
-    Feel free to include a mention of {product_mention} where appropriate.
+   {mention_instruction}.
     """
 
     response = model.generate_content([full_prompt])
