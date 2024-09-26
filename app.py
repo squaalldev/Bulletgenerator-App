@@ -40,7 +40,7 @@ IMPORTANT: Only write the bullets. No headers, no explanations, no types of bull
 """
 
 # Función para obtener una cantidad de bullets
-def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
+def get_gemini_response_bullets(target_audience, product, num_bullets, creativity, desired_action):
     product_mention = get_random_product_mention()
     mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
@@ -56,7 +56,8 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     # Crear el prompt para generar bullets
     full_prompt = f"""
     {system_instruction}
-    Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
+    Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their curiosity about the {product}. 
+    The ultimate goal is to inspire the audience to take the following action: {desired_action}. 
     Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
     * 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
     * 'The best verb tense that gives your clients the feeling they've already bought from you.' 
@@ -125,6 +126,9 @@ with col1:
     # Campos de entrada
     target_audience = st.text_input("¿Quién es tu público objetivo?")
     product = st.text_input("¿Qué producto tienes en mente?")
+
+    # Añadir nuevo campo de entrada para la Acción Deseada
+    desired_action = st.text_input("¿Cuál es la acción deseada?")
     
     # Campos de personalización sin acordeón
     num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
@@ -138,7 +142,7 @@ if submit:
     if target_audience and product:
         try:
             # Obtener la respuesta del modelo
-            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
+            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity, desired_action)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Mira la magia en acción:</h4>
