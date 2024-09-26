@@ -57,7 +57,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     full_prompt = f"""
     {system_instruction}
     Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their curiosity about the {product}. 
-    The ultimate goal is to inspire the audience to take the following action: {desired_action}. 
+    Create these bullets to inspire the {target_audience} to take the following action: {desired_action}. 
     Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
     * 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
     * 'The best verb tense that gives your clients the feeling they've already bought from you.' 
