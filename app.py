@@ -105,8 +105,8 @@ with col1:
     num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5)
     creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
 
-    # Nueva selección para la llamada a la acción
-    action_call = st.selectbox("Tipo de Llamada a la Acción", ["Directo", "Sutil", "Indirecto"])
+    # Campo para la llamada a la acción
+    action_call = st.text_input("¿Qué CTA quieres?")
 
     # Botón de enviar
     submit = st.button("Generar Bullets")
