@@ -134,7 +134,7 @@ if submit:
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Aquí están tus bullets:</h4>
+                    <h4>Observa la magia en acción:</h4>
                     <p>{generated_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
