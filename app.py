@@ -57,7 +57,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     full_prompt = f"""
     {system_instruction}
     Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their curiosity about the {product}. 
-    Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
+    Infuse your responses with a creativity level of {creativity}. The bullets should be written with the primary focus of driving the reader to take the desired action: {desired_action}.
     * 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
     * 'The best verb tense that gives your clients the feeling they've already bought from you.' 
     * 'The story of...', 'The mysteries of...', 'The legend of...' 
@@ -66,10 +66,11 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     * 'Did you know that...' 
     * 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
     Use the following mention instructions to guide your writing: {mention_instruction}
-    Using the mention type '{product_mention}' to guide how to mention the product in the benefits or bullets. Ensure to adapt your writing based on this mention type:
+    Using the mention type '{product_mention}' to guide how to mention the product in the benefits or bullets. Ensure the mention is adapted based on this type:
     - Direct: Clearly highlight the product as the solution.
     - Indirect: Subtly suggest the product without naming it.
     - Metaphorical: Use a metaphor to connect the product to the solution.
+    All bullets must lead towards and emphasize the desired action: {desired_action}.
     Please create the bullets now.
     Cuando respondas siempre escribe un titular que mencione el público objetivo, el producto de la siguiente manera: 'Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta:' 
     """
