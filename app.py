@@ -58,6 +58,13 @@ def get_gemini_response_bullets(target_audience, num_bullets, creativity):
     * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
     * Asking a Question: 'Did you know that...' 
     * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
+    Use the following mention instructions to guide your writing: {call_to_action_instruction}
+    Using the mention type '{action_call}' to guide how to suggest the call to action in the benefits or bullets. Ensure to adapt your writing based on this mention type:
+    - Direct: Clearly highlight the action the reader should take as the solution.
+    - Subtle: Suggest the action without naming it directly.
+    - Indirect: Present the action in a way that feels natural and inevitable without stating it explicitly.
+    Additionally, subtly mention the product '{product}' in the bullets without making it the focus. The connection between the action and the product should feel organic and seamless.
+    Please create the bullets now.
     """
 
     response = model.generate_content([full_prompt])
