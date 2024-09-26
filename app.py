@@ -58,7 +58,6 @@ def get_gemini_response_bullets(target_audience, num_bullets, creativity):
     * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
     * Asking a Question: 'Did you know that...' 
     * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
-    Using {mention_instruction} when you want to mention {product}.
     """
 
     response = model.generate_content([full_prompt])
