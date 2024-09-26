@@ -71,7 +71,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     - Indirect: Subtly suggest the product without naming it.
     - Metaphorical: Use a metaphor to connect the product to the solution.
     Please create the bullets now.
-    Cuando respondas siempre escribe un títular que mencione el público objetivo, el producto de la siguiente manera: Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta: 
+    Cuando respondas siempre escribe un títular con formato H1 que mencione el público objetivo, el producto de la siguiente manera: Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta: 
     """
 
     response = model.generate_content([full_prompt])
@@ -141,7 +141,7 @@ if submit:
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Aquí están tus bullets:</h4>
+                    
                     <p>{generated_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
