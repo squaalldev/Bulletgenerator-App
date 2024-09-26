@@ -139,8 +139,10 @@ if submit:
         try:
             # Obtener la respuesta del modelo
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
+            # Insertar el contenido generado dentro del div
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
+                    {generated_bullets}
                 </div>
             """, unsafe_allow_html=True)
         except ValueError as e:
