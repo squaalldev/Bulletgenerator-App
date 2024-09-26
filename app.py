@@ -65,6 +65,13 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     * Asking a Question: 'Did you know that...' 
     * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
     Using {mention_instruction} when you want to mention {product}.
+    Use the following mention instructions to guide your writing: {mention_instruction}
+    Using the mention type '{product_mention}' to guide how to mention the product in the benefits or bullets. Ensure the mention is adapted based on this type:
+    - Direct: Clearly highlight the product as the solution.
+    - Indirect: Subtly suggest the product without naming it.
+    - Metaphorical: Use a metaphor to connect the product to the solution.
+    When responding, always include a headline that references the {target_audience} and the product in the following way: 'Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta:' 
+    Please create the bullets now.
     """
 
     response = model.generate_content([full_prompt])
@@ -76,13 +83,6 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
-
-# Inicializar el estado de la expansión del acordeón
-if "accordion_expanded" not in st.session_state:
-    st.session_state["accordion_expanded"] = False
-
-def toggle_accordion():
-    st.session_state["accordion_expanded"] = not st.session_state["accordion_expanded"]
 
 # Centrar el título y el subtítulo
 st.markdown("<h1 style='text-align: center;'>Generador de Bullets</h1>", unsafe_allow_html=True)
