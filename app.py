@@ -35,7 +35,7 @@ def get_mention_instruction(product_mention, product):
 # System Prompt - Instrucción en inglés para el modelo
 system_instruction = """
 You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
-Generate unusual, creative, and fascinating bullets that capture readers' attention about the product. Respond in Spanish and use a numbered list format. Important: Only answer bullets, never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
+Generate unusual, creative, and fascinating bullets that capture readers' attention about the product. Respond in Spanish and use a numbered list format. Important: Only answer bullets, never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible(este bullet es cursioso).'.
 """
 
 # Función para obtener una cantidad de bullets
@@ -57,13 +57,13 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     {system_instruction}
     Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
     Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
-    * Good and Bad: 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
-    * The Best/The Worst: 'The best verb tense that gives your clients the feeling they've already bought from you.' 
-    * Stories: 'The story of...', 'The mysteries of...', 'The legend of...' 
-    * Trick: 'A simple system to write copy without trying to convince them to buy.' 
-    * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
-    * Asking a Question: 'Did you know that...' 
-    * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
+    * 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
+    * 'The best verb tense that gives your clients the feeling they've already bought from you.' 
+    * 'The story of...', 'The mysteries of...', 'The legend of...' 
+    * 'A simple system to write copy without trying to convince them to buy.' 
+    * Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
+    * 'Did you know that...' 
+    * 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
     Using {mention_instruction} when you want to mention {product}.
     Use the following mention instructions to guide your writing: {mention_instruction}
     Using the mention type '{product_mention}' to guide how to mention the product in the benefits or bullets. Ensure the mention is adapted based on this type:
