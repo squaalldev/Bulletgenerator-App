@@ -85,8 +85,8 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
 
 # Centrar el título y el subtítulo
-st.markdown("<h1 style='text-align: center;'>Generador de Bullets</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center;'>Crea bullets efectivos que conecten emocionalmente con tu audiencia.</h4>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
 
 # Añadir CSS personalizado para el botón
 st.markdown("""
