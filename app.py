@@ -36,11 +36,10 @@ def get_mention_instruction(product_mention, product):
 system_instruction = """
 You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
 Generate unusual, creative, and fascinating bullets that capture readers' attention about the product. Respond in Spanish and use a numbered list format. Important: Only answer bullets, never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
-IMPORTANT: Only write the bullets. No headers, no explanations, no types of bullets, just the bullets. 
 """
 
 # Función para obtener una cantidad de bullets
-def get_gemini_response_bullets(target_audience, product, num_bullets, creativity, desired_action):
+def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
     product_mention = get_random_product_mention()
     mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
@@ -50,29 +49,22 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     # System Prompt - Instrucción en inglés para el modelo
     system_instruction = """
     You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection. 
-    Create these bullets to inspire the {target_audience} to take the following action: {desired_action}, capturing readers' attention. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
+    Generate unusual, creative, and fascinating bullets that subtly hint at the product without direct mention, capturing readers' attention. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
    """
 
     # Crear el prompt para generar bullets
     full_prompt = f"""
     {system_instruction}
-    Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their curiosity about the {product}. 
-    Infuse your responses with a creativity level of {creativity}. The bullets should be written with the primary focus of driving the reader to take the desired action: {desired_action}.
-    * 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
-    * 'The best verb tense that gives your clients the feeling they've already bought from you.' 
-    * 'The story of...', 'The mysteries of...', 'The legend of...' 
-    * 'A simple system to write copy without trying to convince them to buy.' 
-    * 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
-    * 'Did you know that...' 
-    * 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
-    Use the following mention instructions to guide your writing: {mention_instruction}
-    Using the mention type '{product_mention}' to guide how to mention the product in the benefits or bullets. Ensure the mention is adapted based on this type:
-    - Direct: Clearly highlight the product as the solution.
-    - Indirect: Subtly suggest the product without naming it.
-    - Metaphorical: Use a metaphor to connect the product to the solution.
-    All bullets must lead towards and emphasize the desired action: {desired_action}.
-    Please create the bullets now.
-    Cuando respondas siempre escribe un titular que mencione el público objetivo, el producto de la siguiente manera: 'Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta:' 
+    Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
+    Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
+    * Good and Bad: 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
+    * The Best/The Worst: 'The best verb tense that gives your clients the feeling they've already bought from you.' 
+    * Stories: 'The story of...', 'The mysteries of...', 'The legend of...' 
+    * Trick: 'A simple system to write copy without trying to convince them to buy.' 
+    * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
+    * Asking a Question: 'Did you know that...' 
+    * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
+    Using {mention_instruction} when you want to mention {product}.
     """
 
     response = model.generate_content([full_prompt])
@@ -83,11 +75,18 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
         raise ValueError("Lo sentimos, intenta con una combinación diferente de entradas.")
 
 # Inicializar la aplicación Streamlit
-st.set_page_config(page_title="Impact Bullet Generator", layout="wide")
+st.set_page_config(page_title="Generador de Bullets", layout="wide")
+
+# Inicializar el estado de la expansión del acordeón
+if "accordion_expanded" not in st.session_state:
+    st.session_state["accordion_expanded"] = False
+
+def toggle_accordion():
+    st.session_state["accordion_expanded"] = not st.session_state["accordion_expanded"]
 
 # Centrar el título y el subtítulo
-st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Generador de Bullets</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Crea bullets efectivos que conecten emocionalmente con tu audiencia.</h4>", unsafe_allow_html=True)
 
 # Añadir CSS personalizado para el botón
 st.markdown("""
@@ -119,9 +118,6 @@ with col1:
     # Campos de entrada
     target_audience = st.text_input("¿Quién es tu público objetivo?")
     product = st.text_input("¿Qué producto tienes en mente?")
-
-    # Añadir nuevo campo de entrada para la Acción Deseada
-    desired_action = st.text_input("¿Cuál es la acción deseada?")
     
     # Campos de personalización sin acordeón
     num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
@@ -135,10 +131,10 @@ if submit:
     if target_audience and product:
         try:
             # Obtener la respuesta del modelo
-            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity, desired_action)
+            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Mira la magia en acción:</h4>
+                    <h4>Aquí están tus bullets:</h4>
                     <p>{generated_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
