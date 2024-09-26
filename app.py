@@ -19,11 +19,11 @@ def get_random_call_to_action():
 # Crear la instrucción para la llamada a la acción según la opción seleccionada
 def get_call_to_action_instruction(action_call):
     if action_call == "Directo":
-        return "Incorporate a clear and direct call to action that motivates the reader to act immediately. The call should be compelling and highlight the urgency of taking action."
+        return "Incorpora una llamada a la acción clara y directa que motive al lector a actuar de inmediato. La llamada debe ser convincente y destacar la urgencia de tomar acción."
     elif action_call == "Sutil":
-        return "Suggest a call to action subtly, hinting at the benefits of acting without being too obvious. The reader should feel like they are making the decision on their own."
+        return "Sugiere una llamada a la acción de manera sutil, insinuando los beneficios de actuar sin ser demasiado obvio. El lector debe sentir que está tomando la decisión por su cuenta."
     elif action_call == "Indirecto":
-        return "Present a call to action indirectly, creating a scenario where the reader can see the action as a natural solution to their problems without naming it explicitly."
+        return "Presenta una llamada a la acción de forma indirecta, creando un escenario donde el lector pueda ver la acción como una solución natural a sus problemas sin nombrarla explícitamente."
     return ""
 
 # System Prompt - Instrucción en inglés para el modelo
@@ -33,18 +33,11 @@ Generate unusual, creative, and fascinating bullets that capture readers' attent
 """
 
 # Función para obtener una cantidad de bullets
-def get_gemini_response_bullets(target_audience, num_bullets, creativity):
-    action_call = get_random_call_to_action()  # Obtener la llamada a la acción aleatoria
+def get_gemini_response_bullets(target_audience, num_bullets, creativity, action_call):
     call_to_action_instruction = get_call_to_action_instruction(action_call)  # Definir la instrucción aquí
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
     model = genai.GenerativeModel(model_choice)
-
-    # System Prompt - Instrucción en inglés para el modelo
-    system_instruction = """
-    You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection. 
-    Generate unusual, creative, and fascinating bullets that subtly hint at the product without direct mention, capturing readers' attention. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
-   """
 
     # Crear el prompt para generar bullets
     full_prompt = f"""
@@ -59,10 +52,6 @@ def get_gemini_response_bullets(target_audience, num_bullets, creativity):
     * Asking a Question: 'Did you know that...' 
     * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
     Use the following mention instructions to guide your writing: {call_to_action_instruction}
-    Using the mention type '{action_call}' to guide how to suggest the call to action in the benefits or bullets. Ensure to adapt your writing based on this mention type:
-    - Direct: Clearly highlight the action the reader should take as the solution.
-    - Subtle: Suggest the action without naming it directly.
-    - Indirect: Present the action in a way that feels natural and inevitable without stating it explicitly.
     Additionally, subtly mention the product '{product}' in the bullets without making it the focus. The connection between the action and the product should feel organic and seamless.
     Please create the bullets now.
     """
@@ -116,6 +105,9 @@ with col1:
     num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5)
     creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
 
+    # Nueva selección para la llamada a la acción
+    action_call = st.selectbox("Tipo de Llamada a la Acción", ["Directo", "Sutil", "Indirecto"])
+
     # Botón de enviar
     submit = st.button("Generar Bullets")
 
@@ -124,7 +116,7 @@ if submit:
     if target_audience:
         try:
             # Obtener la respuesta del modelo
-            generated_bullets = get_gemini_response_bullets(target_audience, num_bullets, creativity)  # Sin mención del producto
+            generated_bullets = get_gemini_response_bullets(target_audience, num_bullets, creativity, action_call)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Mira la magia:</h4>
