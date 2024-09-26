@@ -85,13 +85,6 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Impact Bullet Generator", layout="wide")
 
-# Inicializar el estado de la expansión del acordeón
-if "accordion_expanded" not in st.session_state:
-    st.session_state["accordion_expanded"] = False
-
-def toggle_accordion():
-    st.session_state["accordion_expanded"] = not st.session_state["accordion_expanded"]
-
 # Centrar el título y el subtítulo
 st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
