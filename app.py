@@ -141,8 +141,6 @@ if submit:
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    
-                    <p>{generated_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
         except ValueError as e:
