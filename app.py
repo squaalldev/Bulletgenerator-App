@@ -19,74 +19,62 @@ def get_random_product_mention():
 # Crear la instrucción de mención basada en la opción seleccionada
 def get_mention_instruction(product_mention, product):
     if product_mention == "Directa":
-        return f"""
-        Directly introduce the product '{product}' as the clear solution to the problem the reader is facing. Ensure that the product is presented in a way that highlights its key benefits and demonstrates how it directly addresses the issue at hand. The mention should feel natural and seamlessly integrated into the narrative.
-        """
+        return f"Introduce directamente el producto '{product}' como la solución clara al problema que enfrenta el lector."
     elif product_mention == "Indirecta":
-        return f"""
-        Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly. Weave the product's core benefits into the description of how the reader can overcome the issue, creating an implicit connection between the solution and the product. Ensure the mention is subtle but clear enough to guide the reader towards the product.
-        """
+        return f"Referencia sutilmente el producto '{product}' como una posible solución al problema del lector sin nombrarlo explícitamente."
     elif product_mention == "Metafórica":
-        return f"""
-        Introduce the product '{product}' using a metaphor, connecting it symbolically to the solution the reader needs. The metaphor should relate to the problem being discussed and should creatively suggest how the product offers a resolution without explicitly stating its name. The metaphor should evoke the benefits of the product in a memorable and thought-provoking way.
-        """
+        return f"Introduce el producto '{product}' usando una metáfora, conectándolo simbólicamente a la solución que necesita el lector."
     return ""
 
-# System Prompt - Instrucción en inglés para el modelo
-system_instruction = """
-You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
-Generate unusual, creative, and fascinating bullets that capture readers' attention about the product. Respond in Spanish and use a numbered list format. Important: Only answer bullets, never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
-"""
-
-# Función para obtener una cantidad de bullets
-def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
+# Función para generar titulares
+def generate_headlines(number_of_headlines, target_audience, product, temperature):
     product_mention = get_random_product_mention()
-    mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
-    model_choice = "gemini-1.5-flash"  # Modelo por defecto
+    mention_instruction = get_mention_instruction(product_mention, product)
 
-    model = genai.GenerativeModel(model_choice)
+    # Crear la configuración del modelo
+    generation_config = {
+        "temperature": temperature,  # Usar el valor del slider aquí
+        "top_p": 0.95,
+        "top_k": 64,
+        "max_output_tokens": 2048,
+        "response_mime_type": "text/plain",
+    }
 
-    # System Prompt - Instrucción en inglés para el modelo
-    system_instruction = """
-    You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection. 
-    Generate unusual, creative, and fascinating bullets that subtly hint at the product without direct mention, capturing readers' attention. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
-   """
+    model = genai.GenerativeModel(
+        model_name="gemini-1.5-flash",
+        generation_config=generation_config,
+        system_instruction="Eres un copywriter de clase mundial, con experiencia en la creación de ganchos, titulares y líneas de asunto que capturan la atención de inmediato. Tu habilidad radica en comprender profundamente las emociones, deseos y desafíos de una audiencia específica."
+    )
 
-    # Crear el prompt para generar bullets
-    full_prompt = f"""
-    {system_instruction}
-    Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
-    Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
-    * Good and Bad: 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
-    * The Best/The Worst: 'The best verb tense that gives your clients the feeling they've already bought from you.' 
-    * Stories: 'The story of...', 'The mysteries of...', 'The legend of...' 
-    * Trick: 'A simple system to write copy without trying to convince them to buy.' 
-    * The Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
-    * Asking a Question: 'Did you know that...' 
-    * When: 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
-    Using {mention_instruction} when you want to mention {product}.
-    Use the following mention instructions to guide your writing: {mention_instruction}
-    Using the mention type '{product_mention}' to guide how to mention the product in the benefits or bullets. Ensure the mention is adapted based on this type:
-    - Direct: Clearly highlight the product as the solution.
-    - Indirect: Subtly suggest the product without naming it.
-    - Metaphorical: Use a metaphor to connect the product to the solution.
-    When responding, always include a headline that references the {target_audience} and the product in the following way: 'Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta:' 
-    Please create the bullets now.
-    """
+    chat_session = model.start_chat(
+        history=[
+            {
+                "role": "user",
+                "parts": [
+                    f"Tu tarea es crear {number_of_headlines} ganchos o encabezados titulares llamativos diseñados para {target_audience} con el fin de generar interés en {product}. "
+                    f"Usa la siguiente mención: {mention_instruction}. "
+                    "Los ganchos deben ser de este tipo: "
+                    "1. Secretos: 'El secreto detrás de...'; "
+                    "2. Consejos: 'Consejos para que...'; "
+                    "3. Historias: 'La historia del...', 'Los misterios de...', 'La leyenda de...'; "
+                    "4. Deseos: 'Cómo...'; "
+                    "5. Listas: '10 razones por las que...'; "
+                    "6. Haciendo una pregunta: '¿Sabías que...'; "
+                    "7. Curiosidad: '¿Por qué...'."
+                ],
+            },
+        ]
+    )
 
-    response = model.generate_content([full_prompt])
+    response = chat_session.send_message("Genera los titulares")  # Enviar mensaje para obtener la respuesta
+    return response.text  # Regresar la respuesta directamente
 
-    if response and response.parts:
-        return response.parts[0].text
-    else:
-        raise ValueError("Lo sentimos, intenta con una combinación diferente de entradas.")
-
-# Inicializar la aplicación Streamlit
-st.set_page_config(page_title="Generador de Bullets", layout="wide")
+# Configurar la interfaz de usuario con Streamlit
+st.set_page_config(page_title="Generador de Titulares", layout="wide")
 
 # Centrar el título y el subtítulo
-st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Generador de Titulares</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Usa el poder de Gemini AI para crear titulares atractivos.</h4>", unsafe_allow_html=True)
 
 # Añadir CSS personalizado para el botón
 st.markdown("""
@@ -109,36 +97,30 @@ st.markdown("""
         color: black;
     }
     </style>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
-# Crear dos columnas para el layout (40% y 60%)
-col1, col2 = st.columns([2, 3])
+# Crear columnas
+col1, col2 = st.columns([1, 2])  # 1: tamaño de la columna izquierda, 2: tamaño de la columna derecha
 
+# Columnas de entrada
 with col1:
-    # Campos de entrada
-    target_audience = st.text_input("¿Quién es tu público objetivo?")
-    product = st.text_input("¿Qué producto tienes en mente?")
+    target_audience = st.text_input("¿Quién es tu público objetivo?", placeholder="Ejemplo: Estudiantes Universitarios")
+    product = st.text_input("¿Qué producto tienes en mente?", placeholder="Ejemplo: Curso de Inglés")
+    number_of_headlines = st.selectbox("Número de Titulares", options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], index=4)
+    temperature = st.slider("Creatividad", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
     
-    # Campos de personalización sin acordeón
-    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
-    creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
-
     # Botón de enviar
-    submit = st.button("Generar Bullets")
-
-# Mostrar los bullets generados
-if submit:
-    if target_audience and product:
-        try:
+    if st.button("Generar Titulares"):
+        if target_audience and product:
             # Obtener la respuesta del modelo
-            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
+            generated_headlines = generate_headlines(number_of_headlines, target_audience, product, temperature)
+            # Mostrar los bullets generados
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Aquí están tus bullets:</h4>
-                    <p>{generated_bullets}</p>
+                    <h4>Aquí están tus titulares:</h4>
+                    <p>{generated_headlines}</p>
                 </div>
             """, unsafe_allow_html=True)
-        except ValueError as e:
-            col2.error(f"Error: {str(e)}")
-    else:
-        col2.error("Por favor, proporciona el público objetivo y el producto.")
+        else:
+            col2.error("Por favor, proporciona el público objetivo y el producto.")
+
