@@ -113,13 +113,13 @@ with col1:
 
 # Mostrar los bullets generados
 if submit:
-    if target_audience and product:
+    if target_audience:
         try:
             # Obtener la respuesta del modelo
-             generated_bullets = get_gemini_response_bullets(target_audience, num_bullets, creativity, action_call)
+            generated_bullets = get_gemini_response_bullets(target_audience, num_bullets, creativity, action_call)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Mira la magia en acción:</h4>
+                    <h4>Mira la magia:</h4>
                     <p>{generated_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
