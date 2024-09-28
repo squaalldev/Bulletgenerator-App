@@ -74,7 +74,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         )
     )
 
-    # Crear el prompt para generar bullets
+    # Crear la instrucción para generar bullets
     chat_session = model.start_chat(
         history=[
             {
@@ -153,11 +153,11 @@ if submit:
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, temperature)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Observa la magia en acción:</h4>
-                    <p>{generated_bullets}</p>
+                    <h4 style='text-align: center;'>Aquí están tus Bullets:</h4>
+                    <pre style="white-space: pre-wrap;">{generated_bullets}</pre>
                 </div>
             """, unsafe_allow_html=True)
         except ValueError as e:
-            st.error(e)
+            st.error(str(e))
     else:
         st.error("Por favor, completa todos los campos.")
