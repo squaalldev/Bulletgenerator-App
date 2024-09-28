@@ -89,7 +89,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             },
         ]
     )
-
+)
     # Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
     full_prompt = f"{bullets_instruction}"
 
