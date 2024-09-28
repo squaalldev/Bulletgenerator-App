@@ -38,79 +38,43 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
-    model = genai.GenerativeModel(model_choice)
-
- # Configuración del modelo generativo y las instrucciones del sistema
-model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
-    generation_config=generation_config,  # Configuración de generación
-    system_instruction = (f"""
-    You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. You know how to use proven structures to attract {target_audience}, generating interest and creating a powerful connection with {product}. 
-    Generate unusual, creative, and fascinating bullets that capturing {target_audience}'s attention. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'
-    "Los bullets deben ser de los siguientes tipos: "
-    "* 'El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. "
-    "Los hechos están en la página 10.' "
-    "* 'El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.' "
-    "* 'La historia de...', 'Los misterios de...', 'La leyenda de...' "
-    "* 'Un sistema simple para escribir textos sin intentar convencerlos de comprar.' "
-    "* Verdad: 'La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música.' "
-    "* '¿Sabías que...' "
-    "* '¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente.' "
-    f"Usando {mention_instruction} cuando desees mencionar {product}. "
-    f"Usa las siguientes instrucciones de mención para guiar tu escritura: {mention_instruction} "
-    f"Usando el tipo de mención '{product_mention}' para guiar cómo mencionar el producto en los beneficios o bullets. "
-    f"Al responder, siempre incluye un encabezado que haga referencia a {target_audience} y el producto de la siguiente manera: "
-    f"'Aquí tienes 5 bullets para {target_audience}, que aumenten el deseo de adquirir el {product}, usando la mención indirecta:' "
-   
-   """
-     )
-)
-
-# Crear el prompt para generar bullets
-bullets_instruction = (
-    f"Tu tarea es escribir {num_bullets} beneficios o bullets que conecten el síntoma con el problema enfrentado por {target_audience}, "
-    f"aumentando su deseo de adquirir, asistir, descargar o comprar el {product}. "
-    f"Escribe los bullets con un nivel de creatividad {creativity}. "
-    "Asegúrate de que la mención se adapte según este tipo: "
-    "Por favor, crea los bullets ahora."
-)
-
-# Selección aleatoria de tipos de mención, manteniendo variedad en la salida
-product_mention = get_random_product_mention()
-
-# Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
-full_prompt = f"{system_instruction}\n{bullets_instruction}"
-
-
-
-
-# System Prompt - Instrucción en inglés para el modelo
-    system_instruction = """
-    You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection. 
-    Generate unusual, creative, and fascinating bullets that subtly hint at the product without direct mention, capturing readers' attention. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
-   """
+    # Configuración del modelo generativo y las instrucciones del sistema
+    model = genai.GenerativeModel(
+        model_name=model_choice,  # Nombre del modelo que estamos utilizando
+        generation_config=None,  # Configuración de generación, ajusta según sea necesario
+        system_instruction=(
+            f"You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. "
+            f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. "
+            f"You know how to use proven structures to attract {target_audience}, generating interest and creating a powerful connection with {product}. "
+            "Generate unusual, creative, and fascinating bullets that capturing {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
+            "Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.' "
+            "Los bullets deben ser de los siguientes tipos: "
+            "* 'El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.' "
+            "* 'El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.' "
+            "* 'La historia de...', 'Los misterios de...', 'La leyenda de...' "
+            "* 'Un sistema simple para escribir textos sin intentar convencerlos de comprar.' "
+            "* Verdad: 'La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música.' "
+            "* '¿Sabías que...' "
+            "* '¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente.' "
+            f"Usando {mention_instruction} cuando desees mencionar {product}. "
+            f"Usa las siguientes instrucciones de mención para guiar tu escritura: {mention_instruction} "
+            f"Usando el tipo de mención '{product_mention}' para guiar cómo mencionar el producto en los beneficios o bullets. "
+            f"Al responder, siempre incluye un encabezado que haga referencia a {target_audience} y el producto de la siguiente manera: "
+            f"'Aquí tienes 5 bullets para {target_audience}, que aumenten el deseo de adquirir el {product}, usando la mención indirecta:' "
+        )
+    )
 
     # Crear el prompt para generar bullets
-    full_prompt = f"""
-    {system_instruction}
-    Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
-    Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
-    * 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
-    * 'The best verb tense that gives your clients the feeling they've already bought from you.' 
-    * 'The story of...', 'The mysteries of...', 'The legend of...' 
-    * 'A simple system to write copy without trying to convince them to buy.' 
-    * Truth: 'The truth that you've never been told in school, or at home, about how to make a living from music.' 
-    * 'Did you know that...' 
-    * 'When is it a good idea to tell a girl you like her? If you don't say it at that moment, say goodbye to getting to know her intimately.' 
-    Using {mention_instruction} when you want to mention {product}.
-    Use the following mention instructions to guide your writing: {mention_instruction}
-    Using the mention type '{product_mention}' to guide how to mention the product in the benefits or bullets. Ensure the mention is adapted based on this type:
-    - Direct: Clearly highlight the product as the solution.
-    - Indirect: Subtly suggest the product without naming it.
-    - Metaphorical: Use a metaphor to connect the product to the solution.
-    When responding, always include a headline that references the {target_audience} and the product in the following way: 'Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta:' 
-    Please create the bullets now.
-    """
+    bullets_instruction = (
+        f"Tu tarea es escribir {num_bullets} beneficios o bullets que conecten el síntoma con el problema enfrentado por {target_audience}, "
+        f"aumentando su deseo de adquirir, asistir, descargar o comprar el {product}. "
+        f"Escribe los bullets con un nivel de creatividad {creativity}. "
+        "Asegúrate de que la mención se adapte según este tipo: "
+        "Por favor, crea los bullets ahora."
+    )
+
+    # Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
+    full_prompt = f"{bullets_instruction}"
 
     response = model.generate_content([full_prompt])
 
