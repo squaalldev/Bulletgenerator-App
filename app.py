@@ -13,50 +13,55 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
     mentions = ["Directa", "Indirecta", "Metafórica"]
-    probabilities = [0.34, 0.33, 0.33]  
+    probabilities = [0.25, 0.35, 0.40]  
     return random.choices(mentions, probabilities)[0]
 
 # Crear la instrucción de mención basada en la opción seleccionada
 def get_mention_instruction(product_mention, product):
     if product_mention == "Directa":
-        return f"""
-        Directly introduce the product '{product}' as the clear solution to the problem the reader is facing. Ensure that the product is presented in a way that highlights its key benefits and demonstrates how it directly addresses the issue at hand. The mention should feel natural and seamlessly integrated into the narrative.
-        """
+        examples = [
+            f"Este curso de inglés te proporcionará las herramientas necesarias para abrir nuevas oportunidades laborales.",
+            f"Con este curso de inglés, transforma tu carrera y tu vida familiar.",
+            f"No permitas que la falta de inglés limite tu futuro; inscríbete y empieza a disfrutar de más tiempo con tus pequeños."
+        ]
+        return f"Directly introduce the product '{product}' as the clear solution to the problem the reader is facing. Examples: {', '.join(examples)}"
+        
     elif product_mention == "Indirecta":
-        return f"""
-        Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly. Weave the product's core benefits into the description of how the reader can overcome the issue, creating an implicit connection between the solution and the product. Ensure the mention is subtle but clear enough to guide the reader towards the product.
-        """
+        examples = [
+            f"Imagina tener la confianza hablando un idioma diferente para brillar en tus reuniones de trabajo.",
+            f"El mejor regalo que puedes darles a tus hijos es su crecimiento profesional dandoles herramientas como otros idiomas.",
+            f"Visualiza cómo tus pequeños se sentirán orgullosos al verte alcanzar esa promoción por hablar en otro idioma."
+        ]
+        return f"Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly. Examples: {', '.join(examples)}"
+        
     elif product_mention == "Metafórica":
-        return f"""
-        Introduce the product '{product}' using a metaphor, connecting it symbolically to the solution the reader needs. The metaphor should relate to the problem being discussed and should creatively suggest how the product offers a resolution without explicitly stating its name. The metaphor should evoke the benefits of the product in a memorable and thought-provoking way.
-        """
-    return ""
-
-# System Prompt - Instrucción en inglés para el modelo
-system_instruction = """
-You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
-Generate unusual, creative, and fascinating bullets that capture readers' attention about the product. Respond in Spanish and use a numbered list format. Important: Only answer bullets, never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible(este bullet es cursioso).'.
-"""
-
+        examples = [
+            f"Aprender inglés es como lanzarse a la piscina: al principio puede dar miedo.",
+            f"El dominio del inglés es tu brújula en el océano laboral.",
+            f"Dominar el inglés es encender una luz en la oscuridad."
+        ]
+        return f"Introduce the product '{product}' using a metaphor, symbolically connecting it to the solution the reader needs. Examples: {', '.join(examples)}"
+    
+# Function to get a random mention instruction
+def get_random_mention_instruction():
+    mention_type = get_random_product_mention()  # Get random mention type
+    examples = mention_types[mention_type]  # Get examples based on mention type
+    return f"{examples[0]} Examples: {examples[1]}"
+    
 # Función para obtener una cantidad de bullets
-def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
+def generate_bullets(number_of_bullets, target_audience, product, temperature):
     product_mention = get_random_product_mention()
-    mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
+    mention_instruction = get_random_mention_instruction()  # Get mention instruction
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
     model = genai.GenerativeModel(model_choice)
 
     # System Prompt - Instrucción en inglés para el modelo
-    system_instruction = """
-    You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection. 
-    Generate unusual, creative, and fascinating bullets that subtly hint at the product without direct mention, capturing readers' attention. Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
-   """
-
-    # Crear el prompt para generar bullets
-    full_prompt = f"""
-    {system_instruction}
-    Your task is to create {num_bullets} benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
-    Infuse your responses with a creativity level of {creativity}. The bullets should be of the following types: 
+    system_instruction = f"""
+    You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. You know how to use proven structures to attract your {target_audience}, generating interest and creating a powerful connection with {product}. 
+    Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
+    Your task is to create benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
+    Infuse your responses with a creativity level that aligns with the specified temperature of {creativity}, leveraging the imaginative capabilities of the Gemini 1.5 Flash model to produce innovative and boundary-pushing ideas. The bullets should be of the following types: 
     * 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
     * 'The best verb tense that gives your clients the feeling they've already bought from you.' 
     * 'The story of...', 'The mysteries of...', 'The legend of...' 
@@ -70,16 +75,29 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     - Direct: Clearly highlight the product as the solution.
     - Indirect: Subtly suggest the product without naming it.
     - Metaphorical: Use a metaphor to connect the product to the solution.
+   """
+
+    # Crear el prompt para generar bullets
+    full_prompt = f"""
+    Write {num_bullets} unusual, creative, and fascinating bullets that capturing readers' attention. 
     When responding, always include a headline that references the {target_audience} and the product in the following way: 'Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta:' 
     Please create the bullets now.
     """
 
-    response = model.generate_content([full_prompt])
+    try:
+        response = model.generate_content([full_prompt])
+        
+        # Extract text from the response
+        generated_bullets = response.candidates[0].content.parts[0].text.strip()
+        
+        return generated_bullets
+    except Exception as e:
+        raise ValueError(f"Tuvimos este error al generar los bullets: {str(e)}")
 
-    if response and response.parts:
-        return response.parts[0].text
-    else:
-        raise ValueError("Lo sentimos, intenta con una combinación diferente de entradas.")
+# Example usage
+if __name__ == "__main__":
+    bullets = generate_bullets(5, "target audience", "product name", 0.7)
+    print(bullets)
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
