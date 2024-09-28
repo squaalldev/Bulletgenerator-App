@@ -35,14 +35,14 @@ def get_mention_instruction(product_mention, product):
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
     product_mention = get_random_product_mention()
-    mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
+    mention_instruction = get_mention_instruction(product_mention, product)
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
     # Configuración del modelo generativo y las instrucciones del sistema
     model = genai.GenerativeModel(
-        model_name=model_choice,  # Nombre del modelo que estamos utilizando
+        model_name=model_choice,  
         generation_config={
-            "temperature": temperature,  # Cambiamos creatividad por temperature
+            "temperature": temperature,  
             "top_p": 0.85,       
             "top_k": 128,        
             "max_output_tokens": 2048,
@@ -72,16 +72,16 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             f"Al responder, siempre incluye un encabezado que haga referencia a {target_audience} y el producto de la siguiente manera: "
             f"'Aquí tienes 5 bullets para {target_audience}, que aumenten el deseo de adquirir el {product}, usando la mención indirecta:' "
         )
+    )
 
     # Crear el prompt para generar bullets
-
     chat_session = model.start_chat(
         history=[
             {
                 "role": "user",
                 "parts": [
                     f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios del {product} y que tienen la cualidad de fascinar y por lo tanto, fomentan el deseo de adquirir, asistir, descargar o comprar el {product}."
-                    f"Un buen bullet conecta los síntomas con los problemas enfrentado por {target_audience} de una manera natural, que no se note como manipuladora."
+                    f"Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora."
                     f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino mas bien divertidos. "
                     f"Utiliza la función {mention_instruction} al crear los bullets para referirte a los beneficios del {product}. "
                     "Por favor, crea los bullets ahora."
@@ -89,9 +89,9 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             },
         ]
     )
-)
+
     # Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
-    full_prompt = f"{bullets_instruction}"
+    full_prompt = f"{mention_instruction}"
 
     response = model.generate_content([full_prompt])
 
@@ -158,6 +158,6 @@ if submit:
                 </div>
             """, unsafe_allow_html=True)
         except ValueError as e:
-            col2.error(f"Error: {str(e)}")
+            st.error(e)
     else:
-        col2.error("Por favor, proporciona el público objetivo y el producto.")
+        st.error("Por favor, completa todos los campos.")
