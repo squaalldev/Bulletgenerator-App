@@ -13,24 +13,32 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
     mentions = ["Directa", "Indirecta", "Metafórica"]
-    probabilities = [0.34, 0.33, 0.33]  
+    probabilities = [0.20, 0.30, 0.50]  # Mayor probabilidad para Metafórica
     return random.choices(mentions, probabilities)[0]
 
 # Crear la instrucción de mención basada en la opción seleccionada
 def get_mention_instruction(product_mention, product):
     if product_mention == "Directa":
         return f"""
-        Directly introduce the product '{product}' as the clear solution to the problem the reader is facing. Ensure that the product is presented in a way that highlights its key benefits and demonstrates how it directly addresses the issue at hand. The mention should feel natural and seamlessly integrated into the narrative.
+        Presenta el producto '{product}' como la solución clara al problema que enfrenta el lector. Destaca sus beneficios clave y demuestra cómo aborda directamente el problema. La mención debe sentirse natural e integrada en la narrativa.
         """
     elif product_mention == "Indirecta":
         return f"""
-        Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly. Weave the product's core benefits into the description of how the reader can overcome the issue, creating an implicit connection between the solution and the product. Ensure the mention is subtle but clear enough to guide the reader towards the product.
+        Haz referencia al producto '{product}' como una posible solución al problema del lector sin nombrarlo explícitamente. Integra los beneficios del producto en la descripción de cómo el lector puede superar el problema, creando una conexión implícita entre la solución y el producto.
         """
     elif product_mention == "Metafórica":
         return f"""
-        Introduce the product '{product}' using a metaphor, connecting it symbolically to the solution the reader needs. The metaphor should relate to the problem being discussed and should creatively suggest how the product offers a resolution without explicitly stating its name. The metaphor should evoke the benefits of the product in a memorable and thought-provoking way.
+        Introduce el producto '{product}' utilizando una metáfora, conectándolo simbólicamente a la solución que necesita el lector. La metáfora debe relacionarse con el problema discutido y sugerir creativamente cómo el producto ofrece una resolución sin mencionarlo explícitamente.
         """
     return ""
+
+# Función para obtener una cantidad de bullets orientados a la acción
+def get_action_oriented_bullets(product):
+    return [
+        f"¿Sabías que el {product} puede transformar tu rutina diaria? Descúbrelo ahora.",
+        f"No dejes pasar la oportunidad: el {product} está diseñado para facilitarte la vida.",
+        f"Imagina lo que podrías lograr con el {product} en tu arsenal. ¡Actúa y pruébalo hoy!"
+    ]
 
 # System Prompt - Instrucción en inglés para el modelo
 system_instruction = """
@@ -38,7 +46,7 @@ You are a world-class copywriter, expert in creating benefits that connect sympt
 Generate unusual, creative, and fascinating bullets that capture readers' attention about the product. Respond in Spanish and use a numbered list format. Important: Only answer bullets, never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible(este bullet es cursioso).'.
 """
 
-# Función para obtener una cantidad de bullets
+# Función para obtener los bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
     product_mention = get_random_product_mention()
     mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
@@ -132,10 +140,13 @@ if submit:
         try:
             # Obtener la respuesta del modelo
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
+            action_bullets = get_action_oriented_bullets(product)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Observa la magia en acción:</h4>
                     <p>{generated_bullets}</p>
+                    <h4>Bullets orientados a la acción:</h4>
+                    <p>{'<br>'.join(action_bullets)}</p>
                 </div>
             """, unsafe_allow_html=True)
         except ValueError as e:
