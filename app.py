@@ -145,7 +145,7 @@ with col1:
     product = st.text_input("¿Qué producto tienes en mente?")
     
     # Campos de personalización sin acordeón
-    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5)
+    num_of_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5)
     tempeture = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
 
     # Botón de enviar
