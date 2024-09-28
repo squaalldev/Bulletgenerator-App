@@ -80,7 +80,6 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         f"Un buen bullet conecta los síntomas con los problemas enfrentado por {target_audience} de una manera natural, que no se note como manipuladora."
         f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino mas bien divertidos. "
         f"Utiliza la función {mention_instruction} al crear los bullets para referirte a los beneficios del {product}. "
-        "Asegúrate de que cada bullet siga la estructura de 'Conexión + conector + Beneficio', y evita incluir explicaciones como 'Conexión: Mejorar' o 'Beneficio: Aumentar mi felicidad'.\n"
         "Por favor, crea los bullets ahora."
     )
 
