@@ -62,9 +62,13 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             "* Verdad: 'La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música.' "
             "* '¿Sabías que...' "
             "* '¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente.' "
-            f"Usando {mention_instruction} cuando desees mencionar {product}. "
-            f"Usa las siguientes instrucciones de mención para guiar tu escritura: {mention_instruction} "
-            f"Usando el tipo de mención '{product_mention}' para guiar cómo mencionar el producto en los beneficios o bullets. "
+            "Recuerda que un buen bullet debe tener:\n\n"
+            "1. **Conexión**: Palabras que resalten la relación entre el producto y el beneficio para el usuario (e.g., 'Mejorar', 'Transformar').\n"
+            "2. **Beneficio**: Explicar cómo el usuario se beneficiará al asistir, descargar o comprar el producto.\n\n"
+            "Asegúrate de que cada bullet siga la estructura de 'Conexión + conector + Beneficio', y evita incluir explicaciones como 'Conexión: Mejorar' o 'Beneficio: Aumentar mi felicidad'.\n"
+            "Importante: Solo responde con bullets, nunca incluyas explicaciones o categorías, como este ejemplo: 'Asistir a la masterclass y descubrir técnicas para potenciar mi carrera profesional. (Este bullet apela al deseo de crecimiento personal y profesional.)'\n"
+            "Los bullets deben de variados, basate en estos ejemplos para realizar tu tarea de crear bullets:\n\n"
+            "Usa estos lineamientos para generar bullets de alta conversión en español."
             f"Al responder, siempre incluye un encabezado que haga referencia a {target_audience} y el producto de la siguiente manera: "
             f"'Aquí tienes 5 bullets para {target_audience}, que aumenten el deseo de adquirir el {product}, usando la mención indirecta:' "
         )
@@ -72,10 +76,11 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
 
     # Crear el prompt para generar bullets
     bullets_instruction = (
-        f"Tu tarea es escribir {num_bullets} beneficios o bullets que conecten el síntoma con el problema enfrentado por {target_audience}, "
-        f"aumentando su deseo de adquirir, asistir, descargar o comprar el {product}. "
-        f"Escribe los bullets con un nivel de creatividad {temperature:.1f}. "
-        "Asegúrate de que la mención se adapte según este tipo: "
+        f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios del {product} y que tienen la cualidad de fascinar y por lo tanto, fomentan el deseo de adquirir, asistir, descargar o comprar el {product}."
+        f"Un buen bullet conecta los síntomas con los problemas enfrentado por {target_audience} de una manera natural, que no se note como manipuladora."
+        f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino mas bien divertidos. "
+        f"Utiliza la función {mention_instruction} al crear los bullets para referirte a los beneficios del {product}. "
+        "Asegúrate de que cada bullet siga la estructura de 'Conexión + conector + Beneficio', y evita incluir explicaciones como 'Conexión: Mejorar' o 'Beneficio: Aumentar mi felicidad'.\n"
         "Por favor, crea los bullets ahora."
     )
 
