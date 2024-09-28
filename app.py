@@ -33,7 +33,7 @@ def get_mention_instruction(product_mention, product):
     return ""
 
 # Función para obtener una cantidad de bullets
-def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
+def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
     product_mention = get_random_product_mention()
     mention_instruction = get_mention_instruction(product_mention, product)  # Define aquí
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
@@ -41,7 +41,13 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     # Configuración del modelo generativo y las instrucciones del sistema
     model = genai.GenerativeModel(
         model_name=model_choice,  # Nombre del modelo que estamos utilizando
-        generation_config=None,  # Configuración de generación, ajusta según sea necesario
+        generation_config={
+            "temperature": temperature,  # Cambiamos creatividad por temperature
+            "top_p": 0.85,       
+            "top_k": 128,        
+            "max_output_tokens": 2048,
+            "response_mime_type": "text/plain",
+        },
         system_instruction=(
             f"You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. "
             f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. "
@@ -68,7 +74,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, creativit
     bullets_instruction = (
         f"Tu tarea es escribir {num_bullets} beneficios o bullets que conecten el síntoma con el problema enfrentado por {target_audience}, "
         f"aumentando su deseo de adquirir, asistir, descargar o comprar el {product}. "
-        f"Escribe los bullets con un nivel de creatividad {creativity}. "
+        f"Escribe los bullets con un nivel de creatividad {temperature:.1f}. "
         "Asegúrate de que la mención se adapte según este tipo: "
         "Por favor, crea los bullets ahora."
     )
@@ -123,7 +129,7 @@ with col1:
     
     # Campos de personalización sin acordeón
     num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
-    creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
+    temperature = st.slider("Creatividad", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
     # Botón de enviar
     submit = st.button("Generar Bullets")
@@ -133,7 +139,7 @@ if submit:
     if target_audience and product:
         try:
             # Obtener la respuesta del modelo
-            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
+            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, temperature)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Observa la magia en acción:</h4>
