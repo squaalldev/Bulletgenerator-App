@@ -10,12 +10,13 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Descripciones de los tipos de menciones
-mention_descriptions = {
-    f"Directa: Directly introduce the product '{product}' as the clear solution to the problem the reader is facing."
-    f"Indirecta: Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly."
-    f"Metafórica: Introduce the product '{product}' using a metaphor, symbolically connecting it to the solution the reader needs."
-}
+# Función que genera descripciones de menciones usando el producto como variable
+def mention_descriptions(product):
+    return {
+        "Directa": f"Introduce el producto '{product}' como la solución clara al problema que enfrenta el lector.",
+        "Indirecta": f"Referencia el producto '{product}' como una posible solución sin nombrarlo explícitamente.",
+        "Metafórica": f"Usa una metáfora para conectar el producto '{product}' con la solución necesaria."
+    }
 
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
@@ -25,6 +26,7 @@ def get_random_product_mention():
 
 # Crear la instrucción de mención basada en la opción seleccionada
 def get_mention_instruction(product_mention, product):
+    mention_descriptions = get_mention_descriptions(product)  # Llamar la función con el producto
     examples = {
         "Directa": [
             f"Este curso de inglés te proporcionará las herramientas necesarias para abrir nuevas oportunidades laborales.",
@@ -142,7 +144,7 @@ with col1:
     product = st.text_input("¿Qué producto tienes en mente?")
     
     # Campos de personalización sin acordeón
-    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
+    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5)
     creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
 
     # Botón de enviar
@@ -153,7 +155,7 @@ if submit:
     if target_audience and product:
         try:
             # Obtener la respuesta del modelo
-            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, creativity)
+            generated_bullets = generate_bullets(num_bullets, target_audience, product, creativity)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Observa la magia en acción:</h4>
