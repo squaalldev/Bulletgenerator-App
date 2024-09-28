@@ -26,7 +26,7 @@ def get_random_product_mention():
 
 # Crear la instrucción de mención basada en la opción seleccionada
 def get_mention_instruction(product_mention, product):
-    mention_descriptions = mention_descriptions(product)  # Llamar la función con el producto
+    mention_dict = mention_descriptions(product)  # Renombrar la variable para evitar el conflicto
     examples = {
         "Directa": [
             f"Este curso de inglés te proporcionará las herramientas necesarias para abrir nuevas oportunidades laborales.",
@@ -47,7 +47,7 @@ def get_mention_instruction(product_mention, product):
     }
 
     # Retornar la descripción de la mención seleccionada junto con ejemplos
-    return f"{mention_descriptions[product_mention]} Ejemplos: {', '.join(examples[product_mention])}"
+    return f"{mention_dict[product_mention]} Ejemplos: {', '.join(examples[product_mention])}"
 
 # Función que obtiene una instrucción aleatoria de mención
 def get_random_mention_instruction(product):
