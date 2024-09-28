@@ -13,7 +13,7 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
     mentions = ["Directa", "Indirecta", "Metafórica"]
-    probabilities = [0.34, 0.33, 0.33]  
+    probabilities = [0.20, 0.30, 0.50]  # Probabilidades ajustadas
     return random.choices(mentions, probabilities)[0]
 
 # Crear la instrucción de mención basada en la opción seleccionada
@@ -31,12 +31,6 @@ def get_mention_instruction(product_mention, product):
         Introduce the product '{product}' using a metaphor, connecting it symbolically to the solution the reader needs. The metaphor should relate to the problem being discussed and should creatively suggest how the product offers a resolution without explicitly stating its name. The metaphor should evoke the benefits of the product in a memorable and thought-provoking way.
         """
     return ""
-
-# System Prompt - Instrucción en inglés para el modelo
-system_instruction = """
-You are a world-class copywriter, expert in creating benefits that connect symptoms with problems. You deeply understand the emotions, desires, and challenges of a specific audience, allowing you to design personalized marketing strategies that resonate and motivate action. You know how to use proven structures to attract your target audience, generating interest and creating a powerful connection.
-Generate unusual, creative, and fascinating bullets that capture readers' attention about the product. Respond in Spanish and use a numbered list format. Important: Only answer bullets, never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible(este bullet es cursioso).'.
-"""
 
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, creativity):
