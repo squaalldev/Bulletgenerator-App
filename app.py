@@ -30,12 +30,12 @@ def get_mention_instruction(product_mention, product):
             f"Este curso de inglés te proporcionará las herramientas necesarias para abrir nuevas oportunidades laborales.",
             f"Con este curso de inglés, transforma tu carrera y tu vida familiar.",
             f"No permitas que la falta de inglés limite tu futuro; inscríbete y empieza a disfrutar de más tiempo con tus pequeños."
-        ]
+        ],
         "Indirecta": [
             f"Imagina tener la confianza hablando un idioma diferente para brillar en tus reuniones de trabajo.",
             f"El mejor regalo que puedes darles a tus hijos es su crecimiento profesional dandoles herramientas como otros idiomas.",
             f"Visualiza cómo tus pequeños se sentirán orgullosos al verte alcanzar esa promoción por hablar en otro idioma."
-        ]
+        ],
         
         "Metafórica": [
             f"Aprender inglés es como lanzarse a la piscina, al principio puede dar un poco de miedo, en el webinar te enseñare como sumergirte para descubrir un mundo nuevo lleno de oportunidades que antes parecían inaccesibles.",
