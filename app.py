@@ -26,7 +26,7 @@ def get_random_product_mention():
 
 # Crear la instrucción de mención basada en la opción seleccionada
 def get_mention_instruction(product_mention, product):
-    mention_descriptions = get_mention_descriptions(product)  # Llamar la función con el producto
+    mention_descriptions = mention_descriptions(product)  # Llamar la función con el producto
     examples = {
         "Directa": [
             f"Este curso de inglés te proporcionará las herramientas necesarias para abrir nuevas oportunidades laborales.",
@@ -46,13 +46,14 @@ def get_mention_instruction(product_mention, product):
         ]
     }
 
+    # Retornar la descripción de la mención seleccionada junto con ejemplos
     return f"{mention_descriptions[product_mention]} Ejemplos: {', '.join(examples[product_mention])}"
 
-# Function to get a random mention instruction
-def get_random_mention_instruction():
-    mention_type = get_random_product_mention()  # Get random mention type
-    examples = mention_types[mention_type]  # Get examples based on mention type
-    return f"{examples[0]} Examples: {examples[1]}"
+# Función que obtiene una instrucción aleatoria de mención
+def get_random_mention_instruction(product):
+    mention_type = get_random_product_mention()  # Obtener tipo de mención aleatoria
+    mention_instruction = get_mention_instruction(mention_type, product)  # Obtener instrucción con base en el producto y tipo de mención
+    return mention_instruction
     
 # Función para obtener una cantidad de bullets
 def generate_bullets(number_of_bullets, target_audience, product, temperature):
@@ -67,7 +68,7 @@ def generate_bullets(number_of_bullets, target_audience, product, temperature):
     You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. You know how to use proven structures to attract your {target_audience}, generating interest and creating a powerful connection with {product}. 
     Respond in Spanish and use a numbered list format. Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.'.
     Your task is to create benefits or bullets that connect the symptom with the problem faced by {target_audience}, increasing their desire to acquire the {product}. 
-    Infuse your responses with a creativity level that aligns with the specified temperature of {creativity}, leveraging the imaginative capabilities of the Gemini 1.5 Flash model to produce innovative and boundary-pushing ideas. The bullets should be of the following types: 
+    Infuse your responses with a creativity level that aligns with the specified temperature of {temperature}, leveraging the imaginative capabilities of the Gemini 1.5 Flash model to produce innovative and boundary-pushing ideas. The bullets should be of the following types: 
     * 'The bathroom cabinet is the best place to store medicine, right? Incorrect. It's the worst. The facts are on page 10.' 
     * 'The best verb tense that gives your clients the feeling they've already bought from you.' 
     * 'The story of...', 'The mysteries of...', 'The legend of...' 
@@ -85,7 +86,7 @@ def generate_bullets(number_of_bullets, target_audience, product, temperature):
 
     # Crear el prompt para generar bullets
     full_prompt = f"""
-    Write {num_bullets} unusual, creative, and fascinating bullets that capturing readers' attention. 
+    Write {number_of_bullets} unusual, creative, and fascinating bullets that capturing readers' attention. 
     When responding, always include a headline that references the {target_audience} and the product in the following way: 'Aquí tienes 5 bullets para Papás solteros, que aumenten el deseo de adquirir el Aceite multigrado, usando la mención indirecta:' 
     Please create the bullets now.
     """
@@ -145,7 +146,7 @@ with col1:
     
     # Campos de personalización sin acordeón
     num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5)
-    creativity = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
+    tempeture = st.selectbox("Creatividad", ["Alta", "Media", "Baja"])
 
     # Botón de enviar
     submit = st.button("Generar Bullets")
@@ -155,7 +156,7 @@ if submit:
     if target_audience and product:
         try:
             # Obtener la respuesta del modelo
-            generated_bullets = generate_bullets(num_bullets, target_audience, product, creativity)
+            generated_bullets = generate_bullets(number_of_bullets, target_audience, product, tempeture)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Observa la magia en acción:</h4>
