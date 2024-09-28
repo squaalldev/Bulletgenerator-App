@@ -72,15 +72,22 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             f"Al responder, siempre incluye un encabezado que haga referencia a {target_audience} y el producto de la siguiente manera: "
             f"'Aquí tienes 5 bullets para {target_audience}, que aumenten el deseo de adquirir el {product}, usando la mención indirecta:' "
         )
-    )
 
     # Crear el prompt para generar bullets
-    bullets_instruction = (
-        f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios del {product} y que tienen la cualidad de fascinar y por lo tanto, fomentan el deseo de adquirir, asistir, descargar o comprar el {product}."
-        f"Un buen bullet conecta los síntomas con los problemas enfrentado por {target_audience} de una manera natural, que no se note como manipuladora."
-        f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino mas bien divertidos. "
-        f"Utiliza la función {mention_instruction} al crear los bullets para referirte a los beneficios del {product}. "
-        "Por favor, crea los bullets ahora."
+
+    chat_session = model.start_chat(
+        history=[
+            {
+                "role": "user",
+                "parts": [
+                    f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios del {product} y que tienen la cualidad de fascinar y por lo tanto, fomentan el deseo de adquirir, asistir, descargar o comprar el {product}."
+                    f"Un buen bullet conecta los síntomas con los problemas enfrentado por {target_audience} de una manera natural, que no se note como manipuladora."
+                    f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino mas bien divertidos. "
+                    f"Utiliza la función {mention_instruction} al crear los bullets para referirte a los beneficios del {product}. "
+                    "Por favor, crea los bullets ahora."
+                ],
+            },
+        ]
     )
 
     # Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
