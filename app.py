@@ -10,6 +10,13 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
+# Descripciones de los tipos de menciones
+mention_descriptions = {
+    f"Directa: Directly introduce the product '{product}' as the clear solution to the problem the reader is facing."
+    f"Indirecta: Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly."
+    f"Metafórica: Introduce the product '{product}' using a metaphor, symbolically connecting it to the solution the reader needs."
+}
+
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
     mentions = ["Directa", "Indirecta", "Metafórica"]
@@ -18,30 +25,27 @@ def get_random_product_mention():
 
 # Crear la instrucción de mención basada en la opción seleccionada
 def get_mention_instruction(product_mention, product):
-    if product_mention == "Directa":
-        examples = [
+    examples = {
+        "Directa": [
             f"Este curso de inglés te proporcionará las herramientas necesarias para abrir nuevas oportunidades laborales.",
             f"Con este curso de inglés, transforma tu carrera y tu vida familiar.",
             f"No permitas que la falta de inglés limite tu futuro; inscríbete y empieza a disfrutar de más tiempo con tus pequeños."
         ]
-        return f"Directly introduce the product '{product}' as the clear solution to the problem the reader is facing. Examples: {', '.join(examples)}"
-        
-    elif product_mention == "Indirecta":
-        examples = [
+        "Indirecta": [
             f"Imagina tener la confianza hablando un idioma diferente para brillar en tus reuniones de trabajo.",
             f"El mejor regalo que puedes darles a tus hijos es su crecimiento profesional dandoles herramientas como otros idiomas.",
             f"Visualiza cómo tus pequeños se sentirán orgullosos al verte alcanzar esa promoción por hablar en otro idioma."
         ]
-        return f"Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly. Examples: {', '.join(examples)}"
         
-    elif product_mention == "Metafórica":
-        examples = [
-            f"Aprender inglés es como lanzarse a la piscina: al principio puede dar miedo.",
-            f"El dominio del inglés es tu brújula en el océano laboral.",
-            f"Dominar el inglés es encender una luz en la oscuridad."
+        "Metafórica": [
+            f"Aprender inglés es como lanzarse a la piscina, al principio puede dar un poco de miedo, en el webinar te enseñare como sumergirte para descubrir un mundo nuevo lleno de oportunidades que antes parecían inaccesibles.",
+            f"Hablar inglés es tu brújula en el océano laboral para navegar hacia esas rutas que solo parecían estar disponibles para bilingües.",
+            f"Dominar el inglés es encender una luz en la oscuridad que te permite ver otras oportunidades laborales."
         ]
-        return f"Introduce the product '{product}' using a metaphor, symbolically connecting it to the solution the reader needs. Examples: {', '.join(examples)}"
-    
+    }
+
+    return f"{mention_descriptions[product_mention]} Ejemplos: {', '.join(examples[product_mention])}"
+
 # Function to get a random mention instruction
 def get_random_mention_instruction():
     mention_type = get_random_product_mention()  # Get random mention type
@@ -51,7 +55,7 @@ def get_random_mention_instruction():
 # Función para obtener una cantidad de bullets
 def generate_bullets(number_of_bullets, target_audience, product, temperature):
     product_mention = get_random_product_mention()
-    mention_instruction = get_random_mention_instruction()  # Get mention instruction
+    mention_instruction = get_mention_instruction(product_mention, product)  # Get mention instruction
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
     model = genai.GenerativeModel(model_choice)
@@ -93,7 +97,7 @@ def generate_bullets(number_of_bullets, target_audience, product, temperature):
         return generated_bullets
     except Exception as e:
         raise ValueError(f"Tuvimos este error al generar los bullets: {str(e)}")
-
+        
 # Example usage
 if __name__ == "__main__":
     bullets = generate_bullets(5, "target audience", "product name", 0.7)
