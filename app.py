@@ -29,8 +29,8 @@ bullets_examples = {
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
-    # Seleccionar un bullet aleatorio de los ejemplos
-    selected_bullet = random.choice(list(bullets_examples.values()))
+    # Seleccionar múltiples bullets aleatorios de los ejemplos
+    selected_bullets = random.sample(list(bullets_examples.values()), min(num_bullets, len(bullets_examples)))
 
     # Configuración del modelo generativo y las instrucciones del sistema
     model = genai.GenerativeModel(
@@ -61,7 +61,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
                     f"Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora."
                     f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino más bien divertidos. "
                     f"Sé sutil a la hora de crear los bullets para referirte a los beneficios del {product}. "
-                    f"Usa este ejemplo como inspiración: {selected_bullet}."  # Añadir bullet aleatorio
+                    f"Usa estos ejemplos como inspiración: {', '.join(selected_bullets)}."  # Añadir bullets aleatorios
                     "1. **Connection**: Words that highlight the relationship between the product and the benefit for the user (e.g., 'Improve,' 'Transform').\n"
                     "2. **Benefit**: Explain how the user will benefit by attending, downloading, or purchasing the product.\n\n"
                     "Ensure each bullet follows the structure of 'Connection + connector + Benefit,' and avoid including explanations like 'Connection: Improve' or 'Benefit: Increase my happiness.'\n"
@@ -69,7 +69,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
                     "Use these guidelines to generate high-converting bullets in Spanish."
                     "Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.' "
                     "Bullets should vary, based on these examples to guide your task of creating bullets:\n\n"
-                    f"* {selected_bullet} "
+                    f"* {', '.join(selected_bullets)} "
                     # Añadir más ejemplos si es necesario
                     "Por favor, crea los bullets ahora."
                 ],
@@ -124,7 +124,7 @@ with col1:
     product = st.text_input("¿Qué producto tienes en mente?")
     
     # Campos de personalización sin acordeón
-    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=15, value=5)
+    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5)
     temperature = st.slider("Creatividad", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
     # Botón de enviar
