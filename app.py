@@ -36,18 +36,32 @@ preguntas_retoricas = [
     "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
 ]
 
-# Función para generar bullets informativos de todas las categorías
+# Función para generar bullets combinados o utilizando la API de Google
 def generate_bullets(target_audience, product, call_to_action, number_of_bullets):
     bullets = []
     
-    # Lista combinada de todas las categorías
+    # Lista combinada de todas las categorías de bullets predefinidos
     all_categories = directos + misterios + leyendas + historias_personales + preguntas_retoricas
-    
-    # Selecciona bullets aleatorios de la lista combinada
-    for _ in range(number_of_bullets):
-        bullet = random.choice(all_categories)
-        bullets.append(bullet)
 
+    # Generar bullets utilizando la API de Google Generative AI
+    prompt = f"""
+    Estoy creando bullets para una campaña de marketing dirigida a {target_audience}. 
+    El producto es {product} y el objetivo es que los usuarios realicen la siguiente acción: {call_to_action}.
+    
+    Por favor, genera {number_of_bullets} bullets persuasivos que resalten beneficios, problemas y curiosidades para la audiencia objetivo. 
+    """
+
+    try:
+        # Hacer la llamada a la API y generar bullets
+        response = genai.generate_text(prompt=prompt, max_tokens=150)
+        generated_bullets = response['candidates'][0]['output'].split('\n')[:number_of_bullets]  # Tomar la cantidad de bullets solicitados
+        bullets.extend(generated_bullets)
+    except Exception as e:
+        # Si falla la API, genera bullets aleatorios de las categorías predefinidas
+        for _ in range(number_of_bullets):
+            bullet = random.choice(all_categories)
+            bullets.append(bullet)
+    
     return bullets
 
 # Configurar la interfaz de usuario con Streamlit
@@ -138,7 +152,7 @@ with col1:
 if submit:
     if target_audience and product and call_to_action:
         try:
-            # Obtener la respuesta del modelo
+            # Generar los bullets usando la API y la lista predefinida
             generated_bullets = generate_bullets(target_audience, product, call_to_action, number_of_bullets)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
