@@ -37,15 +37,15 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         model_name=model_choice,
         generation_config={
             "temperature": temperature,
-            "top_p": 0.85,
-            "top_k": 128,
+            "top_p": 0.9,  # Aumentar para permitir una mayor diversidad en las opciones generadas
+            "top_k": 64,
             "max_output_tokens": 2048,
             "response_mime_type": "text/plain",
         },
         system_instruction=(
-            f"Eres un copywriter excepcional, experto en conectar con {target_audience}. "
-            f"Entiendes perfectamente sus emociones y desafíos. Crea bullets que no solo informen, sino que hablen directamente al corazón de {target_audience}, "
-            f"generando curiosidad y ganas de saber más sobre {product}. "
+            f"Imagina que estás charlando con un amigo que está buscando {product}. "
+            f"Genera {num_bullets} bullets que suenen naturales y amigables, como si estuvieras contándole por qué debería interesarse. "            f"Entiendes perfectamente sus emociones y desafíos. Crea bullets que no solo informen, sino que hablen directamente al corazón de {target_audience}, "
+            f"Generando curiosidad y ganas de saber más sobre {product}. "
             f"¡Haz que se sientan incluidos! Usa un tono amistoso y divertido. "
             f"Por ejemplo, si están buscando {product}, dales un motivo irresistible para seguir leyendo. "
             f"Incluye un encabezado atractivo que diga: 'Aquí tienes {num_bullets} razones por las que {target_audience} debería considerar {product}'."
