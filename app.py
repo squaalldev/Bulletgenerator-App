@@ -10,44 +10,60 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Diccionario de ejemplos de bullets
-bullets_examples = {
-    "1": "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
-    "2": "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
-    "3": "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa.",
-    "4": "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
-    "5": "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
-    "6": "Un sistema simple para escribir textos sin intentar convencerlos de comprar.",
-    "7": "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música.",
-    "8": "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
-    "9": "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida.",
-    "10": "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?",
-    "11": "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
+# Ejemplos de bullets por tipo
+bullets_types = {
+    "directos": [
+        "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
+        "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
+        "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
+    ],
+    "misterios": [
+        "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
+        "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
+    ],
+    "leyendas": [
+        "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
+        "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
+    ],
+    "historias_personales": [
+        "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
+        "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
+    ],
+    "preguntas_retoricas": [
+        "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
+    ]
 }
 
 # Función para seleccionar bullets aleatorios
 def get_random_bullets(num_bullets):
-    # Seleccionar múltiples bullets aleatorios de los ejemplos
-    selected_bullets = random.sample(list(bullets_examples.values()), min(num_bullets, len(bullets_examples)))
+    selected_bullets = []
+    # Selección aleatoria de tipos de bullet, manteniendo variedad en la salida
+    selected_types = random.sample(list(bullets_types.keys()), min(num_bullets, len(bullets_types)))
+
+    for bullet_type in selected_types:
+        bullet = random.choice(bullets_types[bullet_type])
+        selected_bullets.append(bullet)
+        
     return selected_bullets
 
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
-    model_choice = "gemini-1.5-flash"  # Modelo por defecto
-
     # Seleccionar bullets aleatorios usando la nueva función
     selected_bullets = get_random_bullets(num_bullets)
 
+    # Configuración del modelo
+    generation_config = {
+        "temperature": temperature,  
+        "top_p": 0.85,       
+        "top_k": 128,        
+        "max_output_tokens": 2048,
+        "response_mime_type": "text/plain",
+    }
+
     # Configuración del modelo generativo y las instrucciones del sistema
     model = genai.GenerativeModel(
-        model_name=model_choice,
-        generation_config={
-            "temperature": temperature,
-            "top_p": 0.85,
-            "top_k": 128,
-            "max_output_tokens": 2048,
-            "response_mime_type": "text/plain",
-        },
+        model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
+        generation_config=generation_config,  # Configuración de generación
         system_instruction=(
             f"You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. "
             f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. "
