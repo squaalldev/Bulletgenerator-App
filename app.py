@@ -59,7 +59,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
                     f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios que resolverán los problemas de {target_audience}. "
                     "Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora. "
                     f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino más bien divertidos. "
-                    "Sé sutil a la hora de crear los bullets para referirte a los beneficios de tu oferta. "
+                    f"Sé sutil a la hora de crear los bullets para referirte a los beneficios de tu {product}. "
                     f"Usa estos ejemplos como inspiración: {', '.join(selected_bullets)}. "
                     "Por favor, crea los bullets ahora."
                 ],
