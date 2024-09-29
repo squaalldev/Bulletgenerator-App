@@ -45,9 +45,8 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         system_instruction=(
             f"You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. "
             f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. "
-            f"You know how to use proven structures to attract {target_audience}, generating interest and creating a powerful connection with {product}. "
-            "Generate unusual, creative, and fascinating bullets that capturing {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
-            f"When responding, always include a heading referencing {target_audience} and the product as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}, de [beneficio de comprar, asistir, descargar, adquirir,] {product}' "
+            "Generate unusual, creative, and fascinating bullets that capture {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
+            f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
         )
     )
 
@@ -57,20 +56,11 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             {
                 "role": "user",
                 "parts": [
-                    f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios del {product} y que tienen la cualidad de fascinar y por lo tanto, fomentan el deseo de adquirir, asistir, descargar o comprar el {product}."
-                    f"Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora."
+                    f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios que resolverán los problemas de {target_audience}. "
+                    "Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora. "
                     f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino más bien divertidos. "
-                    f"Sé sutil a la hora de crear los bullets para referirte a los beneficios del {product}. "
-                    f"Usa estos ejemplos como inspiración: {', '.join(selected_bullets)}."  # Añadir bullets aleatorios
-                    "1. **Connection**: Words that highlight the relationship between the product and the benefit for the user (e.g., 'Improve,' 'Transform').\n"
-                    "2. **Benefit**: Explain how the user will benefit by attending, downloading, or purchasing the product.\n\n"
-                    "Ensure each bullet follows the structure of 'Connection + connector + Benefit,' and avoid including explanations like 'Connection: Improve' or 'Benefit: Increase my happiness.'\n"
-                    "Important: Only respond with bullets, never include explanations or categories, like this example: 'Attend the masterclass and discover techniques to boost your professional career.' (This bullet appeals to the desire for personal and professional growth.)\n"
-                    "Use these guidelines to generate high-converting bullets in Spanish."
-                    "Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.' "
-                    "Bullets should vary, based on these examples to guide your task of creating bullets:\n\n"
-                    f"* {', '.join(selected_bullets)} "
-                    # Añadir más ejemplos si es necesario
+                    "Sé sutil a la hora de crear los bullets para referirte a los beneficios de tu oferta. "
+                    f"Usa estos ejemplos como inspiración: {', '.join(selected_bullets)}. "
                     "Por favor, crea los bullets ahora."
                 ],
             },
@@ -78,7 +68,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
     )
 
     # Crear un mensaje para el modelo que incluye los bullets generados
-    response = model.generate_content(chat_session.history)  # Aquí usamos el historial del chat
+    response = model.generate_content(chat_session.history)
 
     if response and response.parts:
         return response.parts[0].text
