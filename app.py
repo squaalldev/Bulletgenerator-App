@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
+import random
 
 # Cargar las variables de entorno
 load_dotenv()
@@ -9,51 +10,80 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
+# Diccionario de ejemplos de bullets
+bullets_examples = {
+    "1": "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
+    "2": "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
+    "3": "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa.",
+    "4": "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
+    "5": "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
+    "6": "Un sistema simple para escribir textos sin intentar convencerlos de comprar.",
+    "7": "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música.",
+    "8": "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
+    "9": "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida.",
+    "10": "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?",
+    "11": "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
+}
+
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
+    model_choice = "gemini-1.5-flash"  # Modelo por defecto
+
+    # Seleccionar un bullet aleatorio de los ejemplos
+    selected_bullet = random.choice(list(bullets_examples.values()))
 
     # Configuración del modelo generativo y las instrucciones del sistema
-    generation_config = {
-        "temperature": temperature,
-        "top_p": 0.9,  # Aumentar para permitir una mayor diversidad en las opciones generadas
-        "top_k": 90,
-        "max_output_tokens": 2048,
-        "response_mime_type": "text/plain",
-    }
-
     model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
-        generation_config=generation_config,  # Configuración de generación
+        model_name=model_choice,
+        generation_config={
+            "temperature": temperature,
+            "top_p": 0.85,
+            "top_k": 128,
+            "max_output_tokens": 2048,
+            "response_mime_type": "text/plain",
+        },
         system_instruction=(
-            f"Imagina que estás charlando con un amigo que está buscando {product}. "
-            "Tu tarea es ayudarme a escribir bullets orientados a beneficios de obtener, descargar, asistir o comprar {product}, los cuales utilizaré para mi [página web, landing, correo, post, etc.],"
-            f"teniendo en cuenta los puntos dolorosos de mi {target_audience} y el {product}."
-            f"Genera {num_bullets} bullets que suenen conversacionales y amigables, no solo que pregunten, sino que informen, demuestren un beneficio, maximizen el interés, como si estuvieras contándole por qué debería interesarse. "
-            f"Entiendes perfectamente sus emociones y desafíos. Crea bullets que no solo informen, sino que hablen directamente al corazón de {target_audience}, "
-            f"Generando curiosidad y ganas de saber más sobre {product}. "
-            f"¡Haz que se sientan incluidos! Usa un tono amistoso y divertido. "
-            f"Por ejemplo, si están buscando {product}, dales un motivo irresistible para seguir leyendo. "
-            f"Incluye un encabezado atractivo que diga: 'Aquí tienes {num_bullets} razones por las que {target_audience} debería considerar {product}'."
+            f"You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. "
+            f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. "
+            f"You know how to use proven structures to attract {target_audience}, generating interest and creating a powerful connection with {product}. "
+            "Generate unusual, creative, and fascinating bullets that capturing {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
+            f"When responding, always include a heading referencing {target_audience} and the product as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}, de [beneficio de comprar, asistir, descargar, adquirir,] {product}' "
         )
     )
 
-    bullets_instruction = (
-        f"Quiero que escribas {num_bullets} bullets que transmitan los beneficios de {product} de una manera que atraiga a {target_audience}. "
-        f"Conecta los problemas y deseos de {target_audience} de forma conversacional, no robótico, ni utilices ':', con un estilo amigable y divertido. "
-        f"Por favor, genera bullets creativos que hagan que {target_audience} se sienta emocionado por {product}."
+    # Crear la instrucción para generar bullets
+    chat_session = model.start_chat(
+        history=[
+            {
+                "role": "user",
+                "parts": [
+                    f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios del {product} y que tienen la cualidad de fascinar y por lo tanto, fomentan el deseo de adquirir, asistir, descargar o comprar el {product}."
+                    f"Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora."
+                    f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino más bien divertidos. "
+                    f"Sé sutil a la hora de crear los bullets para referirte a los beneficios del {product}. "
+                    f"Usa este ejemplo como inspiración: {selected_bullet}."  # Añadir bullet aleatorio
+                    "1. **Connection**: Words that highlight the relationship between the product and the benefit for the user (e.g., 'Improve,' 'Transform').\n"
+                    "2. **Benefit**: Explain how the user will benefit by attending, downloading, or purchasing the product.\n\n"
+                    "Ensure each bullet follows the structure of 'Connection + connector + Benefit,' and avoid including explanations like 'Connection: Improve' or 'Benefit: Increase my happiness.'\n"
+                    "Important: Only respond with bullets, never include explanations or categories, like this example: 'Attend the masterclass and discover techniques to boost your professional career.' (This bullet appeals to the desire for personal and professional growth.)\n"
+                    "Use these guidelines to generate high-converting bullets in Spanish."
+                    "Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.' "
+                    "Bullets should vary, based on these examples to guide your task of creating bullets:\n\n"
+                    f"* {selected_bullet} "
+                    # Añadir más ejemplos si es necesario
+                    "Por favor, crea los bullets ahora."
+                ],
+            },
+        ]
     )
 
-    # Generar el resultado utilizando el modelo con la instrucción específica
-    try:
-        response = model.generate_content([bullets_instruction])
-        
-        # Extraer el texto de la respuesta
-        generated_bullets = response.candidates[0].content.parts[0].text.strip()
-        
-        # Retornar el resultado
-        return generated_bullets
-    except Exception as e:
-        raise ValueError(f"Error al generar los bullets: {str(e)}")
+    # Crear un mensaje para el modelo que incluye los bullets generados
+    response = model.generate_content(chat_session.history)  # Aquí usamos el historial del chat
+
+    if response and response.parts:
+        return response.parts[0].text
+    else:
+        raise ValueError("Lo sentimos, intenta con una combinación diferente de entradas.")
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
