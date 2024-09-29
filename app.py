@@ -12,18 +12,19 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
-    model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
     # Configuración del modelo generativo y las instrucciones del sistema
-    model = genai.GenerativeModel(
-        model_name=model_choice,
-        generation_config={
+        generation_config= {
             "temperature": temperature,
             "top_p": 0.9,  # Aumentar para permitir una mayor diversidad en las opciones generadas
             "top_k": 90,
             "max_output_tokens": 2048,
             "response_mime_type": "text/plain",
         },
+    # Configuración del modelo generativo y las instrucciones del sistema
+    model = genai.GenerativeModel(
+        model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
+        generation_config=generation_config,  # Configuración de generación
         system_instruction=(
             f"Imagina que estás charlando con un amigo que está buscando {product}. "
             f"Genera {num_bullets} bullets que suenen naturales y amigables, como si estuvieras contándole por qué debería interesarse. "
@@ -35,27 +36,23 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         )
     )
 
-    # Crear la instrucción para generar bullets
-    chat_session = model.start_chat(
-        history=[
-            {
-                "role": "user",
-                "parts": [
-                    f"Quiero que escribas {num_bullets} bullets que transmitan los beneficios de {product} de una manera que atraiga a {target_audience}. "
-                    f"Conecta los problemas y deseos de {target_audience} de forma conversacional, no robotico, ni utilices ':', con un estilo amigable y divertido. "
-                    f"Por favor, genera bullets creativos que hagan que {target_audience} se sienta emocionado por {product}."
-                ],
-            },
-        ]
-    )
+bullets_instruction = (
+    f"Quiero que escribas {num_bullets} bullets que transmitan los beneficios de {product} de una manera que atraiga a {target_audience}. "
+    f"Conecta los problemas y deseos de {target_audience} de forma conversacional, no robótico, ni utilices ':', con un estilo amigable y divertido. "
+    f"Por favor, genera bullets creativos que hagan que {target_audience} se sienta emocionado por {product}."
+)
 
-    # Crear un mensaje para el modelo que incluye los bullets generados
-    response = model.generate_content(chat_session.history)  # Aquí usamos el historial del chat
-
-    if response and response.parts:
-        return response.parts[0].text
-    else:
-        raise ValueError("Lo sentimos, intenta con una combinación diferente de entradas.")
+# Generar el resultado utilizando el modelo con la instrucción específica
+try:
+    response = model.generate_content([bullets_instruction])
+    
+    # Extraer el texto de la respuesta
+    generated_bullets = response.candidates[0].content.parts[0].text.strip()
+    
+    # Retornar el resultado
+    return generated_bullets
+except Exception as e:
+    raise ValueError(f"Error al generar los bullets: {str(e)}")
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
