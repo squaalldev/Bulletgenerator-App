@@ -72,7 +72,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             "Important: Only respond with bullets, never include explanations or categories, like this example: 'Attend the masterclass and discover techniques to boost your professional career. (This bullet appeals to the desire for personal and professional growth.)'\n"
             "Bullets should vary, based on these examples to guide your task of creating bullets:\n\n"
             "Use these guidelines to generate high-converting bullets in Spanish."
-            f"When responding, always include a heading referencing {target_audience} and the product as follows:" f"'Here are 5 bullets for {target_audience}, increasing the desire to acquire the {product}:' "
+            f"When responding, always include a heading referencing {target_audience} and the product as follows:" f"'Aquí hay {num_bullets} bullets para convencer a {target_audience}, de [beneficio de comprar, asistir, descargar, adquirir,] {product}' "
         )
     )
 
