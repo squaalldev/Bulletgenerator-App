@@ -65,25 +65,20 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
         generation_config=generation_config,  # Configuración de generación
         system_instruction=(
-            f"You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. "
-            f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. "
-            "Generate unusual, creative, and fascinating bullets that capture {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
-            f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
+            f"Eres un experto copywriter especializado en escribir bullets que resuelven los problemas de {target_audience}. "
+            "Tu tarea es crear bullets creativos y persuasivos que capturen la atención de {target_audience}. "
+            "Usa estos ejemplos como inspiración: {', '.join(selected_bullets)}."
         )
     )
 
-    # Crear la instrucción para generar bullets
+    # Crear un mensaje para el modelo que incluye los bullets generados
     chat_session = model.start_chat(
         history=[
             {
                 "role": "user",
                 "parts": [
                     f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios que resolverán los problemas de {target_audience}. "
-                    "Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora. "
-                    f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino más bien divertidos. "
-                    f"Sé sutil a la hora de crear los bullets para referirte a los beneficios de tu {product}. "
-                    f"Usa estos ejemplos como inspiración: {', '.join(selected_bullets)}. "
-                    "Por favor, crea los bullets ahora."
+                    "Asegúrate de que cada bullet sea atractivo y siga el estilo conversacional."
                 ],
             },
         ]
