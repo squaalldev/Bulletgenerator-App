@@ -85,7 +85,6 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."            "Respond in Spanish and use a numbered list format. "
             "Never respond like this: 'Crea momentos inolvidables: Comparte la experiencia de cocinar con tus hijos, fomentando la unión familiar y creando recuerdos especiales.'"
             f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
-     ],
        )
     )
 
