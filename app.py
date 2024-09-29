@@ -71,7 +71,21 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         system_instruction=(
             f"Eres un experto copywriter especializado en escribir bullets atractivos para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
             "Tu tarea es ayudarme a escribir bullets que destaquen los beneficios de {product}. "
-            "Recuerda que cada bullet debe ser breve, claro y persuasivo, y seguir la estructura 'Beneficio + Conector + Valor'. "
+            "Recuerda que cada bullet debe ser breve, claro y persuasivo, y seguir la estructura de:"
+            "1. Algo que llame la atención del lector, pueder ser una pregunta, afirmación, dato curioso, estadistica."
+            "2. Presenta la solución de manera natural, como si fuera la solución al problema anterior mencionado."
+            "3. Escribe los beneficios de {product} como la solución a todos sus problemas."
+             f"4. Finaliza con un llamado a la acción en donde destaques que perderían o no ganarían si no realizan la {call_to_action}."
+            "Basate en este ejemplo como respuesta:"
+            "¿Te sientes como un barco a la deriva en un mar de responsabilidades? 🌊"
+            "El Curso online de Yoga es tu brújula para navegar las aguas turbulentas de la paternidad soltera."
+            "* Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta."
+            "* Aumenta tu energía y concentración para navegar con mayor seguridad y precisión."
+            "* Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad."
+            "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
+            "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
+            "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
+            "¡Asiste al webinar GRATIS para descubrir cómo el Curso online de Yoga puede ser tu brújula hacia una vida más equilibrada y plena! 'Beneficio + Conector + Valor'. "
             "Los bullets deben inspirar interés y motivar al lector a tomar acción. "
         )
     )
