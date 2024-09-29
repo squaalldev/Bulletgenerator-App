@@ -88,26 +88,22 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
        )
     )
 
-    # Crear la instrucción para generar bullets
-    chat_session = model.start_chat(
-        history=[
-            {
-                "role": "user",
-                "parts": [
+    # Crear un mensaje para el modelo que incluye los CTAs generados según los tipos seleccionados
+    bullets_instruction = (
                     f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios al hablar de {product} que resolverán los problemas de {target_audience}. "
                     "Por favor, crea los bullets ahora."
-                ],
-            },
-        ]
     )
 
     # Crear un mensaje para el modelo que incluye los bullets generados
-    response = model.generate_content(chat_session.history)
-
-    if response and response.parts:
-        return response.parts[0].text
-    else:
-        raise ValueError("Lo sentimos, intenta con una combinación diferente de entradas.")
+        response = model.generate_content([bullets_instruction])
+        
+        # Extraer el texto de la respuesta
+        generated_bullets = response.candidates[0].content.parts[0].text.strip()  # Modificado aquí
+        
+        # Retornar el resultado
+        return generated_bullets
+    except Exception as e:
+        raise ValueError(f"Error al generar los bullets: {str(e)}")    response = model.generate_content([bullets_instruction])
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
