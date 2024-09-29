@@ -58,7 +58,7 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
     # Configuración del modelo
     generation_config = {
         "temperature": temperature,  
-        "top_p": 0.85,       
+        "top_p": 0.90,       
         "top_k": 128,        
         "max_output_tokens": 2048,
         "response_mime_type": "text/plain",
@@ -69,8 +69,8 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
         system_instruction=(
-            f"Eres un experto copywriter especializado en escribir beneficios atractivos para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
-            "Tu tarea es ayudarme a escribir bullets que destaquen los beneficios de asistir, descargar o inscribirme al webinar. "
+            f"Eres un experto copywriter especializado en escribir bullets atractivos para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
+            "Tu tarea es ayudarme a escribir bullets que destaquen los beneficios de {product}. "
             "Recuerda que cada bullet debe ser breve, claro y persuasivo, y seguir la estructura 'Beneficio + Conector + Valor'. "
             "Los bullets deben inspirar interés y motivar al lector a tomar acción. "
         )
