@@ -10,32 +10,8 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Función para obtener una mención del producto de manera probabilística
-def get_random_product_mention():
-    mentions = ["Directa", "Indirecta", "Metafórica"]
-    probabilities = [0.20, 0.30, 0.50]  # Probabilidades ajustadas
-    return random.choices(mentions, probabilities)[0]
-
-# Crear la instrucción de mención basada en la opción seleccionada
-def get_mention_instruction(product_mention, product):
-    if product_mention == "Directa":
-        return f"""
-        Directly introduce the product '{product}' as the clear solution to the problem the reader is facing. Ensure that the product is presented in a way that highlights its key benefits and demonstrates how it directly addresses the issue at hand. The mention should feel natural and seamlessly integrated into the narrative.
-        """
-    elif product_mention == "Indirecta":
-        return f"""
-        Subtly reference the product '{product}' as a potential solution to the reader's problem without naming it explicitly. Weave the product's core benefits into the description of how the reader can overcome the issue, creating an implicit connection between the solution and the product. Ensure the mention is subtle but clear enough to guide the reader towards the product.
-        """
-    elif product_mention == "Metafórica":
-        return f"""
-        Introduce the product '{product}' using a metaphor, connecting it symbolically to the solution the reader needs. The metaphor should relate to the problem being discussed and should creatively suggest how the product offers a resolution without explicitly stating its name. The metaphor should evoke the benefits of the product in a memorable and thought-provoking way.
-        """
-    return ""
-
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
-    product_mention = get_random_product_mention()
-    mention_instruction = get_mention_instruction(product_mention, product)
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
     # Configuración del modelo generativo y las instrucciones del sistema
@@ -53,7 +29,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. "
             f"You know how to use proven structures to attract {target_audience}, generating interest and creating a powerful connection with {product}. "
             "Generate unusual, creative, and fascinating bullets that capturing {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
-            f"When responding, always include a heading referencing {target_audience} and the product as follows:" f"'Aquí hay {num_bullets} bullets para convencer a {target_audience}, de [beneficio de comprar, asistir, descargar, adquirir,] {product}' "
+            f"When responding, always include a heading referencing {target_audience} and the product as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}, de [beneficio de comprar, asistir, descargar, adquirir,] {product}' "
         )
     )
 
@@ -91,10 +67,8 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         ]
     )
 
-    # Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
-    full_prompt = f"{mention_instruction}"
-
-    response = model.generate_content([full_prompt])
+    # Crear un mensaje para el modelo que incluye los bullets generados
+    response = model.generate_content([])
 
     if response and response.parts:
         return response.parts[0].text
