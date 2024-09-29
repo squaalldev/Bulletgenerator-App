@@ -67,10 +67,31 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         system_instruction=(
             f"You are a world-class copywriter, expert in creating bullets. "
             f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized bullets that resonate and motivate action. "
-            "Generate unusual, creative, and fascinating bullets with a format conversational that capture {target_audience}'s attention like this: '¡Adiós a las prisas! Olvídate de las esperas del transporte público, llega a tiempo a las actividades de tus hijos y disfruta de más tiempo de calidad con ellos.' Respond in Spanish and use a numbered list format. "
+            "Generate unusual, creative, and fascinating bullets with a format conversational that capture {target_audience}'s attention like this:" 
+    "directos": [
+        "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
+        "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
+        "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
+    ],
+    "misterios": [
+        "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
+        "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
+    ],
+    "leyendas": [
+        "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
+        "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
+    ],
+    "historias_personales": [
+        "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
+        "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
+    ],
+    "preguntas_retoricas": [
+        "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
+            "Respond in Spanish and use a numbered list format. "
             "Never respond like this: 'Crea momentos inolvidables: Comparte la experiencia de cocinar con tus hijos, fomentando la unión familiar y creando recuerdos especiales.'"
             f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
-        )
+     ],
+       )
     )
 
     # Crear la instrucción para generar bullets
