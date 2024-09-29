@@ -106,8 +106,8 @@ def generate_benefits(number_of_benefits, target_audience, product, call_to_acti
 st.set_page_config(page_title="Quick Prompt", layout="wide")
 
 # Centrar el título y el subtítulo
-st.markdown("<h1 style='text-align: center;'>Quick Prompt</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center;'>Transforma tu mensaje en beneficios que inspiren a tu audiencia a tomar decisiones al instante.</h4>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
 
 # Añadir CSS personalizado para el botón
 st.markdown("""
