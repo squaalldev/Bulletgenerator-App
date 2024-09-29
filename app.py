@@ -78,7 +78,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
     )
 
     # Crear un mensaje para el modelo que incluye los bullets generados
-    response = model.generate_content([])
+    response = model.generate_content(chat_session.history)  # Aquí usamos el historial del chat
 
     if response and response.parts:
         return response.parts[0].text
