@@ -71,17 +71,16 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         )
     )
 
-# Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
-bullets_instruction = (
-    f"Tu tarea es crear {num_bullets} bullets que denoten los beneficios que resolverán los problemas de {target_audience}. "
-    "Asegúrate de que cada bullet sea atractivo y siga el estilo conversacional."
-)
+    # Crear un mensaje para el modelo que incluye los bullets generados
+    bullets_instruction = (
+        f"Tu tarea es crear {num_bullets} bullets que denoten los beneficios que resolverán los problemas de {target_audience}. "
+        "Asegúrate de que cada bullet sea atractivo y siga el estilo conversacional."
+    )
 
-# Generar el resultado utilizando el modelo con la instrucción de bullet específica
-try:
+    # Generar el resultado utilizando el modelo con la instrucción de bullet específica
     response = model.generate_content([bullets_instruction])
-except Exception as e:
-    raise ValueError("Error generando el contenido: " + str(e))
+    
+    return response  # Asegúrate de devolver la respuesta generada
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
