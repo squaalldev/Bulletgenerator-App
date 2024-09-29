@@ -10,17 +10,35 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
+# Diccionario de ejemplos de bullets
+bullets_examples = {
+    "1": "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
+    "2": "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
+    "3": "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa.",
+    "4": "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
+    "5": "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
+    "6": "Un sistema simple para escribir textos sin intentar convencerlos de comprar.",
+    "7": "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música.",
+    "8": "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
+    "9": "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida.",
+    "10": "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?",
+    "11": "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
+}
+
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
+    # Seleccionar un bullet aleatorio de los ejemplos
+    selected_bullet = random.choice(list(bullets_examples.values()))
+
     # Configuración del modelo generativo y las instrucciones del sistema
     model = genai.GenerativeModel(
-        model_name=model_choice,  
+        model_name=model_choice,
         generation_config={
-            "temperature": temperature,  
-            "top_p": 0.85,       
-            "top_k": 128,        
+            "temperature": temperature,
+            "top_p": 0.85,
+            "top_k": 128,
             "max_output_tokens": 2048,
             "response_mime_type": "text/plain",
         },
@@ -41,26 +59,18 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
                 "parts": [
                     f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios del {product} y que tienen la cualidad de fascinar y por lo tanto, fomentan el deseo de adquirir, asistir, descargar o comprar el {product}."
                     f"Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora."
-                    f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino mas bien divertidos. "
+                    f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino más bien divertidos. "
                     f"Sé sutil a la hora de crear los bullets para referirte a los beneficios del {product}. "
+                    f"Usa este ejemplo como inspiración: {selected_bullet}."  # Añadir bullet aleatorio
                     "1. **Connection**: Words that highlight the relationship between the product and the benefit for the user (e.g., 'Improve,' 'Transform').\n"
                     "2. **Benefit**: Explain how the user will benefit by attending, downloading, or purchasing the product.\n\n"
                     "Ensure each bullet follows the structure of 'Connection + connector + Benefit,' and avoid including explanations like 'Connection: Improve' or 'Benefit: Increase my happiness.'\n"
-                    "Important: Only respond with bullets, never include explanations or categories, like this example: 'Attend the masterclass and discover techniques to boost your professional career. (This bullet appeals to the desire for personal and professional growth.)'\n"
+                    "Important: Only respond with bullets, never include explanations or categories, like this example: 'Attend the masterclass and discover techniques to boost your professional career.' (This bullet appeals to the desire for personal and professional growth.)\n"
                     "Use these guidelines to generate high-converting bullets in Spanish."
                     "Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.' "
                     "Bullets should vary, based on these examples to guide your task of creating bullets:\n\n"
-                    "* 'El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.' "
-                    "* 'El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.' "
-                    "* 'La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa.' " 
-                    "* 'Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.' "
-                    "* 'La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?' "
-                    "* 'Un sistema simple para escribir textos sin intentar convencerlos de comprar.' "
-                    "* 'La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música.' "
-                    "* 'La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.' "
-                    "* 'Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida.' "
-                    "* '¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?'"
-                    "* '¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente.' "
+                    f"* {selected_bullet} "
+                    # Añadir más ejemplos si es necesario
                     "Por favor, crea los bullets ahora."
                 ],
             },
