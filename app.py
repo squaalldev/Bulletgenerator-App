@@ -26,7 +26,7 @@ def get_mention_instruction(product_mention, product):
         return f"Introduce el producto '{product}' usando una metáfora, conectándolo simbólicamente a la solución que necesita el lector."
     return ""
 
-# Ejemplos de bullets por tipo
+# Ejemplos de bullets
 benefit_types = {
     "directos": [
         "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
@@ -50,8 +50,8 @@ benefit_types = {
     ],
 }
 
-# Función para generar bullets de beneficios
-def generate_benefits(number_of_benefits, target_audience, product, call_to_action, temperature):
+# Función para generar bullets
+def generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature):
     product_mention = get_random_product_mention()
     mention_instruction = get_mention_instruction(product_mention, product)
 
@@ -77,27 +77,26 @@ def generate_benefits(number_of_benefits, target_audience, product, call_to_acti
     )
 
     # Selección aleatoria de tipos de beneficios, manteniendo variedad en la salida
-    selected_types = random.sample(list(benefit_types.keys()), min(number_of_benefits, len(benefit_types)))
+    selected_types = random.sample(list(benefit_types.keys()), min(number_of_bullets, len(benefit_types)))
 
-    # Crear un mensaje para el modelo que incluye los beneficios generados según los tipos seleccionados
+    # Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
     benefits_instruction = (
-        f"Tu tarea es crear {number_of_benefits} bullets efectivos dirigidos a {target_audience}, "
+        f"Tu tarea es crear {number_of_bullets} bullets efectivos dirigidos a {target_audience}, "
         f"para promover {call_to_action} usando la siguiente mención: {mention_instruction}. "
-        "Asegúrate de que cada bullet siga la estructura de 'Beneficio + Conector + Valor', "
-        "como los ejemplos proporcionados anteriormente."
+        "Asegúrate de que cada bullet siga la estructura de los ejemplos proporcionados anteriormente."
     )
 
-    # Generar el resultado utilizando el modelo con la instrucción de beneficios específica
+    # Generar el resultado utilizando el modelo con la instrucción de bullets específica
     try:
         response = model.generate_content([benefits_instruction])
         
         # Extraer el texto de la respuesta
-        generated_benefits = response.candidates[0].content.parts[0].text.strip()  
+        generated_bullets = response.candidates[0].content.parts[0].text.strip()  
         
         # Retornar el resultado
-        return generated_benefits
+        return generated_bullets
     except Exception as e:
-        raise ValueError(f"Error al generar los beneficios: {str(e)}")
+        raise ValueError(f"Error al generar los bullets: {str(e)}")
 
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Quick Prompt", layout="wide")
@@ -137,7 +136,7 @@ with col1:
     target_audience = st.text_input("¿Quién es tu público objetivo?", placeholder="Ejemplo: Estudiantes Universitarios")
     product = st.text_input("¿Qué producto tienes en mente?", placeholder="Ejemplo: Curso de Inglés")
     call_to_action = st.text_input("¿Qué acción deseas que tomen?", placeholder="Ejemplo: Inscribirse al curso")
-    number_of_benefits = st.selectbox("Número de bullets", options=[1, 2, 3, 4, 5,6,7,8,9,10], index=2)
+    number_of_bullets = st.selectbox("Número de bullets", options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], index=2)
     temperature = st.slider("Creatividad", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
     # Botón de enviar
@@ -148,14 +147,14 @@ if submit:
     if target_audience and product and call_to_action:
         try:
             # Obtener la respuesta del modelo
-            generated_benefits = generate_benefits(number_of_benefits, target_audience, product, call_to_action, temperature)
+            generated_bullets = generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature)
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Mira los beneficios generados:</h4>
-                    <p style="font-size: 22px;">{generated_benefits}</p>
+                    <h4>Mira los bullets generados:</h4>
+                    <p style="font-size: 22px;">{generated_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
         except Exception as e:
-            st.error(f"Error al generar los beneficios: {str(e)}")
+            st.error(f"Error al generar los bullets: {str(e)}")
     else:
         st.error("Por favor, completa todos los campos.")
