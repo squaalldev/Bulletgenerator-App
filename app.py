@@ -10,7 +10,7 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Ejemplos de beneficios, dolores y datos curiosos
+# Ejemplos de categorías de bullets
 directos = [
     "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
     "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
@@ -36,31 +36,18 @@ preguntas_retoricas = [
     "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
 ]
 
-# Función para generar bullets informativos
+# Función para generar bullets informativos de todas las categorías
 def generate_bullets(target_audience, product, call_to_action, number_of_bullets):
     bullets = []
     
-    # Definir el número de bullets por categoría
-    num_benefits = number_of_bullets // 3  # Dividir entre 3 categorías
-    num_pain_points = number_of_bullets // 3
-    num_curiosities = number_of_bullets - (num_benefits + num_pain_points)  # Resto para curiosidades
-
-    # Generar bullets de cada categoría
-    for _ in range(num_benefits):
-        bullet = random.choice(benefits)
-        bullets.append(bullet)
+    # Lista combinada de todas las categorías
+    all_categories = directos + misterios + leyendas + historias_personales + preguntas_retoricas
     
-    for _ in range(num_pain_points):
-        bullet = random.choice(pain_points)
-        bullets.append(bullet)
-    
-    for _ in range(num_curiosities):
-        bullet = random.choice(curiosities)
+    # Selecciona bullets aleatorios de la lista combinada
+    for _ in range(number_of_bullets):
+        bullet = random.choice(all_categories)
         bullets.append(bullet)
 
-    # Mezclar los bullets para que sean aleatorios en la respuesta final
-    random.shuffle(bullets)
-    
     return bullets
 
 # Configurar la interfaz de usuario con Streamlit
