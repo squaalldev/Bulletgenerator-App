@@ -26,6 +26,8 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         generation_config=generation_config,  # Configuración de generación
         system_instruction=(
             f"Imagina que estás charlando con un amigo que está buscando {product}. "
+            "Tu tarea es ayudarme a escribir bullets orientados a beneficios de obtener, descargar, asistir o comprar {product}, los cuales utilizaré para mi [página web, landing, correo, post, etc.],"
+            f"teniendo en cuenta los puntos dolorosos de mi {target_audience} y el {product}."
             f"Genera {num_bullets} bullets que suenen naturales y amigables, como si estuvieras contándole por qué debería interesarse. "
             f"Entiendes perfectamente sus emociones y desafíos. Crea bullets que no solo informen, sino que hablen directamente al corazón de {target_audience}, "
             f"Generando curiosidad y ganas de saber más sobre {product}. "
