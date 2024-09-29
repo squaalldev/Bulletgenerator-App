@@ -54,6 +54,74 @@ def generate_bullets(target_audience, product, call_to_action, number_of_bullets
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="QuickPrompt", layout="wide")
 
+# Agregar el manual en el sidebar con mejor diseño
+st.sidebar.markdown("## **Manual de Usuario para Quick Prompt**")
+st.sidebar.write("""
+**Bienvenido a Quick Prompt**  
+Quick Prompt está diseñado para ayudarte a crear bullets informativos que resalten los beneficios, dolores y curiosidades relevantes para tu audiencia.
+
+### ¿Por qué los bullets son importantes?
+Los bullets ayudan a presentar información clave de manera clara y concisa. Aquí te mostramos algunos ejemplos de información que puedes incluir:
+- Beneficios de tu producto o servicio
+- Problemas comunes que enfrenta tu audiencia
+- Datos curiosos que capturan la atención
+
+### ¿Cómo utilizar Quick Prompt?
+Sigue estos pasos para sacar el máximo provecho de la herramienta:
+
+1. **Define tu público objetivo**  
+   Piensa en quiénes son y qué necesitan. Por ejemplo:
+   - Estudiantes universitarios
+   - Emprendedores
+   - Profesionales en busca de desarrollo personal
+
+2. **Especifica tu producto o servicio**  
+   Asegúrate de que el producto esté claro y relacionado con los bullets. Ejemplos:
+   - Herramientas de productividad
+   - Cursos de marketing digital
+   - Recursos de gestión del tiempo
+
+3. **Determina la acción deseada**  
+   Define cuál es la acción específica que deseas que realice tu audiencia:
+   - Inscribirse en un curso
+   - Descargar un recurso gratuito
+   - Participar en un evento exclusivo
+
+### Consejos adicionales:
+- Asegúrate de que cada bullet sea claro y directo al punto.
+- Utiliza datos y ejemplos concretos para hacer tus bullets más impactantes.
+""")
+
+# Footer del manual
+st.sidebar.write("Con Quick Prompt, comunicarte con claridad y eficacia es más fácil que nunca.")
+
+# Centrar el título y el subtítulo
+st.markdown("<h1 style='text-align: center;'>Quick Prompt</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Transforma tu mensaje en bullets informativos que resalten lo esencial para tu audiencia.</h4>", unsafe_allow_html=True)
+
+# Añadir CSS personalizado para el botón
+st.markdown("""
+    <style>
+    div.stButton > button {
+        background-color: #FFCC00;
+        color: black;
+        width: 90%;
+        height: 60px;
+        font-weight: bold;
+        font-size: 22px;
+        text-transform: uppercase;
+        border: 1px solid #000000;
+        border-radius: 8px;
+        display: block;
+        margin: 0 auto;
+    }
+    div.stButton > button:hover {
+        background-color: #FFD700;
+        color: black;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Crear columnas
 col1, col2 = st.columns([1, 2])  
 
