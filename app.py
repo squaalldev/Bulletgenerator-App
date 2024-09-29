@@ -61,9 +61,6 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
                     f"Quiero que escribas {num_bullets} bullets que transmitan los beneficios de {product} de una manera que atraiga a {target_audience}. "
                     f"Conecta los problemas y deseos de {target_audience} de forma natural y con un estilo amigable y divertido. "
                     f"Recuerda usar este ejemplo como inspiración: {selected_bullet}. "
-                    "Aquí tienes un par de ideas para que te inspires:\n"
-                    "1. ¿Sabías que...? Esto cambiará tu perspectiva sobre... \n"
-                    "2. Imagina si pudieras... ¡Lo que estás buscando está aquí!\n"
                     f"Por favor, genera bullets creativos que hagan que {target_audience} se sienta emocionado por {product}."
                 ],
             },
