@@ -54,7 +54,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
     # Configuración del modelo
     generation_config = {
         "temperature": temperature,  
-        "top_p": 0.85,       
+        "top_p": 0.90,       
         "top_k": 128,        
         "max_output_tokens": 2048,
         "response_mime_type": "text/plain",
@@ -67,7 +67,8 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         system_instruction=(
             f"You are a world-class copywriter, expert in creating bullets. "
             f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized bullets that resonate and motivate action. "
-            "Generate unusual, creative, and fascinating bullets that capture {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
+            "Generate unusual, creative, and fascinating bullets with a format conversational that capture {target_audience}'s attention like this: '¡Adiós a las prisas! Olvídate de las esperas del transporte público, llega a tiempo a las actividades de tus hijos y disfruta de más tiempo de calidad con ellos.' Respond in Spanish and use a numbered list format. "
+            "Never respond like this: 'Crea momentos inolvidables: Comparte la experiencia de cocinar con tus hijos, fomentando la unión familiar y creando recuerdos especiales.'"
             f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
         )
     )
