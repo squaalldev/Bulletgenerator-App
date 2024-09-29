@@ -48,53 +48,55 @@ def get_random_bullets(num_bullets):
 
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
-    # Seleccionar bullets aleatorios usando la nueva función
-    selected_bullets = get_random_bullets(num_bullets)
+    try:
+        # Seleccionar bullets aleatorios usando la nueva función
+        selected_bullets = get_random_bullets(num_bullets)
 
-    # Configuración del modelo
-    generation_config = {
-        "temperature": temperature,  
-        "top_p": 0.90,       
-        "top_k": 128,        
-        "max_output_tokens": 2048,
-        "response_mime_type": "text/plain",
-    }
+        # Configuración del modelo
+        generation_config = {
+            "temperature": temperature,  
+            "top_p": 0.90,       
+            "top_k": 128,        
+            "max_output_tokens": 2048,
+            "response_mime_type": "text/plain",
+        }
 
-    # Configuración del modelo generativo y las instrucciones del sistema
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
-        generation_config=generation_config,  # Configuración de generación
-        system_instruction=(
-            f"You are a world-class copywriter, expert in creating bullets. "
-            f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized bullets that resonate and motivate action. "
-            "Generate unusual, creative, and fascinating bullets with a format conversational that capture {target_audience}'s attention like these:" 
-            "directos:" 
-            "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10."
-            "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado."
-            "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
-            "misterios:" 
-            "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia."
-            "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
-            "leyendas:"
-            "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?"
-            "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
-            "historias personales:" 
-            "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar."
-            "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
-            "preguntas_retoricas:" 
-            "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."            "Respond in Spanish and use a numbered list format. "
-            "Never respond like this: 'Crea momentos inolvidables: Comparte la experiencia de cocinar con tus hijos, fomentando la unión familiar y creando recuerdos especiales.'"
-            f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
-       )
-    )
+        # Configuración del modelo generativo y las instrucciones del sistema
+        model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
+            generation_config=generation_config,  # Configuración de generación
+            system_instruction=(
+                f"You are a world-class copywriter, expert in creating bullets. "
+                f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized bullets that resonate and motivate action. "
+                "Generate unusual, creative, and fascinating bullets with a format conversational that capture {target_audience}'s attention like these:" 
+                "directos:" 
+                "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10."
+                "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado."
+                "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
+                "misterios:" 
+                "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia."
+                "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
+                "leyendas:"
+                "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?"
+                "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
+                "historias personales:" 
+                "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar."
+                "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
+                "preguntas_retoricas:" 
+                "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."            
+                "Respond in Spanish and use a numbered list format. "
+                "Never respond like this: 'Crea momentos inolvidables: Comparte la experiencia de cocinar con tus hijos, fomentando la unión familiar y creando recuerdos especiales.'"
+                f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
+            )
+        )
 
-    # Crear un mensaje para el modelo que incluye los CTAs generados según los tipos seleccionados
-    bullets_instruction = (
-                    f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios al hablar de {product} que resolverán los problemas de {target_audience}. "
-                    "Por favor, crea los bullets ahora."
-    )
+        # Crear un mensaje para el modelo que incluye los CTAs generados según los tipos seleccionados
+        bullets_instruction = (
+            f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios al hablar de {product} que resolverán los problemas de {target_audience}. "
+            "Por favor, crea los bullets ahora."
+        )
 
-    # Crear un mensaje para el modelo que incluye los bullets generados
+        # Crear un mensaje para el modelo que incluye los bullets generados
         response = model.generate_content([bullets_instruction])
         
         # Extraer el texto de la respuesta
@@ -103,7 +105,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         # Retornar el resultado
         return generated_bullets
     except Exception as e:
-        raise ValueError(f"Error al generar los bullets: {str(e)}")    response = model.generate_content([bullets_instruction])
+        raise ValueError(f"Error al generar los bullets: {str(e)}")    
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
