@@ -28,26 +28,25 @@ def get_mention_instruction(product_mention, product):
 
 # Ejemplos de beneficios por tipo
 benefit_types = {
-    "educación": [
-        "Aprenderás las estrategias más efectivas para maximizar tu tiempo.",
-        "Descubrirás técnicas probadas que han ayudado a miles a alcanzar sus objetivos.",
-        "Tendrás acceso a contenido exclusivo que transformará tu manera de trabajar."
+    "directos": [
+        "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
+        "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
+        "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
     ],
-    "urgencia": [
-        "No te quedes atrás; asiste para no perder la oportunidad de cambiar tu vida.",
-        "Inscríbete ahora y asegúrate de obtener la información más actualizada."
+    "misterios": [
+        "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
+        "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
     ],
-    "comunidad": [
-        "Únete a una comunidad de personas con ideas afines y comparte tus experiencias.",
-        "Conectarás con expertos que pueden guiarte en tu camino."
+    "leyendas": [
+        "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
+        "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
     ],
-    "resultados": [
-        "Obtendrás herramientas que te ayudarán a lograr resultados visibles en poco tiempo.",
-        "Aprenderás a implementar cambios que impulsarán tu carrera profesional."
+    "historias_personales": [
+        "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
+        "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
     ],
-    "exclusividad": [
-        "Accede a recursos que solo están disponibles para los asistentes del webinar.",
-        "Sé parte de un grupo selecto que recibe información privilegiada."
+    "preguntas_retoricas": [
+        "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
     ],
 }
 
@@ -138,7 +137,7 @@ with col1:
     target_audience = st.text_input("¿Quién es tu público objetivo?", placeholder="Ejemplo: Estudiantes Universitarios")
     product = st.text_input("¿Qué producto tienes en mente?", placeholder="Ejemplo: Curso de Inglés")
     call_to_action = st.text_input("¿Qué acción deseas que tomen?", placeholder="Ejemplo: Inscribirse al curso")
-    number_of_benefits = st.selectbox("Número de beneficios", options=[1, 2, 3, 4, 5], index=2)
+    number_of_benefits = st.selectbox("Número de bullets", options=[1, 2, 3, 4, 5,6,7,8,9,10], index=2)
     temperature = st.slider("Creatividad", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
     # Botón de enviar
