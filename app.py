@@ -77,10 +77,13 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         "Asegúrate de que cada bullet sea atractivo y siga el estilo conversacional."
     )
 
-    # Generar el resultado utilizando el modelo con la instrucción de bullet específica
+# Generar el resultado utilizando el modelo con la instrucción de bullet específica
+try:
     response = model.generate_content([bullets_instruction])
-    
-    return response  # Asegúrate de devolver la respuesta generada
+    # Extraer solo el texto de la respuesta
+    generated_bullets = response.candidates[0].content.parts[0].text
+except Exception as e:
+    raise ValueError("Error generando el contenido: " + str(e))
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
@@ -133,6 +136,8 @@ if submit:
         try:
             # Obtener la respuesta del modelo
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, temperature)
+            # Limpiar el texto para eliminar caracteres extraños
+            generated_bullets = generated_bullets.replace("\n", "<br>")  # Para formatear en HTML
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>🧙🏻‍♂️ Mira la magia en acción:</h4>
