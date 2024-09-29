@@ -25,12 +25,18 @@ bullets_examples = {
     "11": "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
 }
 
+# Función para seleccionar bullets aleatorios
+def get_random_bullets(num_bullets):
+    # Seleccionar múltiples bullets aleatorios de los ejemplos
+    selected_bullets = random.sample(list(bullets_examples.values()), min(num_bullets, len(bullets_examples)))
+    return selected_bullets
+
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
 
-    # Seleccionar múltiples bullets aleatorios de los ejemplos
-    selected_bullets = random.sample(list(bullets_examples.values()), min(num_bullets, len(bullets_examples)))
+    # Seleccionar bullets aleatorios usando la nueva función
+    selected_bullets = get_random_bullets(num_bullets)
 
     # Configuración del modelo generativo y las instrucciones del sistema
     model = genai.GenerativeModel(
