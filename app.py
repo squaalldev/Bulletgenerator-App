@@ -10,161 +10,104 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Ejemplos de bullets por tipo
-bullets_types = {
-    "directos": [
-        "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
-        "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
-        "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
-    ],
-    "misterios": [
-        "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
-        "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
-    ],
-    "leyendas": [
-        "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
-        "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
-    ],
-    "historias_personales": [
-        "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
-        "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
-    ],
-    "preguntas_retoricas": [
-        "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
-    ]
-}
+# Ejemplos de beneficios, dolores y datos curiosos
+benefits = [
+    "Mejora tu productividad diaria con técnicas efectivas.",
+    "Descubre cómo simplificar tus tareas y ganar tiempo.",
+    "Transforma tu carrera profesional con habilidades clave.",
+    "Accede a recursos exclusivos que te ayudarán a destacar.",
+    "Aprende a manejar tu tiempo para reducir el estrés."
+]
 
-# Función para seleccionar bullets aleatorios
-def get_random_bullets(num_bullets):
-    selected_bullets = []
-    # Selección aleatoria de tipos de bullet, manteniendo variedad en la salida
-    selected_types = random.sample(list(bullets_types.keys()), min(num_bullets, len(bullets_types)))
+pain_points = [
+    "¿Te sientes abrumado por la falta de organización?",
+    "¿Tus días se sienten interminables y sin propósito?",
+    "¿Te gustaría aumentar tu enfoque y evitar distracciones?",
+    "¿Te cuesta encontrar tiempo para lo que realmente importa?",
+    "¿Sientes que tu carrera no avanza como esperabas?"
+]
 
-    for bullet_type in selected_types:
-        bullet = random.choice(bullets_types[bullet_type])
-        selected_bullets.append(bullet)
-        
-    return selected_bullets
+curiosities = [
+    "¿Sabías que el 70% de las personas no logran sus objetivos anuales?",
+    "Estudios muestran que la gestión del tiempo mejora la salud mental.",
+    "El 80% de la productividad se logra en el 20% del tiempo.",
+    "Las personas que establecen metas tienen un 10 veces más de probabilidad de tener éxito.",
+    "Aprender a priorizar tareas puede aumentar tu eficacia en un 300%."
+]
 
-# Función para obtener una cantidad de bullets
-def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
-    try:
-        # Seleccionar bullets aleatorios usando la nueva función
-        selected_bullets = get_random_bullets(num_bullets)
+# Función para generar bullets informativos
+def generate_bullets(number_of_bullets):
+    bullets = []
+    
+    for _ in range(number_of_bullets):
+        category = random.choice(['benefit', 'pain_point', 'curiosity'])
+        if category == 'benefit':
+            bullet = random.choice(benefits)
+        elif category == 'pain_point':
+            bullet = random.choice(pain_points)
+        else:
+            bullet = random.choice(curiosities)
+        bullets.append(bullet)
+    
+    return bullets
 
-        # Configuración del modelo
-        generation_config = {
-            "temperature": temperature,  
-            "top_p": 0.90,       
-            "top_k": 128,        
-            "max_output_tokens": 2048,
-            "response_mime_type": "text/plain",
-        }
+# Configurar la interfaz de usuario con Streamlit
+st.set_page_config(page_title="QuickPrompt", layout="wide")
 
-        # Configuración del modelo generativo y las instrucciones del sistema
-        model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
-            generation_config=generation_config,  # Configuración de generación
-            system_instruction=(
-                f"You are a world-class copywriter, expert in creating bullets. "
-                f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized bullets that resonate and motivate action. "
-                "Generate unusual, creative, and fascinating bullets with a format conversational that capture {target_audience}'s attention like these:" 
-                "directos:" 
-                "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10."
-                "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado."
-                "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
-                "misterios:" 
-                "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia."
-                "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
-                "leyendas:"
-                "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?"
-                "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
-                "historias personales:" 
-                "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar."
-                "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
-                "preguntas_retoricas:" 
-                "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."            
-                "Respond in Spanish and use a numbered list format. "
-                "Never respond like this: 'Crea momentos inolvidables: Comparte la experiencia de cocinar con tus hijos, fomentando la unión familiar y creando recuerdos especiales.'"
-                f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
-            )
-        )
+# Agregar el manual en el sidebar con mejor diseño
+st.sidebar.markdown("## **Manual de Usuario para Quick Prompt**")
+st.sidebar.write("""
+**Bienvenido a Quick Prompt**  
+Quick Prompt está diseñado para ayudarte a crear bullets informativos que resalten los beneficios, dolores y curiosidades para atraer a tu audiencia.
 
-        # Crear un mensaje para el modelo que incluye los CTAs generados según los tipos seleccionados
-        bullets_instruction = (
-            f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios al hablar de {product} que resolverán los problemas de {target_audience}. "
-            "Por favor, crea los bullets ahora."
-        )
+### ¿Por qué son importantes estos bullets?
+Estos bullets son elementos clave para captar la atención de tu audiencia y motivarles a tomar acción. Aquí te mostramos ejemplos de cada categoría:
+- **Beneficios**: Mejora tu productividad diaria con técnicas efectivas.
+- **Puntos de Dolor**: ¿Te sientes abrumado por la falta de organización?
+- **Datos Curiosos**: ¿Sabías que el 70% de las personas no logran sus objetivos anuales?
 
-        # Crear un mensaje para el modelo que incluye los bullets generados
-        response = model.generate_content([bullets_instruction])
-        
-        # Extraer el texto de la respuesta
-        generated_bullets = response.candidates[0].content.parts[0].text.strip()  # Modificado aquí
-        
-        # Retornar el resultado
-        return generated_bullets
-    except Exception as e:
-        raise ValueError(f"Error al generar los bullets: {str(e)}")    
+### ¿Cómo utilizar Quick Prompt?
+Sigue estos pasos para obtener resultados efectivos:
 
-# Inicializar la aplicación Streamlit
-st.set_page_config(page_title="Generador de Bullets", layout="wide")
+1. **Define tu público objetivo**  
+   Reflexiona sobre quiénes son y qué necesitan.
+
+2. **Especifica el número de bullets que deseas generar**  
+   Determina cuántos bullets necesitas para tu mensaje.
+
+3. **Generar los bullets**  
+   Haz clic en el botón para obtener los bullets informativos.
+""")
+
+# Footer del manual
+st.sidebar.write("Transforma tu mensaje con bullets que conectan con tu audiencia.")
 
 # Centrar el título y el subtítulo
-st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Quick Prompt</h1>", unsafe_allow_html=True)
+st.markdown("<h4 style='text-align: center;'>Genera bullets que cautiven y motiven a tu audiencia.</h4>", unsafe_allow_html=True)
 
-# Añadir CSS personalizado para el botón
-st.markdown("""
-    <style>
-    div.stButton > button {
-        background-color: #FFCC00;
-        color: black;
-        width: 90%;
-        height: 60px;
-        font-weight: bold;
-        font-size: 22px;
-        text-transform: uppercase;
-        border: 1px solid #000000;
-        border-radius: 8px;
-        display: block;
-        margin: 0 auto;
-    }
-    div.stButton > button:hover {
-        background-color: #FFD700;
-        color: black;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+# Crear columnas
+col1, col2 = st.columns([1, 2])  
 
-# Crear dos columnas para el layout (40% y 60%)
-col1, col2 = st.columns([2, 3])
-
+# Columnas de entrada
 with col1:
-    # Campos de entrada
-    target_audience = st.text_input("¿Quién es tu público objetivo?")
-    product = st.text_input("¿Qué producto tienes en mente?")
+    number_of_bullets = st.selectbox("Número de bullets informativos", options=[1, 2, 3, 4, 5], index=2)
     
-    # Campos de personalización sin acordeón
-    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5)
-    temperature = st.slider("Creatividad", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
-
     # Botón de enviar
     submit = st.button("Generar Bullets")
 
 # Mostrar los bullets generados
 if submit:
-    if target_audience and product:
-        try:
-            # Obtener la respuesta del modelo
-            generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, temperature)
-            col2.markdown(f"""
-                <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>🧙🏻‍♂️ Mira la magia en acción:</h4>
-                    <pre style="white-space: pre-wrap;">{generated_bullets}</pre>
-                </div>
-            """, unsafe_allow_html=True)
-        except ValueError as e:
-            st.error(str(e))
-    else:
-        st.error("Por favor, completa todos los campos.")
+    try:
+        # Obtener la respuesta del modelo
+        generated_bullets = generate_bullets(number_of_bullets)
+        col2.markdown(f"""
+            <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
+                <h4>Bullets Generados:</h4>
+                <ul>
+                    {''.join(f'<li>{bullet}</li>' for bullet in generated_bullets)}
+                </ul>
+            </div>
+        """, unsafe_allow_html=True)
+    except Exception as e:
+        col2.error(f"Error inesperado: {str(e)}")
