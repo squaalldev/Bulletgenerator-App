@@ -19,14 +19,14 @@ def get_random_product_mention():
 # Crear la instrucción de mención basada en la opción seleccionada
 def get_mention_instruction(product_mention, product):
     if product_mention == "Directa":
-        return f"Introduce directamente el producto '{product}' como la solución clara al problema que enfrenta el lector."
+        return f"Introduce directamente el producto '{product}' como la solución clara al problema que enfrenta el lector, de manera conversacional, no forzada."
     elif product_mention == "Indirecta":
         return f"Referencia sutilmente el producto '{product}' como una posible solución al problema del lector sin nombrarlo explícitamente."
     elif product_mention == "Metafórica":
         return f"Introduce el producto '{product}' usando una metáfora, conectándolo simbólicamente a la solución que necesita el lector."
     return ""
 
-# Ejemplos de beneficios por tipo
+# Ejemplos de bullets por tipo
 benefit_types = {
     "directos": [
         "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
