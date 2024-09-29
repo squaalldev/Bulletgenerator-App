@@ -20,7 +20,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         generation_config={
             "temperature": temperature,
             "top_p": 0.9,  # Aumentar para permitir una mayor diversidad en las opciones generadas
-            "top_k": 64,
+            "top_k": 90,
             "max_output_tokens": 2048,
             "response_mime_type": "text/plain",
         },
@@ -42,7 +42,7 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
                 "role": "user",
                 "parts": [
                     f"Quiero que escribas {num_bullets} bullets que transmitan los beneficios de {product} de una manera que atraiga a {target_audience}. "
-                    f"Conecta los problemas y deseos de {target_audience} de forma natural y con un estilo amigable y divertido. "
+                    f"Conecta los problemas y deseos de {target_audience} de forma conversacional, no robotico, ni utilices ':', con un estilo amigable y divertido. "
                     f"Por favor, genera bullets creativos que hagan que {target_audience} se sienta emocionado por {product}."
                 ],
             },
