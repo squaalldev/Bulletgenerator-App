@@ -87,6 +87,7 @@ def generate_benefits(number_of_benefits, target_audience, product, call_to_acti
         f"para promover {call_to_action} usando la siguiente mención: {mention_instruction}. "
         "Asegúrate de que cada bullet siga la estructura de 'Beneficio + Conector + Valor', "
         "como los ejemplos proporcionados anteriormente."
+        f"Incluye un encabezado atractivo que diga: 'Aquí tienes {num_bullets} razones por las que {target_audience} debería considerar {product}'."
     )
 
     # Generar el resultado utilizando el modelo con la instrucción de beneficios específica
