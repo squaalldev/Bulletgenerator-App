@@ -43,11 +43,12 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             "response_mime_type": "text/plain",
         },
         system_instruction=(
-            f"You are a world-class copywriter, expert in creating benefits that connect symptoms with problems of {target_audience}. "
-            f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized copywriting that resonate and motivate action. "
-            f"You know how to use proven structures to attract {target_audience}, generating interest and creating a powerful connection with {product}. "
-            "Generate unusual, creative, and fascinating bullets that capturing {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
-            f"When responding, always include a heading referencing {target_audience} and the product as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}, de [beneficio de comprar, asistir, descargar, adquirir,] {product}' "
+            f"Eres un copywriter excepcional, experto en conectar con {target_audience}. "
+            f"Entiendes perfectamente sus emociones y desafíos. Crea bullets que no solo informen, sino que hablen directamente al corazón de {target_audience}, "
+            f"generando curiosidad y ganas de saber más sobre {product}. "
+            f"¡Haz que se sientan incluidos! Usa un tono amistoso y divertido. "
+            f"Por ejemplo, si están buscando {product}, dales un motivo irresistible para seguir leyendo. "
+            f"Incluye un encabezado atractivo que diga: 'Aquí tienes {num_bullets} razones por las que {target_audience} debería considerar {product}'."
         )
     )
 
@@ -57,21 +58,13 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
             {
                 "role": "user",
                 "parts": [
-                    f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios del {product} y que tienen la cualidad de fascinar y por lo tanto, fomentan el deseo de adquirir, asistir, descargar o comprar el {product}."
-                    f"Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora."
-                    f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino más bien divertidos. "
-                    f"Sé sutil a la hora de crear los bullets para referirte a los beneficios del {product}. "
-                    f"Usa este ejemplo como inspiración: {selected_bullet}."  # Añadir bullet aleatorio
-                    "1. **Connection**: Words that highlight the relationship between the product and the benefit for the user (e.g., 'Improve,' 'Transform').\n"
-                    "2. **Benefit**: Explain how the user will benefit by attending, downloading, or purchasing the product.\n\n"
-                    "Ensure each bullet follows the structure of 'Connection + connector + Benefit,' and avoid including explanations like 'Connection: Improve' or 'Benefit: Increase my happiness.'\n"
-                    "Important: Only respond with bullets, never include explanations or categories, like this example: 'Attend the masterclass and discover techniques to boost your professional career.' (This bullet appeals to the desire for personal and professional growth.)\n"
-                    "Use these guidelines to generate high-converting bullets in Spanish."
-                    "Important: Never include explanations or categories, like this: 'La leyenda del padre soltero: Dice que nunca hay tiempo suficiente. El yoga te enseña a usar mejor el tiempo que tienes, incluso cuando te parece imposible.' "
-                    "Bullets should vary, based on these examples to guide your task of creating bullets:\n\n"
-                    f"* {selected_bullet} "
-                    # Añadir más ejemplos si es necesario
-                    "Por favor, crea los bullets ahora."
+                    f"Quiero que escribas {num_bullets} bullets que transmitan los beneficios de {product} de una manera que atraiga a {target_audience}. "
+                    f"Conecta los problemas y deseos de {target_audience} de forma natural y con un estilo amigable y divertido. "
+                    f"Recuerda usar este ejemplo como inspiración: {selected_bullet}. "
+                    "Aquí tienes un par de ideas para que te inspires:\n"
+                    "1. ¿Sabías que...? Esto cambiará tu perspectiva sobre... \n"
+                    "2. Imagina si pudieras... ¡Lo que estás buscando está aquí!\n"
+                    f"Por favor, genera bullets creativos que hagan que {target_audience} se sienta emocionado por {product}."
                 ],
             },
         ]
