@@ -74,7 +74,6 @@ def generate_benefits(number_of_benefits, target_audience, product, call_to_acti
             "Tu tarea es ayudarme a escribir bullets que destaquen los beneficios de asistir, descargar o inscribirme al webinar. "
             "Recuerda que cada bullet debe ser breve, claro y persuasivo, y seguir la estructura 'Beneficio + Conector + Valor'. "
             "Los bullets deben inspirar interés y motivar al lector a tomar acción. "
-            "Ejemplos: '- Aprenderás a...'; '- Descubrirás cómo...'; '- Conocerás a...'."
         )
     )
 
