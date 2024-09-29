@@ -11,43 +11,55 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Ejemplos de beneficios, dolores y datos curiosos
-benefits = [
-    "Mejora tu productividad diaria con técnicas efectivas.",
-    "Descubre cómo simplificar tus tareas y ganar tiempo.",
-    "Transforma tu carrera profesional con habilidades clave.",
-    "Accede a recursos exclusivos que te ayudarán a destacar.",
-    "Aprende a manejar tu tiempo para reducir el estrés."
+directos = [
+    "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
+    "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
+    "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
 ]
 
-pain_points = [
-    "¿Te sientes abrumado por la falta de organización?",
-    "¿Tus días se sienten interminables y sin propósito?",
-    "¿Te gustaría aumentar tu enfoque y evitar distracciones?",
-    "¿Te cuesta encontrar tiempo para lo que realmente importa?",
-    "¿Sientes que tu carrera no avanza como esperabas?"
+misterios = [
+    "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
+    "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
 ]
 
-curiosities = [
-    "¿Sabías que el 70% de las personas no logran sus objetivos anuales?",
-    "Estudios muestran que la gestión del tiempo mejora la salud mental.",
-    "El 80% de la productividad se logra en el 20% del tiempo.",
-    "Las personas que establecen metas tienen un 10 veces más de probabilidad de tener éxito.",
-    "Aprender a priorizar tareas puede aumentar tu eficacia en un 300%."
+leyendas = [
+    "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
+    "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
+]
+
+historias_personales = [
+    "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
+    "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
+]
+
+preguntas_retoricas = [
+    "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
 ]
 
 # Función para generar bullets informativos
 def generate_bullets(target_audience, product, call_to_action, number_of_bullets):
     bullets = []
     
-    for _ in range(number_of_bullets):
-        category = random.choice(['benefit', 'pain_point', 'curiosity'])
-        if category == 'benefit':
-            bullet = random.choice(benefits)
-        elif category == 'pain_point':
-            bullet = random.choice(pain_points)
-        else:
-            bullet = random.choice(curiosities)
+    # Definir el número de bullets por categoría
+    num_benefits = number_of_bullets // 3  # Dividir entre 3 categorías
+    num_pain_points = number_of_bullets // 3
+    num_curiosities = number_of_bullets - (num_benefits + num_pain_points)  # Resto para curiosidades
+
+    # Generar bullets de cada categoría
+    for _ in range(num_benefits):
+        bullet = random.choice(benefits)
         bullets.append(bullet)
+    
+    for _ in range(num_pain_points):
+        bullet = random.choice(pain_points)
+        bullets.append(bullet)
+    
+    for _ in range(num_curiosities):
+        bullet = random.choice(curiosities)
+        bullets.append(bullet)
+
+    # Mezclar los bullets para que sean aleatorios en la respuesta final
+    random.shuffle(bullets)
     
     return bullets
 
