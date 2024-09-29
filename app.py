@@ -65,26 +65,36 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         model_name="gemini-1.5-flash",  # Nombre del modelo que estamos utilizando
         generation_config=generation_config,  # Configuración de generación
         system_instruction=(
-            f"Eres un experto copywriter especializado en escribir bullets que resuelven los problemas de {target_audience}. "
-            "Tu tarea es crear bullets creativos y persuasivos que capturen la atención de {target_audience}. "
-            "Usa estos ejemplos como inspiración: {', '.join(selected_bullets)}."
+            f"You are a world-class copywriter, expert in creating bullets that connect symptoms with problems of {target_audience}. "
+            f"You deeply understand the emotions, desires, and challenges of {target_audience}, allowing you to design personalized bullets that resonate and motivate action. "
+            "Generate unusual, creative, and fascinating bullets that capture {target_audience}'s attention. Respond in Spanish and use a numbered list format. "
+            f"When responding, always include a heading referencing {target_audience} as follows: 'Aquí hay {num_bullets} bullets para convencer a {target_audience}.'"
         )
     )
 
-    # Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
-    bullets_instruction = (
-        f"Tu tarea es crear {num_bullets} bullets que denoten los beneficios que resolverán los problemas de {target_audience}. "
-        "Asegúrate de que cada bullet sea atractivo y siga el estilo conversacional."
+    # Crear la instrucción para generar bullets
+    chat_session = model.start_chat(
+        history=[
+            {
+                "role": "user",
+                "parts": [
+                    f"Tu tarea es escribir {num_bullets} bullets que denoten los beneficios al hablar de {product} que resolverán los problemas de {target_audience}. "
+                    "Un buen bullet conecta los síntomas con los problemas enfrentados por {target_audience} de una manera natural, que no se note como manipuladora. "
+                    f"Escribe bullets creativos, en un estilo conversacional, que no sean aburridos, sino más bien divertidos. "
+                    f"Sé sutil a la hora de crear los bullets para referirte a los beneficios de tu {product}. "
+                    "Por favor, crea los bullets ahora."
+                ],
+            },
+        ]
     )
 
-    # Generar el resultado utilizando el modelo con la instrucción de bullet específica
-    try:
-        response = model.generate_content([bullets_instruction])
-        # Extraer solo el texto de la respuesta
-        generated_bullets = response.candidates[0].content.parts[0].text
-        return generated_bullets
-    except Exception as e:
-        raise ValueError("Error generando el contenido: " + str(e))
+    # Crear un mensaje para el modelo que incluye los bullets generados
+    response = model.generate_content(chat_session.history)
+
+    if response and response.parts:
+        return response.parts[0].text
+    else:
+        raise ValueError("Lo sentimos, intenta con una combinación diferente de entradas.")
 
 # Inicializar la aplicación Streamlit
 st.set_page_config(page_title="Generador de Bullets", layout="wide")
@@ -137,8 +147,6 @@ if submit:
         try:
             # Obtener la respuesta del modelo
             generated_bullets = get_gemini_response_bullets(target_audience, product, num_bullets, temperature)
-            # Limpiar el texto para eliminar caracteres extraños
-            generated_bullets = generated_bullets.replace("\n", "<br>")  # Para formatear en HTML
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>🧙🏻‍♂️ Mira la magia en acción:</h4>
