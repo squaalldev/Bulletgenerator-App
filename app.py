@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
-import random
 
 # Cargar las variables de entorno
 load_dotenv()
@@ -10,27 +9,9 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Diccionario de ejemplos de bullets
-bullets_examples = {
-    "1": "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
-    "2": "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
-    "3": "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa.",
-    "4": "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
-    "5": "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
-    "6": "Un sistema simple para escribir textos sin intentar convencerlos de comprar.",
-    "7": "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música.",
-    "8": "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
-    "9": "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida.",
-    "10": "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?",
-    "11": "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
-}
-
 # Función para obtener una cantidad de bullets
 def get_gemini_response_bullets(target_audience, product, num_bullets, temperature):
     model_choice = "gemini-1.5-flash"  # Modelo por defecto
-
-    # Seleccionar un bullet aleatorio de los ejemplos
-    selected_bullet = random.choice(list(bullets_examples.values()))
 
     # Configuración del modelo generativo y las instrucciones del sistema
     model = genai.GenerativeModel(
@@ -44,7 +25,8 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
         },
         system_instruction=(
             f"Imagina que estás charlando con un amigo que está buscando {product}. "
-            f"Genera {num_bullets} bullets que suenen naturales y amigables, como si estuvieras contándole por qué debería interesarse. "            f"Entiendes perfectamente sus emociones y desafíos. Crea bullets que no solo informen, sino que hablen directamente al corazón de {target_audience}, "
+            f"Genera {num_bullets} bullets que suenen naturales y amigables, como si estuvieras contándole por qué debería interesarse. "
+            f"Entiendes perfectamente sus emociones y desafíos. Crea bullets que no solo informen, sino que hablen directamente al corazón de {target_audience}, "
             f"Generando curiosidad y ganas de saber más sobre {product}. "
             f"¡Haz que se sientan incluidos! Usa un tono amistoso y divertido. "
             f"Por ejemplo, si están buscando {product}, dales un motivo irresistible para seguir leyendo. "
@@ -60,7 +42,6 @@ def get_gemini_response_bullets(target_audience, product, num_bullets, temperatu
                 "parts": [
                     f"Quiero que escribas {num_bullets} bullets que transmitan los beneficios de {product} de una manera que atraiga a {target_audience}. "
                     f"Conecta los problemas y deseos de {target_audience} de forma natural y con un estilo amigable y divertido. "
-                    f"Recuerda usar este ejemplo como inspiración: {selected_bullet}. "
                     f"Por favor, genera bullets creativos que hagan que {target_audience} se sienta emocionado por {product}."
                 ],
             },
