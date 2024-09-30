@@ -50,6 +50,9 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
     try:
         response = model.generate_content([system_instruction])
         
+        # Depurar la respuesta
+        st.write("Respuesta del modelo:", response)
+
         # Verificar que la respuesta tenga el formato esperado
         if isinstance(response, tuple) and len(response) > 0:
             generated_bullets = response[0].text.strip()
