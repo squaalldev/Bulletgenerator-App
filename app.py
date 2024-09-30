@@ -76,7 +76,7 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
         "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
         "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
-        "Los bullets deben de ser cortos y concisos, sin explicaciones, ni parentesis."
+        "Los bullets no deben de llevar explicaciones, ni parentesis, ni dos puntos."
     )
 
     # Configuración del modelo generativo
