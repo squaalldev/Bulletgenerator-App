@@ -72,7 +72,6 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         f"1. Acción: Establece el tono y el punto de partida del mensaje, en este caso, 'Cocina como un superhéroe' crea una imagen poderosa e inspiradora que engancha a {target_audience} y los motiva a actuar de manera proactiva.\n"
         f"2. Beneficio: Describe lo que se gana o se obtiene al seguir la {call_to_action} mencionada, en este ejemplo, 'al preparar comidas nutritivas y deliciosas' enfatiza el valor añadido que la audiencia experimentará al realizar esa acción.\n"
         f"3. Resultado: Muestra el desenlace concreto o el impacto directo, y es crucial ser específico. En lugar de un término general como 'en tiempo récord', se debe optar por algo más preciso como 'en tan solo 15 minutos'. Este nivel de especificidad le da un sentido claro de urgencia y eficiencia a la {call_to_action}, haciendo que el mensaje sea más creíble y atractivo.\n"
-        "Asegúrate de que cada bullet siga la estructura de 'Acción + Beneficio + Resultado', y evita incluir explicaciones como 'Acción: Descubrir' o 'Resultado: Un oasis de paz en medio del caos'.\n"
         "Important: Only answer bullets, never include explanations or categories, like this: 'Registrarme ahora y descubrir cómo encontrar un poco de paz en medio del caos. (Este CTA apela al deseo de Han Solo de encontrar un momento de tranquilidad en su vida agitada.).'\n"
         f"Basate en estos ejemplos como respuesta, escribe {number_of_bullets} bullets enfocados a beneficios:"
         "- 'Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta.'\n"
@@ -82,6 +81,7 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         "- 'Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza.'\n"
         "- 'Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento.'\n"
         "Los bullets no deben de llevar explicaciones, ni parentesis, ni dos puntos."
+        "Asegúrate de que cada bullet siga la estructura de 'Acción + Beneficio + Resultado', y evita incluir explicaciones como 'Acción: Descubrir' o 'Resultado: Un oasis de paz en medio del caos'.\n"
     )
 
     # Configuración del modelo generativo
@@ -90,18 +90,17 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         generation_config=generation_config,
     )
 
-    # Generar el resultado utilizando el modelo
-    try:
-        response = model.generate_content([system_instruction])
-        
-        # Verificar que la respuesta tenga el formato esperado
-        if response.candidates and response.candidates[0].content.parts:
-            generated_bullets = response.candidates[0].content.parts[0].text.strip()
-            return generated_bullets
-        else:
-            raise ValueError("No se generaron bullets válidos.")
-    except Exception as e:
-        raise ValueError(f"Error al generar los bullets: {str(e)}")
+ # Generar el resultado utilizando el modelo con la instrucción de bullets específica
+try:
+    response = model.generate_content([system_instruction])
+    
+    # Extraer el texto de la respuesta
+    generated_bullets = response.candidates[0].content.parts[0].text.strip()  # Modificado aquí
+    
+    # Retornar el resultado
+    return generated_bullets
+except Exception as e:
+    raise ValueError(f"Error al generar los bullets: {str(e)}")
 
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Quick Prompt", layout="wide")
