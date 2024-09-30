@@ -20,7 +20,10 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         "response_mime_type": "text/plain",
     }
 
-    # Crear la instrucción del sistema
+    # Configuración del modelo generativo
+    model = genai.GenerativeModel(
+        model_name="gemini-1.5-flash",
+        generation_config=generation_config,
     system_instruction = (
             f"Eres un experto copywriter especializado en escribir mensajes o textos que atraen la atención de {target_audience} para promover {product} que soluciona los problemas de {target_audience}. "
             f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}, los cuales utilizare para mi [página web, landing, correo], "
@@ -36,18 +39,10 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
             "* El de la verdad: 'La verdad que nunca te han dicho en el colegio, la escuela, ni en tu casa de como vivir de la música'"
             "* Haciendo una pregunta: '¿Sabías que?'"
             "* Cuando: '¿Cuándo es buena idea decirle a una chica que te gusta? Si no lo dices justo en ese momento, despídete de que la conozcas íntimamente.'"
-            "- 'Descargar la guía para mejorar mi productividad diaria'"
-            "- 'Suscribirme para recibir actualizaciones y promociones exclusivas'"
-            "- 'Unirme a la prueba gratis de 14 días y descubrir nuevas funciones'"
-            "Important: Only answer CTAs, never include explanations or categories, like this: 'Registrarme ahora y descubrir cómo encontrar un poco de paz en medio del caos. (Este CTA apela al deseo de Han Solo de encontrar un momento de tranquilidad en su vida agitada.).'"
-            "Usa estos lineamientos para generar CTAs de alta conversión en español."
-    )
-
-    # Configuración del modelo generativo
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        generation_config=generation_config,
-    )
+            "Important: Only answer bullets, never include explanations or categories, like this: 'Registrarme ahora y descubrir cómo encontrar un poco de paz en medio del caos. (Este CTA apela al deseo de Han Solo de encontrar un momento de tranquilidad en su vida agitada.).'"
+            "Usa estos lineamientos para generar bullets en español."
+    )    
+)
 
     # Generar el resultado utilizando el modelo
     try:
