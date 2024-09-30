@@ -67,7 +67,7 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
     # Crear la instrucción del sistema
     system_instruction = (
         f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
-        f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
+        f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}, escritos en un formato de lista numerada. "
         "Recuerda que un buen bullet debe tener:\n\n"
         f"1. Acción: Establece el tono y el punto de partida del mensaje, en este caso, 'Cocina como un superhéroe' crea una imagen poderosa e inspiradora que engancha a {target_audience} y los motiva a actuar de manera proactiva.\n"
         f"2. Beneficio: Describe lo que se gana o se obtiene al seguir la {call_to_action} mencionada, en este ejemplo, 'al preparar comidas nutritivas y deliciosas' enfatiza el valor añadido que la audiencia experimentará al realizar esa acción.\n"
