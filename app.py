@@ -91,7 +91,7 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
     )
 
 # Mostrar los beneficios generados con formato correcto en HTML
-if submit:
+if "submit" in locals() and submit:
     if target_audience and product and call_to_action:
         try:
             # Obtener la respuesta del modelo
