@@ -105,6 +105,13 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Quick Prompt", layout="wide")
 
+# Leer el contenido del archivo manual.md
+with open("manual.md", "r", encoding="utf-8") as file:
+    manual_content = file.read()
+
+# Mostrar el contenido del manual en el sidebar
+st.sidebar.markdown(manual_content)
+
 # Centrar el título y el subtítulo
 st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
