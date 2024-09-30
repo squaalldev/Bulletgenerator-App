@@ -152,10 +152,15 @@ if submit:
         try:
             # Obtener la respuesta del modelo
             generated_bullets = generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature)
+            
+            # Dividir los bullets en una lista y unirlos con saltos de línea
+            bullets_list = generated_bullets.split('\n')
+            formatted_bullets = '\n'.join([f'- {bullet}' for bullet in bullets_list if bullet])  # Añadir un guion para cada bullet
+
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Mira los bullets generados:</h4>
-                    <p>{generated_bullets}</p>
+                    <p>{formatted_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
         except Exception as e:
