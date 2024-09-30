@@ -64,28 +64,30 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         "response_mime_type": "text/plain",
     }
 
-    # Configuración del modelo generativo y las instrucciones del sistema
+    # Crear la instrucción del sistema
+    system_instruction = (
+        f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
+        "Los bullets deben inspirar interés y motivar al lector a tomar acción. "
+        f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
+        f"Basate en este ejemplo como respuesta, escribe la mayor cantidad de bullets enfocados a beneficios de acuerdo a lo solicitado en {number_of_bullets}:"
+        "El Curso online de Yoga es tu brújula para navegar las aguas turbulentas de la paternidad soltera."
+        "* Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta."
+        "* Aumenta tu energía y concentración para navegar con mayor seguridad y precisión."
+        "* Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad."
+        "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
+        "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
+        "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
+    )
+
+    # Configuración del modelo generativo
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
-        system_instruction=(
-            f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
-            "Los bullets deben inspirar interés y motivar al lector a tomar acción. "
-            f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
-            f"Basate en este ejemplo como respuesta, escribe la mayor cantidad de bullets enfocados a beneficios de acuerdo a lo solicitado en {number_of_bullets}:"
-            "El Curso online de Yoga es tu brújula para navegar las aguas turbulentas de la paternidad soltera."
-            "* Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta."
-            "* Aumenta tu energía y concentración para navegar con mayor seguridad y precisión."
-            "* Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad."
-            "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
-            "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
-            "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
-        )
     )
 
     # Generar el resultado utilizando el modelo
     try:
-        response = model.generate_content([model.system_instruction])
+        response = model.generate_content([system_instruction])
         
         # Verificar que la respuesta tenga el formato esperado
         if response.candidates and response.candidates[0].content.parts:
