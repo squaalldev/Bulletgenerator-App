@@ -53,12 +53,10 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         # Depurar la respuesta
         st.write("Respuesta del modelo:", response)
 
-        # Verificar que la respuesta tenga el formato esperado
-        if isinstance(response, tuple) and len(response) > 0:
-            generated_bullets = response[0].text.strip()
-            return generated_bullets
-        else:
-            raise ValueError("Respuesta inesperada del modelo.")
+        # Acceder al contenido generado correctamente
+        generated_bullets = response.result.candidates[0].content.parts[0].text.strip()
+        
+        return generated_bullets
 
     except Exception as e:
         st.error(f"Error al generar los bullets: {str(e)}")
