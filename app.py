@@ -68,7 +68,7 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
     system_instruction = (
         f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
         f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
-        f"Basate en este ejemplo como respuesta, escribe la mayor cantidad de bullets enfocados a beneficios de acuerdo a lo solicitado en {number_of_bullets}:"
+        f"Basate en este ejemplo como respuesta, escribe {number_of_bullets} bullets enfocados a beneficios:"
         "El Curso online de Yoga es tu brújula para navegar las aguas turbulentas de la paternidad soltera."
         "* Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta."
         "* Aumenta tu energía y concentración para navegar con mayor seguridad y precisión."
