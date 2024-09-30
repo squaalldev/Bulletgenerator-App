@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
-import langchain
 
 # Cargar las variables de entorno
 load_dotenv()
@@ -55,13 +54,17 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         response = model.generate_content([system_instruction])
         
         # Verificar que la respuesta tenga el formato esperado
-        if response.candidates and response.candidates[0].content.parts:
-            generated_bullets = response.candidates[0].content.parts[0].text.strip()
-            return generated_bullets
-        else:
-            raise ValueError("No se generaron bullets válidos.")
+        if not response.candidates:
+            raise ValueError("No se generaron candidatos válidos.")
+
+        if not response.candidates[0].content.parts:
+            raise ValueError("No se generaron partes válidas en la respuesta.")
+        
+        generated_bullets = response.candidates[0].content.parts[0].text.strip()
+        return generated_bullets
     except Exception as e:
-        raise ValueError(f"Error al generar los bullets: {str(e)}")
+        st.error(f"Error al generar los bullets: {str(e)}")
+        raise
 
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Impact Bullet Generator", layout="wide")
