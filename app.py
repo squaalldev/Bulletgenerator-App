@@ -75,13 +75,13 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         "Asegúrate de que cada bullet siga la estructura de 'Acción + Beneficio + Resultado', y evita incluir explicaciones como 'Acción: Descubrir' o 'Resultado: Un oasis de paz en medio del caos'.\n"
         "Important: Only answer bullets, never include explanations or categories, like this: 'Registrarme ahora y descubrir cómo encontrar un poco de paz en medio del caos. (Este CTA apela al deseo de Han Solo de encontrar un momento de tranquilidad en su vida agitada.).'\n"
         f"Basate en estos ejemplos como respuesta, escribe {number_of_bullets} bullets enfocados a beneficios:"
-        "* Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta."
-        "* Aumenta tu energía y concentración para navegar con mayor seguridad y precisión."
-        "* Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad."
-        "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
-        "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
-        "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
-        "Los bullets no deben de llevar explicaciones, ni parentesis, ni dos puntos."
+        "Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta."
+        "Aumenta tu energía y concentración para navegar con mayor seguridad y precisión."
+        "Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad."
+        "Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
+        "Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
+        "Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
+        "Los bullets no deben de llevar explicaciones, ni parentesis, ni dos puntos.\n"
     )
 
     # Configuración del modelo generativo
