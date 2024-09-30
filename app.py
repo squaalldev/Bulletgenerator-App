@@ -85,13 +85,14 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
 
     # Generar el resultado utilizando el modelo
     try:
-        response = model.generate_content([system_instruction])
+        response = model.generate_content([model.system_instruction])
         
-        # Extraer el texto de la respuesta
-        generated_bullets = response.candidates[0].content.parts[0].text.strip()  
-        
-        # Retornar el resultado
-        return generated_bullets
+        # Verificar que la respuesta tenga el formato esperado
+        if response.candidates and response.candidates[0].content.parts:
+            generated_bullets = response.candidates[0].content.parts[0].text.strip()
+            return generated_bullets
+        else:
+            raise ValueError("No se generaron bullets válidos.")
     except Exception as e:
         raise ValueError(f"Error al generar los bullets: {str(e)}")
 
