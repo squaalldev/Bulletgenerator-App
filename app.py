@@ -90,23 +90,27 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         generation_config=generation_config,
     )
 
-    # Obtener respuesta generada
-    response = model.generate(
-        instruction=system_instruction,
-        examples=benefit_types,
-    )
-
-    # Retornar los bullets generados
-    return response.generations[0].text
+    # Generar el resultado utilizando el modelo
+    try:
+        response = model.generate_content([system_instruction])
+        
+        # Verificar que la respuesta tenga el formato esperado
+        if response.candidates and response.candidates[0].content.parts:
+            generated_bullets = response.candidates[0].content.parts[0].text.strip()
+            return generated_bullets
+        else:
+            raise ValueError("No se generaron bullets válidos.")
+    except Exception as e:
+        raise ValueError(f"Error al generar los bullets: {str(e)}")
 
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Quick Prompt", layout="wide")
 
-# Añadir título y subtítulo usando HTML y aplicando estilo directamente
+# Centrar el título y el subtítulo
 st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
 
-# Añadir CSS personalizado para el botón y estilo general
+# Añadir CSS personalizado para el botón
 st.markdown("""
     <style>
     div.stButton > button {
@@ -126,26 +130,11 @@ st.markdown("""
         background-color: #FFD700;
         color: black;
     }
-    .generated-bullets {
-        border: 1px solid #000000;
-        padding: 10px;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-        margin-top: 20px;
-    }
-    .generated-bullets h4 {
-        margin-bottom: 10px;
-        font-weight: bold;
-    }
-    .generated-bullets p {
-        margin: 0;
-        font-size: 16px;
-    }
     </style>
 """, unsafe_allow_html=True)
 
 # Crear columnas
-col1, col2 = st.columns([1, 2])
+col1, col2 = st.columns([1, 2])  
 
 # Columnas de entrada
 with col1:
@@ -164,15 +153,10 @@ if submit:
         try:
             # Obtener la respuesta del modelo
             generated_bullets = generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature)
-            
-            # Dividir los bullets por líneas y generar el HTML sin formato markdown
-            bullets_list = generated_bullets.split("*")
-            bullets_html = "".join([f"<li>{bullet.strip()}</li>" for bullet in bullets_list if bullet.strip()])
-
             col2.markdown(f"""
-                <div class="generated-bullets">
+                <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Mira los bullets generados:</h4>
-                    <ul>{bullets_html}</ul>
+                    <p>{generated_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
         except Exception as e:
