@@ -90,17 +90,17 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         generation_config=generation_config,
     )
 
- # Generar el resultado utilizando el modelo con la instrucción de bullets específica
-try:
-    response = model.generate_content([system_instruction])
-    
-    # Extraer el texto de la respuesta
-    generated_bullets = response.candidates[0].content.parts[0].text.strip()  # Modificado aquí
-    
-    # Retornar el resultado
-    return generated_bullets
-except Exception as e:
-    raise ValueError(f"Error al generar los bullets: {str(e)}")
+    # Generar el resultado utilizando el modelo con la instrucción de bullets específica
+    try:
+        response = model.generate_content([system_instruction])
+        
+        # Extraer el texto de la respuesta
+        generated_bullets = response.candidates[0].content.parts[0].text.strip()  # Modificado aquí
+        
+        # Retornar el resultado
+        return generated_bullets
+    except Exception as e:
+        raise ValueError(f"Error al generar los bullets: {str(e)}")
 
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Quick Prompt", layout="wide")
