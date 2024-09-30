@@ -147,7 +147,7 @@ with col1:
     target_audience = st.text_input("¿Quién es tu público objetivo?", placeholder="Ejemplo: Estudiantes Universitarios")
     product = st.text_input("¿Qué producto tienes en mente?", placeholder="Ejemplo: Curso de Inglés")
     call_to_action = st.text_input("¿Qué acción deseas que tomen?", placeholder="Ejemplo: Inscribirse al curso")
-    number_of_bullets = st.selectbox("Número de bullets", options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], index=2)
+    number_of_bullets = st.selectbox("Número de bullets", options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], index=4)
     temperature = st.slider("Creatividad", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
     # Botón de enviar
