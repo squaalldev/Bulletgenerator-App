@@ -155,7 +155,7 @@ if submit:
             
             # Formatear la salida usando etiquetas <br> para saltos de línea
             bullets_list = generated_bullets.split('\n')
-            formatted_bullets = '<br style="line-height: 1.5;">'.join([bullet for bullet in bullets_list if bullet])  # Agregar interlineado
+            formatted_bullets = '<br style="line-height: 2;">'.join([bullet for bullet in bullets_list if bullet])  # Agregar interlineado
 
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
@@ -164,6 +164,6 @@ if submit:
                 </div>
             """, unsafe_allow_html=True)
         except Exception as e:
-            st.error(f"Error al generar los bullets: {str(e)}")
+            col2.error(f"Error al generar los bullets: {str(e)}")  # Cambiar a mostrar el error en col2
     else:
-        st.error("Por favor, completa todos los campos.")
+        col2.error("Por favor, completa todos los campos.")  # Cambiar a mostrar el error en col2
