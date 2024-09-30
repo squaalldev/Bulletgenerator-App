@@ -106,11 +106,11 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Quick Prompt", layout="wide")
 
-# Centrar el título y el subtítulo
+# Añadir título y subtítulo usando HTML y aplicando estilo directamente
 st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>Transforma los pensamientos de tu audiencia en balas persuasivas que inspiren a la acción.</h4>", unsafe_allow_html=True)
 
-# Añadir CSS personalizado para el botón
+# Añadir CSS personalizado para el botón y estilo general
 st.markdown("""
     <style>
     div.stButton > button {
@@ -129,6 +129,21 @@ st.markdown("""
     div.stButton > button:hover {
         background-color: #FFD700;
         color: black;
+    }
+    .generated-bullets {
+        border: 1px solid #000000;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        margin-top: 20px;
+    }
+    .generated-bullets h4 {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .generated-bullets p {
+        margin: 0;
+        font-size: 16px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -154,9 +169,9 @@ if submit:
             # Obtener la respuesta del modelo
             generated_bullets = generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature)
             col2.markdown(f"""
-                <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
+                <div class="generated-bullets">
                     <h4>Mira los bullets generados:</h4>
-                    <p style="font-size: 22px;">{generated_bullets}</p>
+                    <p>{generated_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
         except Exception as e:
