@@ -1,6 +1,6 @@
-# Manual de Usuario para Impact Bullet Generator
+# Manual de Usuario
 
-**Bienvenido a Impact Bullet Generator**  
+**Bienvenido**  
 Impact Bullet Generator está diseñado para ayudarte a transformar las ideas de tu audiencia en bullets persuasivos que inspiran a la acción.
 
 ## ¿Por qué los bullets persuasivos son importantes?
