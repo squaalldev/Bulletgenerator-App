@@ -10,17 +10,6 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Ejemplos de bullets
-benefit_examples = [
-    "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
-    "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
-    "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa.",
-    "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
-    "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
-    "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
-    "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
-]
-
 # Generar el resultado utilizando el modelo con la instrucción de bullets específica
 def generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature):
     # Configuración del modelo
@@ -37,13 +26,13 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
         f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
         f"Utiliza las siguientes menciones y ejemplos como inspiración en tu respuesta: "
-        f"1. {benefit_examples[0]} "
-        f"2. {benefit_examples[1]} "
-        f"3. {benefit_examples[2]} "
-        f"4. {benefit_examples[3]} "
-        f"5. {benefit_examples[4]} "
-        f"6. {benefit_examples[5]} "
-        f"7. {benefit_examples[6]} "
+        "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
+        "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
+        "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa.",
+        "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
+        "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
+        "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
+        "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
         f"Cuando respondas, utiliza la mayor cantidad de variaciones."
     )
 
@@ -67,7 +56,7 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         raise ValueError(f"Error al generar los bullets: {str(e)}")
 
 # Configurar la interfaz de usuario con Streamlit
-st.set_page_config(page_title="Quick Prompt", layout="wide")
+st.set_page_config(page_title="Impact Bullet Generator", layout="wide")
 
 # Centrar el título y el subtítulo
 st.markdown("<h1 style='text-align: center;'>Impact Bullet Generator</h1>", unsafe_allow_html=True)
@@ -104,7 +93,7 @@ with col1:
     target_audience = st.text_input("¿Quién es tu público objetivo?", placeholder="Ejemplo: Estudiantes Universitarios")
     product = st.text_input("¿Qué producto tienes en mente?", placeholder="Ejemplo: Curso de Inglés")
     call_to_action = st.text_input("¿Qué acción deseas que tomen?", placeholder="Ejemplo: Inscribirse al curso")
-    number_of_bullets = st.selectbox("Número de bullets", options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], index=2)
+    number_of_bullets = st.selectbox("Número de bullets", options=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], value=5)
     temperature = st.slider("Creatividad", min_value=0.0, max_value=1.0, value=0.5, step=0.1)
 
     # Botón de enviar
