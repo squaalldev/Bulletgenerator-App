@@ -160,7 +160,7 @@ if submit:
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
                     <h4>Mira la magia en acción con estos bullets:</h4>
-                    <p style="line-height: 1.5;">{formatted_bullets}</p>
+                    <p style="line-height: 2;">{formatted_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
         except Exception as e:
