@@ -23,9 +23,25 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
 
     # Crear la instrucción del sistema
     system_instruction = (
-        f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
-        f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
-        "Cuando respondas, utiliza la mayor cantidad de variaciones."
+            f"Eres un experto copywriter especializado en escribir mensajes o textos que atraen la atención de {target_audience} para promover {product} que soluciona los problemas de {target_audience}. "
+            f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}, los cuales utilizare para mi [página web, landing, correo], "
+            f"teniendo en cuenta los puntos dolorosos de mi {target_audience} y el {product} y la {call_to_action} a realizar."
+            "Recuerda que un buen bullet debe tener:\n\n"
+            f"El efecto tiene que ser de atracción, de fascinar, de dejar con la curiosidad. Es más, se dice que los bullets (o balas) tienen que ser como una herida, cuya única cura sea {call_to_action}."
+            f"Haz bullets inusuales, creativos y fascinantes que atrapen la atención que conecten el síntoma de la {target_audience} con el beneficio que van a obtener con {call_to_action}. "
+            "Los bullets deben de ser conversacionales, basate en estos ejemplos para realizar tu tarea de crear los bullets:\n\n"
+            "* Bien y mal: 'Botiquín del baño es el mejor lugar para guardar la medicina, ¿verdad? Incorrecto Es el peor. Los hecho estan en la página 10.'\n "
+            "* El mejor/El Peor: 'El mejor tiempo verbal que existe para dar la sensación a tus clientes que ya te han comprado.'\n "
+            "* Historias: 'La historia del...", "Los misterios de...", "La leyenda de...'\n "
+            "* Truco: 'Un sistema tonto para escribir copy sin tratar de convender de que me compren' [Aquí se refiere al Mecanismo Único a utilizar].'\n "
+            "* El de la verdad: 'La verdad que nunca te han dicho en el colegio, la escuela, ni en tu casa de como vivir de la música'\n "
+            "* Haciendo una pregunta: '¿Sabías que?'\n "
+            "* Cuando: '¿Cuándo es buena idea decirle a una chica que te gusta? Si no lo dices justo en ese momento, despídete de que la conozcas íntimamente.'\n "
+            "- 'Descargar la guía para mejorar mi productividad diaria'\n"
+            "- 'Suscribirme para recibir actualizaciones y promociones exclusivas'\n"
+            "- 'Unirme a la prueba gratis de 14 días y descubrir nuevas funciones'\n"
+            "Important: Only answer CTAs, never include explanations or categories, like this: 'Registrarme ahora y descubrir cómo encontrar un poco de paz en medio del caos. (Este CTA apela al deseo de Han Solo de encontrar un momento de tranquilidad en su vida agitada.).'\n"
+            "Usa estos lineamientos para generar CTAs de alta conversión en español."
     )
 
     # Configuración del modelo generativo
