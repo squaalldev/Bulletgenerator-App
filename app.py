@@ -71,9 +71,9 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         "Recuerda que un buen bullet debe tener:\n\n"
         f"1. Acción: Establece el tono y el punto de partida del mensaje, en este caso, 'Cocina como un superhéroe' crea una imagen poderosa e inspiradora que engancha a {target_audience} y los motiva a actuar de manera proactiva.\n"
         f"2. Beneficio: Describe lo que se gana o se obtiene al seguir la {call_to_action} mencionada, en este ejemplo, 'al preparar comidas nutritivas y deliciosas' enfatiza el valor añadido que la audiencia experimentará al realizar esa acción.\n"
-        f"3. Resultado: Muestra el desenlace concreto o el impacto directo, y es crucial ser específico. En lugar de un término general como 'en tiempo récord', se debe optar por algo más preciso como 'en tan solo 15 minutos'. Este nivel de especificidad le da un sentido claro de urgencia y eficiencia a la {call_to_action}, haciendo que el mensaje sea más creíble y atractivo.\n\n"
-        "Important: Only answer bullets, never include explanations or categories, like this: 'Registrarme ahora y descubrir cómo encontrar un poco de paz en medio del caos. (Este bullet apela al deseo de Han Solo de encontrar un momento de tranquilidad en su vida agitada.).'\n"
-        f"Basate en estos ejemplos como respuesta, escribe {number_of_bullets} bullets enfocados a beneficios:\n\n"
+        f"3. Resultado: Muestra el desenlace concreto o el impacto directo, y es crucial ser específico. En lugar de un término general como 'en tiempo récord', se debe optar por algo más preciso como 'en tan solo 15 minutos'. Este nivel de especificidad le da un sentido claro de urgencia y eficiencia a la {call_to_action}, haciendo que el mensaje sea más creíble y atractivo.\n"
+        "Important: Only answer bullets, never include explanations or categories, like this: 'Registrarme ahora y descubrir cómo encontrar un poco de paz en medio del caos. (Este CTA apela al deseo de Han Solo de encontrar un momento de tranquilidad en su vida agitada.).'\n"
+        f"Basate en estos ejemplos como respuesta, escribe {number_of_bullets} bullets enfocados a beneficios:"
         "- 'Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta.'\n"
         "- 'Aumenta tu energía y concentración para navegar con mayor seguridad y precisión.'\n"
         "- 'Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad.'\n"
@@ -152,10 +152,15 @@ if submit:
         try:
             # Obtener la respuesta del modelo
             generated_bullets = generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature)
+            
+            # Formatear la salida usando etiquetas <br> para saltos de línea
+            bullets_list = generated_bullets.split('\n')
+            formatted_bullets = '<br>'.join([f'- {bullet}' for bullet in bullets_list if bullet])  # Añadir un guion para cada bullet
+
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Mira la magia en acción:</h4>
-                    <p>{generated_bullets}</p>
+                    <h4>Mira los bullets generados:</h4>
+                    <p>{formatted_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
         except Exception as e:
