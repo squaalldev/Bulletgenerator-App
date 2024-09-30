@@ -90,18 +90,27 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         generation_config=generation_config,
     )
 
-    # Generar el resultado utilizando el modelo
-    try:
-        response = model.generate_content([system_instruction])
-        
-        # Verificar que la respuesta tenga el formato esperado
-        if response.candidates and response.candidates[0].content.parts:
-            generated_bullets = response.candidates[0].content.parts[0].text.strip()
-            return generated_bullets
-        else:
-            raise ValueError("No se generaron bullets válidos.")
-    except Exception as e:
-        raise ValueError(f"Error al generar los bullets: {str(e)}")
+# Mostrar los beneficios generados con formato correcto en HTML
+if submit:
+    if target_audience and product and call_to_action:
+        try:
+            # Obtener la respuesta del modelo
+            generated_bullets = generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature)
+            
+            # Dividir los bullets por líneas y generar el HTML sin formato markdown
+            bullets_list = generated_bullets.split("*")
+            bullets_html = "".join([f"<li>{bullet.strip()}</li>" for bullet in bullets_list if bullet.strip()])
+
+            col2.markdown(f"""
+                <div class="generated-bullets">
+                    <h4>Mira los bullets generados:</h4>
+                    <ul>{bullets_html}</ul>
+                </div>
+            """, unsafe_allow_html=True)
+        except Exception as e:
+            st.error(f"Error al generar los bullets: {str(e)}")
+    else:
+        st.error("Por favor, completa todos los campos.")
 
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Quick Prompt", layout="wide")
