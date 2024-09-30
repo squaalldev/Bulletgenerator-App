@@ -67,7 +67,6 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
     # Crear la instrucción del sistema
     system_instruction = (
         f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
-        "Los bullets deben inspirar interés y motivar al lector a tomar acción. "
         f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
         f"Basate en este ejemplo como respuesta, escribe la mayor cantidad de bullets enfocados a beneficios de acuerdo a lo solicitado en {number_of_bullets}:"
         "El Curso online de Yoga es tu brújula para navegar las aguas turbulentas de la paternidad soltera."
@@ -77,6 +76,7 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
         "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
         "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
+        "Cuando respondas utiliza la mayor cantidad de variaciones"
     )
 
     # Configuración del modelo generativo
