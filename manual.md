@@ -1,7 +1,7 @@
 # Manual de Usuario
 
-**Bienvenido**  
-Impact Bullet Generator está diseñado para ayudarte a transformar las ideas de tu audiencia en bullets persuasivos que inspiran a la acción.
+**Bienvenido Rock Star del copy**  
+Esta aplicación llamada Impact Bullet Generator está diseñada para ayudarte a transformar las ideas de tu audiencia en bullets persuasivos que inspiran a la acción.
 
 ## ¿Por qué los bullets persuasivos son importantes?
 Los bullets persuasivos son la clave para captar la atención de tu audiencia y comunicar los beneficios de tu producto o servicio de manera efectiva. Aquí te mostramos algunos ejemplos de acciones que pueden motivar a tu público:
