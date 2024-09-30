@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
-import random
+import langchain
 
 # Cargar las variables de entorno
 load_dotenv()
@@ -10,51 +10,19 @@ load_dotenv()
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Función para obtener una mención del producto de manera probabilística
-def get_random_product_mention():
-    mentions = ["Directa", "Indirecta", "Metafórica"]
-    probabilities = [0.35, 0.25, 0.40]
-    return random.choices(mentions, probabilities)[0]
-
-# Crear la instrucción de mención basada en la opción seleccionada
-def get_mention_instruction(product_mention, product):
-    if product_mention == "Directa":
-        return f"Introduce directamente el producto '{product}' como la solución clara al problema que enfrenta el lector, de manera conversacional, no forzada."
-    elif product_mention == "Indirecta":
-        return f"Referencia sutilmente el producto '{product}' como una posible solución al problema del lector sin nombrarlo explícitamente."
-    elif product_mention == "Metafórica":
-        return f"Introduce el producto '{product}' usando una metáfora, conectándolo simbólicamente a la solución que necesita el lector."
-    return ""
-
 # Ejemplos de bullets
-benefit_types = {
-    "directos": [
-        "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
-        "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
-        "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa."
-    ],
-    "misterios": [
-        "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
-        "Los misterios de cómo una técnica sencilla te permite reducir el estrés al instante, sin necesidad de dejar tu trabajo o cambiar tu estilo de vida."
-    ],
-    "leyendas": [
-        "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
-        "La verdad que nunca te han contado en la escuela, o en casa, sobre cómo ganarte la vida con la música."
-    ],
-    "historias_personales": [
-        "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
-        "¿Sabías que muchas personas están usando este método y han mejorado su bienestar en solo 7 días?"
-    ],
-    "preguntas_retoricas": [
-        "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
-    ],
-}
+benefit_examples = [
+    "El armario del baño es el mejor lugar para guardar medicamentos, ¿verdad? Incorrecto. Es el peor. Los hechos están en la página 10.",
+    "El mejor tiempo verbal que le da a tus clientes la sensación de que ya te han comprado.",
+    "La historia de un joven emprendedor que transformó su vida aplicando esta técnica simple pero poderosa.",
+    "Los misterios de cómo algunas personas parecen tener éxito sin esfuerzo, mientras otras luchan. La clave está en esta pequeña diferencia.",
+    "La leyenda de aquellos que dominaron la productividad con un solo hábito. ¿Te atreves a descubrirlo?",
+    "La historia de un padre ocupado que, con solo 10 minutos al día, logró transformar su salud y bienestar.",
+    "¿Cuándo es una buena idea decirle a una chica que te gusta? Si no se lo dices en ese momento, despídete de conocerla íntimamente."
+]
 
 # Generar el resultado utilizando el modelo con la instrucción de bullets específica
 def generate_bullets(number_of_bullets, target_audience, product, call_to_action, temperature):
-    product_mention = get_random_product_mention()
-    mention_instruction = get_mention_instruction(product_mention, product)
-
     # Configuración del modelo
     generation_config = {
         "temperature": temperature,
@@ -68,15 +36,15 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
     system_instruction = (
         f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
         f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
-        f"Basate en este ejemplo como respuesta, escribe {number_of_bullets} bullets enfocados a beneficios:"
-        "El Curso online de Yoga es tu brújula para navegar las aguas turbulentas de la paternidad soltera."
-        "* Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta."
-        "* Aumenta tu energía y concentración para navegar con mayor seguridad y precisión."
-        "* Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad."
-        "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
-        "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
-        "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
-        "Cuando respondas utiliza la mayor cantidad de variaciones"
+        f"Utiliza las siguientes menciones y ejemplos como inspiración en tu respuesta: "
+        f"1. {benefit_examples[0]} "
+        f"2. {benefit_examples[1]} "
+        f"3. {benefit_examples[2]} "
+        f"4. {benefit_examples[3]} "
+        f"5. {benefit_examples[4]} "
+        f"6. {benefit_examples[5]} "
+        f"7. {benefit_examples[6]} "
+        f"Cuando respondas, utiliza la mayor cantidad de variaciones."
     )
 
     # Configuración del modelo generativo
