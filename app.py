@@ -167,4 +167,3 @@ if submit:
             st.error(f"Error al generar los bullets: {str(e)}")
     else:
         st.error("Por favor, completa todos los campos.")
-
