@@ -155,12 +155,12 @@ if submit:
             
             # Formatear la salida usando etiquetas <br> para saltos de línea
             bullets_list = generated_bullets.split('\n')
-            formatted_bullets = '<br>'.join([f'- {bullet}' for bullet in bullets_list if bullet])  # Añadir un guion para cada bullet
+            formatted_bullets = '<br style="line-height: 1.5;">'.join([bullet for bullet in bullets_list if bullet])  # Agregar interlineado
 
             col2.markdown(f"""
                 <div style="border: 1px solid #000000; padding: 5px; border-radius: 8px; background-color: #ffffff;">
-                    <h4>Mira los bullets generados:</h4>
-                    <p>{formatted_bullets}</p>
+                    <h4>Mira la magia en acción con estos bullets:</h4>
+                    <p style="line-height: 1.5;">{formatted_bullets}</p>
                 </div>
             """, unsafe_allow_html=True)
         except Exception as e:
