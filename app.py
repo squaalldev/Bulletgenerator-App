@@ -54,14 +54,12 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         response = model.generate_content([system_instruction])
         
         # Verificar que la respuesta tenga el formato esperado
-        if not response.candidates:
-            raise ValueError("No se generaron candidatos válidos.")
+        if isinstance(response, tuple) and len(response) > 0:
+            generated_bullets = response[0].text.strip()
+            return generated_bullets
+        else:
+            raise ValueError("Respuesta inesperada del modelo.")
 
-        if not response.candidates[0].content.parts:
-            raise ValueError("No se generaron partes válidas en la respuesta.")
-        
-        generated_bullets = response.candidates[0].content.parts[0].text.strip()
-        return generated_bullets
     except Exception as e:
         st.error(f"Error al generar los bullets: {str(e)}")
         raise
