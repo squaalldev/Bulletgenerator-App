@@ -64,46 +64,37 @@ def generate_bullets(number_of_bullets, target_audience, product, call_to_action
         "response_mime_type": "text/plain",
     }
 
-    # Configuración del modelo generativo y las instrucciones del sistema
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        generation_config=generation_config,
-        system_instruction=(
-            f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
-            "Los bullets deben inspirar interés y motivar al lector a tomar acción. "
-            f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
-            f"Basate en este ejemplo como respuesta, escribe la mayor cantidad de bullets enfocados a beneficios de acuerdo a lo solicitado en {number_of_bullets}:"
-            "El Curso online de Yoga es tu brújula para navegar las aguas turbulentas de la paternidad soltera."
-            "* Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta."
-            "* Aumenta tu energía y concentración para navegar con mayor seguridad y precisión."
-            "* Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad."
-            "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos."
-            "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza."
-            "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento."
-        )
+# Configuración del modelo generativo y las instrucciones del sistema
+model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    generation_config=generation_config,
+    system_instruction=(
+        f"Eres un experto copywriter especializado en escribir bullets atractivos, curiosos e inusuales para {target_audience} sobre {product} que promueven la acción de {call_to_action}. "
+        "Los bullets deben inspirar interés y motivar al lector a tomar acción. "
+        f"Tu tarea es ayudarme a escribir {number_of_bullets} bullets que destaquen los beneficios de {product}. "
+        f"Basate en este ejemplo como respuesta, escribe la mayor cantidad de bullets enfocados a beneficios de acuerdo a lo solicitado en {number_of_bullets}: "
+        "El Curso online de Yoga es tu brújula para navegar las aguas turbulentas de la paternidad soltera. "
+        "* Reduce el estrés y la ansiedad como un ancla que te mantiene firme en medio de la tormenta. "
+        "* Aumenta tu energía y concentración para navegar con mayor seguridad y precisión. "
+        "* Mejora tu flexibilidad y movilidad para adaptarte a cualquier situación con mayor agilidad. "
+        "* Encuentra la paz interior como un faro que te guía hacia la calma en medio del caos. "
+        "* Conecta contigo mismo para descubrir tu propio rumbo y navegar con mayor confianza. "
+        "* Aprende técnicas para gestionar el tiempo y la energía para optimizar tu viaje y disfrutar de cada momento. "
+        f"Considera los siguientes tipos de beneficios: {', '.join(selected_types)}."
     )
+)
 
-    # Selección aleatoria de tipos de beneficios, manteniendo variedad en la salida
-    selected_types = random.sample(list(benefit_types.keys()), min(number_of_bullets, len(benefit_types)))
-
-    # Crear un mensaje para el modelo que incluye los bullets generados según los tipos seleccionados
-    benefits_instruction = (
-        f"Tu tarea es crear {number_of_bullets} bullets efectivos dirigidos a {target_audience}, "
-        f"para promover {call_to_action} usando la siguiente mención: {mention_instruction}. "
-        "Asegúrate de que cada bullet siga la estructura de los ejemplos proporcionados anteriormente."
-    )
-
-    # Generar el resultado utilizando el modelo con la instrucción de bullets específica
-    try:
-        response = model.generate_content([benefits_instruction])
-        
-        # Extraer el texto de la respuesta
-        generated_bullets = response.candidates[0].content.parts[0].text.strip()  
-        
-        # Retornar el resultado
-        return generated_bullets
-    except Exception as e:
-        raise ValueError(f"Error al generar los bullets: {str(e)}")
+# Generar el resultado utilizando el modelo con la instrucción de bullets específica
+try:
+    response = model.generate_content([system_instruction])
+    
+    # Extraer el texto de la respuesta
+    generated_bullets = response.candidates[0].content.parts[0].text.strip()  
+    
+    # Retornar el resultado
+    return generated_bullets
+except Exception as e:
+    raise ValueError(f"Error al generar los bullets: {str(e)}")
 
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Quick Prompt", layout="wide")
