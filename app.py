@@ -57,9 +57,9 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
             },
         )
 
-        # Generar los beneficios con la API de Google, pasando la temperatura (creatividad)
-        response = model.generate_content([specific_prompt], temperature=creativity)
-        
+        # Generar los beneficios con la API de Google, sin pasar la temperatura aquí
+        response = model.generate_content([specific_prompt])
+
         if response and response.parts:
             benefits.append(response.parts[0].text.strip())
         else:
