@@ -26,10 +26,8 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
     prompt_base = f"""
     Eres un experto en copywriting y tu objetivo es crear {num_bullets} bullets persuasivos que destaquen los beneficios del {product}, 
     conecten emocionalmente con la audiencia {target_audience} y respondan a sus problemas, necesidades, deseos o situaciones específicas.\n\n
-    Ten en cuenta lo siguiente:\n
-    - Los bullets deben ser breves, concisos, como minititulares que impacten a la audiencia.\n
-    - Deben captar la atención de inmediato y despertar curiosidad o acción.\n
-    - Los beneficios deben ser claros, enfocados en el valor práctico y emocional del producto.\n
+    Cada bullet debe ser claro, directo y generar curiosidad, invitando a la acción sin ser forzado. Piensa en cómo puedes captar rápidamente la atención de la audiencia con frases impactantes, como si estuvieras hablándole directamente.
+    Usa enfoques creativos para conectar los beneficios del producto con lo que realmente le importa a la audiencia. Evita la jerga técnica y mantén la simplicidad.
     Ahora, crea una lista de {num_bullets} bullets persuasivos para el siguiente producto y nicho objetivo.\n\n
     Producto: {product}\n
     Nicho objetivo: {target_audience}\n
