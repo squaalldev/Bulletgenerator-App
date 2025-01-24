@@ -8,7 +8,7 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Función para generar los beneficios (bullets) basados en el enfoque
-def generate_benefits(focus_points, product, target_audience):
+def generate_benefits(focus_points, product, target_audience, creativity, num_bullets):
     model = genai.GenerativeModel("gemini-1.5-flash")
 
     # Base del prompt para generar los bullets persuasivos
@@ -40,12 +40,12 @@ def generate_benefits(focus_points, product, target_audience):
 
     benefits = []
     # Crear el prompt específico para cada enfoque y enviarlo al modelo
-    for point in focus_points:
+    for point in focus_points[:num_bullets]:  # Limitar a los bullets seleccionados
         # Crear el prompt para el enfoque seleccionado
         specific_prompt = prompt_base + f"\n\nEnfoque: {point}\n"
         
-        # Generar los beneficios con la API de Google
-        response = model.generate_content([specific_prompt])
+        # Generar los beneficios con la API de Google, pasando la temperatura (creatividad)
+        response = model.generate_content([specific_prompt], temperature=creativity)
         
         if response and response.parts:
             benefits.append(response.parts[0].text.strip())
@@ -80,12 +80,19 @@ with col1:
     )
     product = st.text_input("Producto relacionado:", placeholder="Ejemplo: Curso de productividad")
     target_audience = st.text_input("Público objetivo:", placeholder="Ejemplo: Estudiantes universitarios")
+    
+    # Slider para la creatividad
+    creativity = st.slider("Creatividad (Temperatura)", min_value=0.0, max_value=1.0, value=0.7, step=0.1)
+    
+    # Slider para el número de bullets
+    num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5, step=1)
+    
     submit = st.button("Generar Beneficios")
 
 # Mostrar los beneficios generados
 if submit:
     if focus_points and product and target_audience:
-        benefits = generate_benefits(focus_points, product, target_audience)
+        benefits = generate_benefits(focus_points, product, target_audience, creativity, num_bullets)
         formatted_benefits = '<br style="line-height: 2;">'.join(benefits)
         
         col2.markdown(f"""
