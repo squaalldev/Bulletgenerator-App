@@ -91,7 +91,7 @@ def generate_benefits(number_of_benefits, target_audience, product, temperature,
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
-        system_instruction="You are a world-class copywriter, with expertise in crafting benefits that connect emotionally and address the desires, problems, and motivations of a target audience. Your task is to generate compelling and specific benefit bullets in Spanish based on a given formula. Always respond with a numbered list format, and ensure each benefit is relevant, concise, and action-oriented. Do not include explanations or categories in your output."
+        system_instruction="You are a world-class copywriter, with expertise in crafting benefits that connect emotionally and address the desires, problems, and motivations of {target_audience}. Your task is to generate compelling and specific benefit bullets in Spanish based on a given formula. Always respond with a numbered list format, and ensure each benefit is relevant, concise, action-oriented with a natural language and conversational way. Do not include explanations or categories in your output."
     )
 
     # Crear un mensaje para el modelo, destacando la audiencia, el producto, la fórmula seleccionada y los ejemplos
