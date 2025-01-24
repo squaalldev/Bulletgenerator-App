@@ -24,10 +24,13 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
 
     # Base del prompt para generar los bullets persuasivos
     prompt_base = f"""
-    Eres un experto en copywriting y tu objetivo es crear {num_bullets} bullets persuasivos que destaquen los beneficios del {product}, 
-    conecten emocionalmente con la audiencia {target_audience} y respondan a sus problemas, necesidades, deseos o situaciones específicas.\n\n
-    Cada bullet debe ser claro, directo y generar curiosidad, invitando a la acción sin ser forzado. Piensa en cómo puedes captar rápidamente la atención de la audiencia con frases impactantes, como si estuvieras hablándole directamente.
-    Usa enfoques creativos para conectar los beneficios del producto con lo que realmente le importa a la audiencia. Evita la jerga técnica y mantén la simplicidad.
+    Eres un experto en copywriting y tu objetivo es crear {num_bullets} bullets persuasivos que conecten emocionalmente con la audiencia {target_audience}. 
+    Cada bullet debe abordar sus problemas, deseos o situaciones, mostrando cómo se pueden mejorar o solucionar gracias a una solución específica. 
+    Piensa en cómo puedes captar la atención de la audiencia con frases impactantes, como si estuvieras hablando directamente con ellos. La idea es resaltar el valor que aporta la solución, sin hacer que el producto suene como una venta forzada. 
+    Los bullets deben ser claros, directos y generar curiosidad, invitando a la acción de manera natural. Evita la jerga técnica y mantén la simplicidad, enfocándote en cómo el producto se integra de manera natural en la vida de la audiencia para mejorarla.
+    Crea {num_bullets} bullets persuasivos que muestren cómo el producto puede resolver o transformar una situación para la audiencia. 
+    Hazlo con un enfoque genuino, sin forzar la mención del producto, pero asegurándote de que quede claro cómo puede ser la solución ideal.
+    Usa enfoques creativos para conectar los beneficios del producto con lo que realmente le importa a la audiencia. 
     Ahora, crea una lista de {num_bullets} bullets persuasivos para el siguiente producto y nicho objetivo.\n\n
     Producto: {product}\n
     Nicho objetivo: {target_audience}\n
