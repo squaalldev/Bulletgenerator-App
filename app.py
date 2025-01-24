@@ -18,7 +18,8 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
     Ten en cuenta lo siguiente:\n
     - Los bullets son pequeños anzuelos diseñados para captar la atención de inmediato, como tráilers de películas que dejan a la audiencia queriendo más.\n
     - Ayudan a evitar textos largos y monótonos, destacando tanto beneficios emocionales como prácticos.\n
-    - Los beneficios deben ser relevantes, concisos y específicos, mostrando cómo el producto puede transformar o mejorar la vida de la audiencia.\n\n
+    - Los beneficios deben ser relevantes, concisos y específicos, mostrando cómo el producto puede transformar o mejorar la vida de la audiencia.\n
+    - El 80% de los bullets deben ser cortos y el 20% deben ser largos.\n\n
     Ahora, crea una lista de beneficios para el siguiente producto y nicho objetivo. Si no se especifican problemas, necesidades, deseos o situaciones, 
     identifica ejemplos comunes relevantes para el nicho objetivo proporcionado y asocia estos problemas con el producto.\n\n
     Producto: {product}\n
@@ -44,20 +45,8 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
         # Crear el prompt para el enfoque seleccionado
         specific_prompt = prompt_base + f"\n\nEnfoque: {point}\n"
         
-        # Configurar el modelo con parámetros de generación
-        model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
-            generation_config={
-                "temperature": creativity,  # Usar la creatividad para definir la temperatura
-                "top_p": 0.65,  # Probabilidad de tokens para mayor diversidad
-                "top_k": 280,  # Número de tokens que se consideran en cada paso
-                "max_output_tokens": 8196,  # Límite máximo de tokens generados
-                "response_mime_type": "text/plain",  # Respuesta en texto plano
-            },
-        )
-        
         # Generar los beneficios con la API de Google, pasando la temperatura (creatividad)
-        response = model.generate_content([specific_prompt])
+        response = model.generate_content([specific_prompt], temperature=creativity)
         
         if response and response.parts:
             benefits.append(response.parts[0].text.strip())
@@ -85,13 +74,8 @@ col1, col2 = st.columns([1, 2])
 
 # Columnas de entrada
 with col1:
-    focus_points = st.multiselect(
-        "Selecciona los enfoques que deseas utilizar:",
-        ["Curiosidad", "CASI Imposible", "Autoridad y Credibilidad", "Contraste"],
-        default=[]
-    )
-    product = st.text_input("Producto relacionado:", placeholder="Ejemplo: Curso de productividad")
     target_audience = st.text_input("Público objetivo:", placeholder="Ejemplo: Estudiantes universitarios")
+    product = st.text_input("Producto relacionado:", placeholder="Ejemplo: Curso de productividad")
     
     # Slider para la creatividad
     creativity = st.slider("Creatividad (Temperatura)", min_value=0.0, max_value=1.0, value=0.7, step=0.1)
@@ -99,6 +83,12 @@ with col1:
     # Slider para el número de bullets
     num_bullets = st.slider("Número de Bullets", min_value=1, max_value=10, value=5, step=1)
     
+    focus_points = st.multiselect(
+        "Selecciona los enfoques que deseas utilizar:",
+        ["Curiosidad", "CASI Imposible", "Autoridad y Credibilidad", "Contraste"],
+        default=[]
+    )
+
     submit = st.button("Generar Beneficios")
 
 # Mostrar los beneficios generados
