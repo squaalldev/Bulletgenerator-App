@@ -37,7 +37,7 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
                 "temperature": creativity,  # Usar la creatividad para definir la temperatura
                 "top_p": 0.65,  # Probabilidad de tokens para mayor diversidad
                 "top_k": 280,  # Número de tokens que se consideran en cada paso
-                "max_output_tokens": 50,  # Limitar a 50 tokens para que el bullet sea corto
+                "max_output_tokens": 2048,  # Limitar a 50 tokens para que el bullet sea corto
                 "response_mime_type": "text/plain",  # Respuesta en texto plano
             },
         )
