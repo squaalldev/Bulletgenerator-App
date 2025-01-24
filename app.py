@@ -94,17 +94,16 @@ def generate_benefits(number_of_benefits, target_audience, product, temperature,
 
     # Crear un mensaje para el modelo, destacando la audiencia, el producto, la fórmula seleccionada y los ejemplos
     benefits_instruction = (
-        f"Tu tarea es crear {number_of_benefits} beneficios específicos y atractivos diseñados para {target_audience}. "
-    f"El objetivo es conectar emocionalmente y destacar cómo {product} puede mejorar la vida del lector. Asegúrate de que cada beneficio sea "
-    f"llamativo, persuasivo y relevante, siguiendo la estructura de la fórmula seleccionada, que puedes ver a continuación: "
-    f"\n\n{selected_formula['description']}\n\n"
-    f"Revisa los siguientes ejemplos de cómo esta fórmula puede ser utilizada con éxito:\n"
-    f"- {selected_formula['examples'][0]}\n"
-    f"- {selected_formula['examples'][1]}\n"
-    f"- {selected_formula['examples'][2]}\n\n"
-    f"Usa estos ejemplos como inspiración y asegúrate de incluir la siguiente mención en los beneficios generados: {mention_instruction}. "
-    f"No expliques las fórmulas ni la estructura en la salida, solo proporciona los beneficios. "
-    f"Recuerda, el objetivo es inspirar acción y generar deseo en el lector."
+        f"Tu tarea es crear {number_of_benefits} beneficios irresistibles diseñados para {target_audience}. "
+        f"El objetivo es mostrar cómo {product} puede transformar la vida del lector, conectando de forma natural y emocional. "
+        f"Evita usar menciones literales o repetitivas, y destaca soluciones concretas, mostrando cómo el producto elimina obstáculos o satisface deseos reales. "
+        f"Usa la fórmula seleccionada como guía:\n\n{selected_formula['description']}\n\n"
+        f"Inspírate en estos ejemplos:\n"
+        f"- {selected_formula['examples'][0]}\n"
+        f"- {selected_formula['examples'][1]}\n"
+        f"- {selected_formula['examples'][2]}\n\n"
+        f"Y no olvides integrar esta instrucción de manera fluida: {mention_instruction}. "
+        f"Tu objetivo es inspirar deseo y acción, evitando explicaciones o categorías en la respuesta."
     )
 
     chat_session = model.start_chat(
