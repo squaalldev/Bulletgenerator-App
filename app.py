@@ -41,13 +41,14 @@ benefits_formulas = {
     },
     "formula_suprema_istvanova": {
         "description": """
-            La fórmula Suprema de Istvanova: Números + Adjetivo + Palabra Clave + Razón + Promesa.
-            Diseñada para crear beneficios específicos y atractivos que conecten emocionalmente con tu audiencia. Cada elemento cumple una función clave:
-            1. **Números**: Establecen una expectativa clara y medible.
+            La estructura de la fórmula Suprema de Istvanova es: Números + Adjetivo + Palabra Clave + Razón + Promesa. 
+            Crea bullets points o beneficios con beneficios específicos y atractivos que conectan emocionalmente con {target_audience} y cumple con estos elementos:
+            1. **Números**: Se escriben con el fin de declarar que existen cierto números de articulos.
             2. **Adjetivo**: Añaden emoción y atractivo al mensaje.
             3. **Palabra Clave**: Reflejan el beneficio principal o tema clave.
             4. **Razón**: Justifican el beneficio o valor del producto.
             5. **Promesa**: Muestran el resultado o beneficio que el lector puede esperar.
+            Cada uno de estos elementos se Integra de manera natural y no forzada cuando se crean los bullets points así como los examples. 
         """,
         "examples": [
             "5 métodos simples para duplicar tus ventas en menos de 30 días.",
@@ -57,12 +58,13 @@ benefits_formulas = {
     },
     "formula_aida": {
         "description": """
-            La fórmula AIDA para beneficios: Atención + Interés + Deseo + Acción.
-            Construye beneficios que sigan estos pasos:
-            - **Atención**: Captura de inmediato el interés del lector.
-            - **Interés**: Detalla cómo el beneficio soluciona un problema específico.
+            La estructura de la fórmula AIDA para crear bullets points con beneficios es: Atención + Interés + Deseo + Acción.
+            Crea bullets points o beneficios que sigan estos pasos:
+            - **Atención**: Captura de inmediato el interés o atención de {target_audience} por medio de un dato insólito o increíble, le habla de una situación problemática o un deseo de {target_audience}.
+            - **Interés**: Detalla cómo el beneficio del {product} soluciona un problema específico o como Facilita la obtencion de un deseo de {target_audience}.
             - **Deseo**: Despierta el anhelo por lograr el resultado prometido.
             - **Acción**: Inspira al lector a actuar para obtener el beneficio.
+            Todos estos elementos se integral de manera natural y no forzada al crear los bullets points o beneficios. 
         """,
         "examples": [
             "Descubre cómo atraer clientes automáticamente, sin experiencia previa.",
