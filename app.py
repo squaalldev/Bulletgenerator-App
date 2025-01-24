@@ -152,7 +152,7 @@ def generate_bullets_with_angles(angle, number_of_bullets, target_audience, prod
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
-        system_instruction="You are a world-class copywriter, with expertise in crafting bullets that connect emotionally."
+        system_instruction="You are a world-class copywriter, with expertise in crafting bullets that connect emotionally. Never write with :"
     )
 
     chat_session = model.start_chat(history=[])
