@@ -7,6 +7,20 @@ load_dotenv()
 
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
+# Función para obtener una mención del producto de manera probabilística
+def get_random_product_mention():
+    mentions = ["Indirecta", "Metafórica"]
+    probabilities = [0.50, 0.50]  
+    return random.choices(mentions, probabilities)[0]
+
+# Crear la instrucción de mención basada en la opción seleccionada
+def get_mention_instruction(product_mention, product):
+    if product_mention == "Indirecta":
+        return f"Referencia sutilmente el producto '{product}' como una posible solución al problema del lector sin nombrarlo explícitamente."
+    elif product_mention == "Metafórica":
+        return f"Introduce el producto '{product}' usando una metáfora, conectándolo simbólicamente a la solución que necesita el lector."
+    return ""
+    
 # Función para generar los beneficios (bullets) basados en el enfoque
 def generate_benefits(focus_points, product, target_audience, creativity, num_bullets):
     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -22,47 +36,49 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
         "Respond in Spanish and use a numbered list format. Important: Only answer with subject lines, never include explanations or categories."
     )
 
-    # Base del prompt para generar los bullets persuasivos
-    prompt_base = f"""
-    Eres un experto en copywriting y tu objetivo es crear {num_bullets} bullets persuasivos que conecten emocionalmente con la audiencia {target_audience}. 
-    Cada bullet debe abordar sus problemas, deseos o situaciones, mostrando cómo se pueden mejorar o solucionar gracias a una solución específica. 
-    Piensa en cómo puedes captar la atención de la audiencia con frases impactantes, como si estuvieras hablando directamente con ellos. La idea es resaltar el valor que aporta la solución, sin hacer que el producto suene como una venta forzada. 
-    Los bullets deben ser claros, directos y generar curiosidad, invitando a la acción de manera natural. Evita la jerga técnica y mantén la simplicidad, enfocándote en cómo el producto se integra de manera natural en la vida de la audiencia para mejorarla.
-    Crea {num_bullets} bullets persuasivos que muestren cómo el producto puede resolver o transformar una situación para la audiencia. 
-    Hazlo con un enfoque genuino, sin forzar la mención del producto, pero asegurándote de que quede claro cómo puede ser la solución ideal.
-    Usa enfoques creativos para conectar los beneficios del producto con lo que realmente le importa a la audiencia. 
-    Ahora, crea una lista de {num_bullets} bullets persuasivos para el siguiente producto y nicho objetivo.\n\n
-    Producto: {product}\n
-    Nicho objetivo: {target_audience}\n
-    """
+    # Modificación en el prompt para integrar menciones del producto
+prompt_base = f"""
+Eres un experto en copywriting y tu objetivo es crear {{num_bullets}} bullets persuasivos que conecten emocionalmente con la audiencia {{target_audience}}.
+Cada bullet debe abordar sus problemas, deseos o situaciones, mostrando cómo se pueden mejorar o solucionar gracias a una solución específica.
+Piensa en cómo puedes captar la atención de la audiencia con frases impactantes, como si estuvieras hablando directamente con ellos.
+La idea es resaltar el valor que aporta la solución, sin hacer que el producto suene como una venta forzada.
+Además, asegúrate de mencionar el producto utilizando el siguiente enfoque: {{mention_instruction}}.
+Los bullets deben ser claros, directos y generar curiosidad, invitando a la acción de manera natural.
+Evita la jerga técnica y mantén la simplicidad, enfocándote en cómo el producto se integra de manera natural en la vida de la audiencia para mejorarla.
+Usa enfoques creativos para conectar los beneficios del producto con lo que realmente le importa a la audiencia.
+Crea {{num_bullets}} bullets persuasivos que muestren cómo el producto puede resolver o transformar una situación para la audiencia.
+"""
+
+# Generación del prompt específico con mención
+def generate_benefits(focus_points, product, target_audience, creativity, num_bullets):
+    product_mention = get_random_product_mention()
+    mention_instruction = get_mention_instruction(product_mention, product)
 
     benefits = []
-    # Crear el prompt específico para cada enfoque y enviarlo al modelo
-    for point in focus_points[:num_bullets]:  # Limitar a los bullets indicados por el usuario
-        # Crear el prompt para el enfoque seleccionado
-        specific_prompt = prompt_base + f"\n\nEnfoque: {point}\n"
+    for point in focus_points[:num_bullets]:
+        specific_prompt = prompt_base.format(
+            num_bullets=num_bullets,
+            target_audience=target_audience,
+            mention_instruction=mention_instruction
+        ) + f"\n\nEnfoque: {point}\n"
 
-        # Configurar el modelo con parámetros de generación
-        model = genai.GenerativeModel(
+        response = genai.GenerativeModel(
             model_name="gemini-1.5-flash",
             generation_config={
-                "temperature": creativity,  # Usar la creatividad para definir la temperatura
-                "top_p": 0.65,  # Probabilidad de tokens para mayor diversidad
-                "top_k": 280,  # Número de tokens que se consideran en cada paso
-                "max_output_tokens": 2048,  # Limitar a 50 tokens para que el bullet sea corto
-                "response_mime_type": "text/plain",  # Respuesta en texto plano
+                "temperature": creativity,
+                "top_p": 0.65,
+                "top_k": 280,
+                "max_output_tokens": 2048,
+                "response_mime_type": "text/plain",
             },
             system_instruction=system_instruction
-        )
-
-        # Generar los beneficios con la API de Google
-        response = model.generate_content([specific_prompt])
+        ).generate_content([specific_prompt])
 
         if response and response.parts:
             bullet = response.parts[0].text.strip()
             benefits.append(bullet)
         else:
-            benefits.append("Lo siento, no se pudieron generar los beneficios para este enfoque.")
+            benefits.append("No se pudo generar un beneficio para este enfoque.")
 
     return benefits
 
