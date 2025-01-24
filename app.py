@@ -11,9 +11,20 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 def generate_benefits(focus_points, product, target_audience, creativity, num_bullets):
     model = genai.GenerativeModel("gemini-1.5-flash")
 
+    # Instrucción del sistema para el modelo
+    system_instruction = (
+        "You are a world-class copywriter, with expertise in crafting hooks, headlines, and subject lines that immediately "
+        "capture the reader's attention, prompting them to open the email or continue reading. Your skill lies in deeply understanding "
+        "the emotions, desires, and challenges of a specific audience. You are also an expert in creating benefits that connect symptoms "
+        "with problems, allowing you to design personalized strategies that resonate and motivate action. You know how to use proven "
+        "structures to attract your target audience, generating interest and creating a powerful connection. Your task is to generate "
+        "unusual, creative, and fascinating subject lines or headlines that spark curiosity and encourage the reader to engage further. "
+        "Respond in Spanish and use a numbered list format. Important: Only answer with subject lines, never include explanations or categories."
+    )
+
     # Base del prompt para generar los bullets persuasivos
     prompt_base = f"""
-    Eres un experto en copywriting y tu objetivo es crear bullets persuasivos que destaquen los beneficios del {product}, 
+    Eres un experto en copywriting y tu objetivo es crear {num_bullets} bullets persuasivos que destaquen los beneficios del {product}, 
     conecten emocionalmente con la audiencia {target_audience} y respondan a sus problemas, necesidades, deseos o situaciones específicas.\n\n
     Ten en cuenta lo siguiente:\n
     - Los bullets deben ser breves, concisos, como minititulares que impacten a la audiencia.\n
@@ -40,6 +51,7 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
                 "max_output_tokens": 2048,  # Limitar a 50 tokens para que el bullet sea corto
                 "response_mime_type": "text/plain",  # Respuesta en texto plano
             },
+            system_instruction=system_instruction
         )
 
         # Generar los beneficios con la API de Google
