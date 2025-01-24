@@ -44,8 +44,20 @@ def generate_benefits(focus_points, product, target_audience, creativity, num_bu
         # Crear el prompt para el enfoque seleccionado
         specific_prompt = prompt_base + f"\n\nEnfoque: {point}\n"
         
+        # Configurar el modelo con parámetros de generación
+        model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash",
+            generation_config={
+                "temperature": creativity,  # Usar la creatividad para definir la temperatura
+                "top_p": 0.65,  # Probabilidad de tokens para mayor diversidad
+                "top_k": 280,  # Número de tokens que se consideran en cada paso
+                "max_output_tokens": 8196,  # Límite máximo de tokens generados
+                "response_mime_type": "text/plain",  # Respuesta en texto plano
+            },
+        )
+        
         # Generar los beneficios con la API de Google, pasando la temperatura (creatividad)
-        response = model.generate_content([specific_prompt], temperature=creativity)
+        response = model.generate_content([specific_prompt])
         
         if response and response.parts:
             benefits.append(response.parts[0].text.strip())
