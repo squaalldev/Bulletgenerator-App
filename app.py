@@ -64,7 +64,7 @@ benefits_formulas = {
             - **Interés**: Detalla cómo el beneficio del {product} soluciona un problema específico o como Facilita la obtencion de un deseo de {target_audience}.
             - **Deseo**: Despierta el anhelo por lograr el resultado prometido.
             - **Acción**: Inspira al lector a actuar para obtener el beneficio.
-            Todos estos elementos se integral de manera natural y no forzada al crear los bullets points o beneficios. 
+            Todos estos elementos se integral de manera natural y no forzada al crear los bullets points o beneficios. Los bullets points están escritos de una manera conversacional y natural como en "examples". 
         """,
         "examples": [
             "Descubre cómo atraer clientes automáticamente, sin experiencia previa.",
@@ -91,7 +91,7 @@ def generate_benefits(number_of_benefits, target_audience, product, temperature,
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
-        system_instruction="You are a world-class copywriter, with expertise in crafting benefits that connect emotionally and address the desires, problems, and motivations of {target_audience}. Your task is to generate compelling and specific benefit bullets in Spanish based on a given formula. Always respond with a numbered list format, and ensure each benefit is relevant, concise, action-oriented with a natural language and conversational way. Do not include explanations or categories in your output."
+        system_instruction="You are a world-class copywriter, with expertise in crafting benefits that connect emotionally and address the desires, problems, and motivations of {target_audience}. Your task is to generate compelling and specific benefit bullets in Spanish based on a given formula. Always respond with a numbered list format, and ensure each benefit is relevant, concise, action-oriented with a natural language and conversational way. Do not include explanations or categories in your output. Never include these symbols : when you create bullets"
     )
 
     # Crear un mensaje para el modelo, destacando la audiencia, el producto, la fórmula seleccionada y los ejemplos
