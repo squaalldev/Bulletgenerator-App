@@ -1,3 +1,4 @@
+# .vercelignore
 __pycache__
 *.pyc
 .env
@@ -5,5 +6,6 @@ __pycache__
 venv
 .git
 .gitignore
-README.md
 *.log
+.pytest_cache
+node_modules
