@@ -277,7 +277,7 @@ with open("manual.md", "r", encoding="utf-8") as file:
 # Mostrar el contenido del manual en el sidebar
 st.sidebar.markdown(manual_content)
 
-# Ocultar menú de Streamlit y otros elementos de la interfaz
+# Ocultar menú y ajustar espaciado
 st.markdown("""
     <style>
         /* Ocultar menú hamburguesa */
@@ -292,8 +292,26 @@ st.markdown("""
         /* Ocultar header decoration */
         header {visibility: hidden;}
 
-        /* Opcional: Ocultar marca de agua "Made with Streamlit" */
+        /* Ocultar marca de agua "Made with Streamlit" */
         #stStreamlitFooterContainer {visibility: hidden;}
+
+        /* Reducir espacio superior */
+        .block-container {
+            padding-top: 1rem;
+            padding-bottom: 0rem;
+        }
+
+        /* Ajustar espaciado del título */
+        h1 {
+            margin-top: -2rem;
+            padding-top: 0rem;
+        }
+
+        /* Ajustar espaciado del subtítulo */
+        h4 {
+            margin-top: 0.5rem;
+            padding-top: 0rem;
+        }
     </style>
 """, unsafe_allow_html=True)
 
