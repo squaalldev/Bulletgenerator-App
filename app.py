@@ -2,27 +2,12 @@ from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
-import random
 
 # Cargar las variables de entorno
 load_dotenv()
 
 # Configurar la API de Google
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
-# Función para obtener una mención del producto de manera probabilística
-def get_random_product_mention():
-    mentions = ["Indirecta", "Metafórica"]
-    probabilities = [0.50, 0.50]  
-    return random.choices(mentions, probabilities)[0]
-
-# Crear la instrucción de mención basada en la opción seleccionada
-def get_mention_instruction(product_mention, product):
-    if product_mention == "Indirecta":
-        return f"Referencia sutilmente el producto '{product}' como una posible solución al problema del lector sin nombrarlo explícitamente."
-    elif product_mention == "Metafórica":
-        return f"Introduce el producto '{product}' usando una metáfora, conectándolo simbólicamente a la solución que necesita el lector."
-    return ""
 
 # Fórmulas con ejemplos y explicaciones
 benefits_formulas = {
@@ -90,8 +75,6 @@ benefits_formulas = {
 
 # Función para generar bullets de beneficios
 def generate_benefits(number_of_benefits, target_audience, product, temperature, selected_formula):
-    product_mention = get_random_product_mention()
-    mention_instruction = get_mention_instruction(product_mention, product)
 
     # Crear la configuración del modelo
     generation_config = {
