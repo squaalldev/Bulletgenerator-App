@@ -1,35 +1,14 @@
-import streamlit as st
-
-# Configuración correcta de la página según la documentación
-st.set_page_config(
-    page_title="Bullet Generator",
-    page_icon="📝",
-    layout="wide",
-    initial_sidebar_state="expanded",
-    menu_items={
-        'Get Help': 'https://www.github.com',
-        'Report a bug': "https://www.github.com",
-        'About': "# Bullet Generator App\n Esta aplicación genera bullet points usando IA."
-    }
-)
-
-import google.generativeai as genai
-import os
 from dotenv import load_dotenv
+import streamlit as st
+import os
+import google.generativeai as genai
+import random
 
-# Cargar variables de entorno
+# Cargar las variables de entorno
 load_dotenv()
 
-# Obtener API key de variable de entorno
-api_key = os.getenv('GOOGLE_API_KEY')
-
-# Si no hay API key, mostrar error
-if not api_key:
-    st.error("Por favor, configura la variable de entorno GOOGLE_API_KEY")
-    st.stop()
-
-# Configurar la API
-genai.configure(api_key=api_key)
+# Configurar la API de Google
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
