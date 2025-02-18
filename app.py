@@ -140,7 +140,6 @@ IMPORTANTE:
         f"- {selected_formula['examples'][0]}\n"
         f"- {selected_formula['examples'][1]}\n"
         f"- {selected_formula['examples'][2]}\n\n"
-        f"Y no olvides integrar esta instrucción de manera fluida: {mention_instruction}. "
         f"Tu objetivo es inspirar deseo y acción, evitando explicaciones o categorías en la respuesta."
     )
 
