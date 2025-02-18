@@ -99,7 +99,6 @@ def generate_benefits(number_of_benefits, target_audience, product, temperature,
         "top_p": 0.65,        # Considerar un poco menos de palabras probables
         "top_k": 360,        # Aumentar las palabras candidatas para más variedad
         "max_output_tokens": 8196,  # Mantenerlo igual, pero puedes aumentar si deseas más detalle
-        "response_mime_type": "text/plain",
     }
 
     model = genai.GenerativeModel(
