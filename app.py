@@ -1,10 +1,16 @@
 import streamlit as st
 
-# IMPORTANTE: set_page_config debe ser lo primero
+# Configuración correcta de la página según la documentación
 st.set_page_config(
-    page_title="Bullet Benefits Generator",
-    page_icon="🎯",
-    layout="wide"
+    page_title="Bullet Generator",
+    page_icon="📝",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://www.github.com',
+        'Report a bug': "https://www.github.com",
+        'About': "# Bullet Generator App\n Esta aplicación genera bullet points usando IA."
+    }
 )
 
 import google.generativeai as genai
