@@ -277,6 +277,26 @@ with open("manual.md", "r", encoding="utf-8") as file:
 # Mostrar el contenido del manual en el sidebar
 st.sidebar.markdown(manual_content)
 
+# Ocultar menú de Streamlit y otros elementos de la interfaz
+st.markdown("""
+    <style>
+        /* Ocultar menú hamburguesa */
+        #MainMenu {visibility: hidden;}
+
+        /* Ocultar botón de Fork y menú de tres puntos */
+        .stDeployButton {display: none;}
+
+        /* Ocultar footer */
+        footer {visibility: hidden;}
+
+        /* Ocultar header decoration */
+        header {visibility: hidden;}
+
+        /* Opcional: Ocultar marca de agua "Made with Streamlit" */
+        #stStreamlitFooterContainer {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
 # Centrar el título y el subtítulo
 st.markdown("<h1 style='text-align: center;'>Bullet Benefits Generator</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>Transforma características en beneficios irresistibles que conectan emocionalmente con tu audiencia.</h4>", unsafe_allow_html=True)
