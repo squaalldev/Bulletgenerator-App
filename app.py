@@ -270,6 +270,13 @@ IMPORTANTE:
 # Configurar la interfaz de usuario con Streamlit
 st.set_page_config(page_title="Bullet Benefits Generator", layout="wide")
 
+# Leer el contenido del archivo manual.md
+with open("manual.md", "r", encoding="utf-8") as file:
+    manual_content = file.read()
+
+# Mostrar el contenido del manual en el sidebar
+st.sidebar.markdown(manual_content)
+
 # Centrar el título y el subtítulo
 st.markdown("<h1 style='text-align: center;'>Bullet Benefits Generator</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>Transforma características en beneficios irresistibles que conectan emocionalmente con tu audiencia.</h4>", unsafe_allow_html=True)
