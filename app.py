@@ -277,23 +277,30 @@ with open("manual.md", "r", encoding="utf-8") as file:
 # Mostrar el contenido del manual en el sidebar
 st.sidebar.markdown(manual_content)
 
-# Ocultar menú y ajustar espaciado
+# Ocultar elementos de la interfaz
 st.markdown("""
     <style>
         /* Ocultar menú hamburguesa */
         #MainMenu {visibility: hidden;}
 
-        /* Ocultar botón de Fork y menú de tres puntos */
+        /* Ocultar botón de Fork, GitHub y menú de tres puntos */
         .stDeployButton {display: none;}
+        [data-testid="stToolbar"] {display: none;}
+        .css-14xtw13 {display: none;}
+        .css-pkbazv {display: none;}
 
         /* Ocultar footer */
         footer {visibility: hidden;}
 
-        /* Ocultar header decoration */
+        /* Ocultar header */
         header {visibility: hidden;}
 
-        /* Ocultar marca de agua "Made with Streamlit" */
+        /* Ocultar marca de agua de Streamlit */
         #stStreamlitFooterContainer {visibility: hidden;}
+
+        /* Ocultar íconos inferiores */
+        .viewerBadge_link__1S137 {display: none;}
+        .viewerBadge_container__1QSob {display: none;}
 
         /* Reducir espacio superior */
         .block-container {
@@ -304,7 +311,7 @@ st.markdown("""
         /* Ajustar espaciado del título */
         h1 {
             margin-top: -2rem;
-            padding-top: 3rem;
+            padding-top: 2.5rem;
         }
 
         /* Ajustar espaciado del subtítulo */
