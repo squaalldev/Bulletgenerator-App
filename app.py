@@ -11,7 +11,7 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Fórmulas con ejemplos y explicaciones
 benefits_formulas = {
-    "Fórmula_GPS": {
+    "GPS": {
         "description": """
             Crea bullets de beneficios que respondan estas tres preguntas clave:
             1. ¿Qué es lo que el lector quiere conseguir?
@@ -24,7 +24,7 @@ benefits_formulas = {
             "Ahorra para salir de viaje en tres meses, sin sacrificar esas noches de cine."
         ]
     },
-    "formula_suprema_istvanova": {
+    "Númerica Suprema": {
     "description": """
         La Fórmula Suprema de Istvanova combina 5 elementos clave más artículos plurales para crear bullets persuasivos:
 
@@ -98,7 +98,7 @@ benefits_formulas = {
         "Asegura que la palabra clave esté en plural"
     ]
 },
-    "formula_aida": {
+    "AIDA": {
     "description": """
         La fórmula AIDA se aplica de manera flexible y estratégica, combinando 1-4 elementos para crear bullets impactantes y naturales:
 
@@ -169,7 +169,7 @@ benefits_formulas = {
         "• Imagina despertar cada mañana con tu bandeja de entrada vacía y tus tareas importantes ya organizadas. Este pequeño truco de 5 minutos lo hace posible.", # D (imagen vivida) + I (beneficio) + A (simplicidad)
     ]
 },
-    "formula_3_en_1": {
+    "3 en 1": {
         "description": """
             La fórmula 3 en 1 para empezar a conectar con las personas combina:
             1. **Característica**: Describe las propiedades tangibles del producto o servicio. Por ejemplo, "Este software tiene una función de automatización única".
