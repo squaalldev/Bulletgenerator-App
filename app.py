@@ -105,11 +105,14 @@ def generate_benefits(number_of_benefits, target_audience, product, temperature,
     model = genai.GenerativeModel(
         model_name="gemini-2.0-flash",
         generation_config=generation_config,
-        system_instruction="You are a world-class copywriter, with expertise in crafting benefits that connect emotionally and address the desires, problems, and motivations of {target_audience}. Your task is to generate compelling and specific benefit bullets in Spanish based on a given formula. Always respond with a numbered list format, and ensure each benefit is relevant, concise, action-oriented with a natural language and conversational way. Do not include explanations or categories in your output. Never include these symbols : when you create bullets",
 )
 
+# Incluir las instrucciones del sistema en el prompt principal
+    system_prompt = "Eres un copywriter experto de clase mundial, con experiencia en crear beneficios que conectan emocionalmente y abordan los deseos, problemas y motivaciones de la audiencia objetivo. Tu tarea es generar bullets de beneficios convincentes y específicos en español basados en una fórmula dada. Siempre responde con un formato de lista numerada, y asegúrate de que cada beneficio sea relevante, conciso y orientado a la acción, con un lenguaje natural y conversacional. No incluyas explicaciones ni categorías en tu respuesta. Nunca incluyas estos símbolos : cuando crees bullets"
+    
     # Crear un mensaje para el modelo, destacando la audiencia, el producto, la fórmula seleccionada y los ejemplos
     benefits_instruction = (
+        f"{system_prompt}\n\n"
         f"Tu tarea es crear {number_of_benefits} beneficios irresistibles diseñados para {target_audience}. "
         f"El objetivo es mostrar cómo {product} puede transformar la vida del lector, conectando de forma natural y emocional. "
         f"Evita usar menciones literales o repetitivas, y destaca soluciones concretas, mostrando cómo el producto elimina obstáculos o satisface deseos reales. "
