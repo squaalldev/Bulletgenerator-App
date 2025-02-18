@@ -3,15 +3,15 @@ import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 
-# Cargar variables de entorno
-load_dotenv()
-
-# Configuración de página
+# IMPORTANTE: set_page_config debe ser lo primero
 st.set_page_config(
-    page_title="Chat IA",
-    page_icon="🤖",
+    page_title="Bullet Benefits Generator",
+    page_icon="🎯",
     layout="wide"
 )
+
+# Cargar variables de entorno
+load_dotenv()
 
 # Obtener API key de variable de entorno
 api_key = os.getenv('GOOGLE_API_KEY')
