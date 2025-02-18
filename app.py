@@ -24,23 +24,88 @@ benefits_formulas = {
             "Ahorra para salir de viaje en tres meses, sin sacrificar esas noches de cine."
         ]
     },
-    "formula_suprema_istvanova": {
-        "description": """
-            La estructura de la fórmula Suprema de Istvanova es: Números + Adjetivo + Palabra Clave + Razón + Promesa. 
-            Crea bullets points o beneficios con beneficios específicos y atractivos que conectan emocionalmente con {target_audience} y cumple con estos elementos:
-            1. **Números**: Se escriben con el fin de declarar que existen cierto números de artículos.
-            2. **Adjetivo**: Añaden emoción y atractivo al mensaje.
-            3. **Palabra Clave**: Reflejan el beneficio principal o tema clave.
-            4. **Razón**: Justifican el beneficio o valor del producto.
-            5. **Promesa**: Muestran el resultado o beneficio que el lector puede esperar.
-            Cada uno de estos elementos se integra de manera natural y no forzada cuando se crean los bullets points así como los examples. 
-        """,
-        "examples": [
-            "5 métodos simples para duplicar tus ventas en menos de 30 días.",
-            "8 trucos secretos para que tu perro obedezca en una semana.",
-            "10 técnicas fáciles que mejorarán tu relación antes de un mes."
+    "Formula_Númerica_Suprema": {
+    "description": """
+        La Fórmula Númerica Suprema combina 5 elementos clave más artículos plurales para crear bullets persuasivos:
+
+        1. **Artículos Plurales** (Art):
+           - Los (para masculino plural)
+           - Las (para femenino plural)
+           - Dan naturalidad y autoridad al texto
+           - Ejemplos: "Los 7 métodos...", "Las 3 técnicas..."
+
+        2. **Números** (N):
+           - Específicos y creíbles (3, 5, 7, 10...)
+           - Crean estructura y expectativas claras
+           - Se combinan con artículos: "Los 5...", "Las 3..."
+
+        3. **Adjetivo** (A):
+           - Emocionales y descriptivos
+           - Conectan con deseos/miedos
+           - Ejemplos: poderosos, simples, efectivos, revolucionarios
+
+        4. **Palabra Clave** (P):
+           - Término central del beneficio en plural
+           - Fácil de entender y recordar
+           - Ejemplos: métodos, estrategias, técnicas, secretos
+
+        5. **Razón** (R):
+           - Justifica el beneficio
+           - Añade credibilidad
+           - Conecta con la motivación del lector
+
+        6. **Promesa** (P):
+           - Resultado específico y medible
+           - Timeframe realista
+           - Beneficio final atractivo
+
+        Formatos:
+        - Corto: Art plural + N + A + P + P
+        - Medio: Art plural + N + A + P + R + P
+        - Largo: Art plural + N + A + P + R detallada + P específica
+    """,
+    "examples": {
+        "cortos": [
+            "Los 3 rituales probados para dormir mejor.",
+            "Las 5 rutinas efectivas para fortalecer tu core.",
+            "Los 7 hábitos esenciales para aumentar productividad."
+        ],
+        "medios": [
+            "Las 3 técnicas comprobadas para dormir mejor basadas en neurociencia.",
+            "Los 5 movimientos efectivos para fortalecer tu core sin equipamiento.",
+            "Las 7 estrategias esenciales para aumentar productividad sin estrés."
+        ],
+        "largos": [
+            "Los 3 métodos científicos para dormir mejor basados en los últimos descubrimientos de la neurociencia del sueño que transformarán tus noches.",
+            "Las 5 secuencias efectivas para fortalecer tu core descubiertas por fisioterapeutas olímpicos que puedes hacer en casa.",
+            "Los 7 sistemas revolucionarios para aumentar productividad desarrollados por CEOs que duplicarán tus resultados."
         ]
     },
+    "variaciones_estructura": {
+        "básica": "Art plural + N + A + P + P",
+        "intermedia": "Art plural + N + A + P + R + P",
+        "avanzada": "Art plural + N + A + P + R detallada + P específica"
+    },
+    "uso_articulos_plurales": {
+        "masculino_plural": {
+            "artículo": "los",
+            "ejemplos_palabras": "métodos, sistemas, pasos, secretos, trucos, hábitos",
+            "ejemplo": "Los 3 métodos probados..."
+        },
+        "femenino_plural": {
+            "artículo": "las",
+            "ejemplos_palabras": "técnicas, estrategias, rutinas, tácticas, claves",
+            "ejemplo": "Las 5 técnicas comprobadas..."
+        }
+    },
+    "consejos_uso": [
+        "Usa siempre la forma plural para mayor impacto",
+        "Alterna entre 'los' y 'las' según la palabra clave",
+        "Mantén coherencia en el género a lo largo del bullet",
+        "Combina artículos con números de forma natural",
+        "Asegura que la palabra clave esté en plural"
+    ]
+},
     "formula_aida": {
     "description": """
         La fórmula AIDA se aplica de manera flexible y estratégica, combinando 1-4 elementos para crear bullets impactantes y naturales:
