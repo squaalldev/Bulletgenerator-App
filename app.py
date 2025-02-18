@@ -24,9 +24,9 @@ benefits_formulas = {
             "Ahorra para salir de viaje en tres meses, sin sacrificar esas noches de cine."
         ]
     },
-    "Formula_Númerica_Suprema": {
+    "formula_suprema_istvanova": {
     "description": """
-        La Fórmula Númerica Suprema combina 5 elementos clave más artículos plurales para crear bullets persuasivos:
+        La Fórmula Suprema de Istvanova combina 5 elementos clave más artículos plurales para crear bullets persuasivos:
 
         1. **Artículos Plurales** (Art):
            - Los (para masculino plural)
