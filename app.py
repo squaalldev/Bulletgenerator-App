@@ -304,7 +304,7 @@ st.markdown("""
         /* Ajustar espaciado del título */
         h1 {
             margin-top: -2rem;
-            padding-top: 2rem;
+            padding-top: 3rem;
         }
 
         /* Ajustar espaciado del subtítulo */
