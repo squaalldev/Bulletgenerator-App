@@ -1,14 +1,19 @@
 import streamlit as st
-import os
 import google.generativeai as genai
-import random
+import os
 
-# Configuración básica
-api_key = os.getenv("GOOGLE_API_KEY")
-if not api_key:
-    api_key = st.secrets["GOOGLE_API_KEY"]
+# Configuración de página
+st.set_page_config(
+    page_title="Mi App de IA",
+    page_icon="🤖",
+    layout="wide"
+)
 
-genai.configure(api_key=api_key)
+# Configuración de API
+if 'GOOGLE_API_KEY' in st.secrets:
+    genai.configure(api_key=st.secrets['GOOGLE_API_KEY'])
+else:
+    genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
 
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
