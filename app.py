@@ -1,14 +1,14 @@
-from dotenv import load_dotenv
 import streamlit as st
 import os
 import google.generativeai as genai
 import random
 
-# Cargar las variables de entorno
-load_dotenv()
+# Modificar la configuración de la API key
+api_key = os.getenv("GOOGLE_API_KEY")
+if not api_key:
+    api_key = st.secrets["GOOGLE_API_KEY"]
 
-# Configurar la API de Google
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key=api_key)
 
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
