@@ -1,7 +1,4 @@
 import streamlit as st
-import google.generativeai as genai
-import os
-from dotenv import load_dotenv
 
 # IMPORTANTE: set_page_config debe ser lo primero
 st.set_page_config(
@@ -9,6 +6,10 @@ st.set_page_config(
     page_icon="🎯",
     layout="wide"
 )
+
+import google.generativeai as genai
+import os
+from dotenv import load_dotenv
 
 # Cargar variables de entorno
 load_dotenv()
