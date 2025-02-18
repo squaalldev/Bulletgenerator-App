@@ -1,0 +1,9 @@
+{
+  "name": "bullet-benefits-generator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "streamlit run app.py",
+    "build": "pip install -r requirements.txt"
+  }
+}
