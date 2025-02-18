@@ -1,19 +1,28 @@
 import streamlit as st
 import google.generativeai as genai
 import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv()
 
 # Configuración de página
 st.set_page_config(
-    page_title="Mi App de IA",
+    page_title="Chat IA",
     page_icon="🤖",
     layout="wide"
 )
 
-# Configuración de API
-if 'GOOGLE_API_KEY' in st.secrets:
-    genai.configure(api_key=st.secrets['GOOGLE_API_KEY'])
-else:
-    genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
+# Obtener API key de variable de entorno
+api_key = os.getenv('GOOGLE_API_KEY')
+
+# Si no hay API key, mostrar error
+if not api_key:
+    st.error("Por favor, configura la variable de entorno GOOGLE_API_KEY")
+    st.stop()
+
+# Configurar la API
+genai.configure(api_key=api_key)
 
 # Función para obtener una mención del producto de manera probabilística
 def get_random_product_mention():
