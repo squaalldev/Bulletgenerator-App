@@ -3,7 +3,7 @@ import os
 import google.generativeai as genai
 import random
 
-# Modificar la configuración de la API key
+# Configuración básica
 api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
     api_key = st.secrets["GOOGLE_API_KEY"]
