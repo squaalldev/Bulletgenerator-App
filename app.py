@@ -64,23 +64,17 @@ benefits_formulas = {
         - Medio: Art plural + N + A + P + R + P
         - Largo: Art plural + N + A + P + R detallada + P específica
     """,
-    "examples": {
-        "cortos": [
-            "Los 3 rituales probados para dormir mejor.",
-            "Las 5 rutinas efectivas para fortalecer tu core.",
-            "Los 7 hábitos esenciales para aumentar productividad."
-        ],
-        "medios": [
-            "Las 3 técnicas comprobadas para dormir mejor basadas en neurociencia.",
-            "Los 5 movimientos efectivos para fortalecer tu core sin equipamiento.",
-            "Las 7 estrategias esenciales para aumentar productividad sin estrés."
-        ],
-        "largos": [
-            "Los 3 métodos científicos para dormir mejor basados en los últimos descubrimientos de la neurociencia del sueño que transformarán tus noches.",
-            "Las 5 secuencias efectivas para fortalecer tu core descubiertas por fisioterapeutas olímpicos que puedes hacer en casa.",
-            "Los 7 sistemas revolucionarios para aumentar productividad desarrollados por CEOs que duplicarán tus resultados."
-        ]
-    },
+    "examples": [
+        "Los 3 rituales probados para dormir mejor.",
+        "Las 5 rutinas efectivas para fortalecer tu core.",
+        "Los 7 hábitos esenciales para aumentar productividad.",
+        "Las 3 técnicas comprobadas para dormir mejor basadas en neurociencia.",
+        "Los 5 movimientos efectivos para fortalecer tu core sin equipamiento.",
+        "Las 7 estrategias esenciales para aumentar productividad sin estrés.",
+        "Los 3 métodos científicos para dormir mejor basados en los últimos descubrimientos de la neurociencia del sueño que transformarán tus noches.",
+        "Las 5 secuencias efectivas para fortalecer tu core descubiertas por fisioterapeutas olímpicos que puedes hacer en casa.",
+        "Los 7 sistemas revolucionarios para aumentar productividad desarrollados por CEOs que duplicarán tus resultados."
+    ],
     "variaciones_estructura": {
         "básica": "Art plural + N + A + P + P",
         "intermedia": "Art plural + N + A + P + R + P",
@@ -89,13 +83,11 @@ benefits_formulas = {
     "uso_articulos_plurales": {
         "masculino_plural": {
             "artículo": "los",
-            "ejemplos_palabras": "métodos, sistemas, pasos, secretos, trucos, hábitos",
-            "ejemplo": "Los 3 métodos probados..."
+            "ejemplos_palabras": "métodos, sistemas, pasos, secretos, trucos, hábitos"
         },
         "femenino_plural": {
             "artículo": "las",
-            "ejemplos_palabras": "técnicas, estrategias, rutinas, tácticas, claves",
-            "ejemplo": "Las 5 técnicas comprobadas..."
+            "ejemplos_palabras": "técnicas, estrategias, rutinas, tácticas, claves"
         }
     },
     "consejos_uso": [
