@@ -11,7 +11,7 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Fórmulas con ejemplos y explicaciones
 benefits_formulas = {
-    "plantilla": {
+    "Fórmula_GPS": {
         "description": """
             Crea bullets de beneficios que respondan estas tres preguntas clave:
             1. ¿Qué es lo que el lector quiere conseguir?
