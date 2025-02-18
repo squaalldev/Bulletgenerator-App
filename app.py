@@ -42,21 +42,76 @@ benefits_formulas = {
         ]
     },
     "formula_aida": {
-        "description": """
-            La estructura de la fórmula AIDA para crear bullets points con beneficios es: Atención + Interés + Deseo + Acción.
-            Crea bullets points o beneficios que sigan estos pasos:
-            - **Atención**: Captura de inmediato el interés o atención de {target_audience} por medio de un dato insólito o increíble, le habla de una situación problemática o un deseo de {target_audience}.
-            - **Interés**: Detalla cómo el beneficio del {product} soluciona un problema específico o cómo facilita la obtención de un deseo de {target_audience}.
-            - **Deseo**: Despierta el anhelo por lograr el resultado prometido.
-            - **Acción**: Inspira al lector a actuar para obtener el beneficio.
-            Todos estos elementos se integran de manera natural y no forzada al crear los bullets points o beneficios. Los bullets points están escritos de una manera conversacional y natural como en "examples". 
-        """,
-        "examples": [
-            "Descubre cómo atraer clientes automáticamente, sin experiencia previa.",
-            "Imagina tener un cuerpo en forma disfrutando lo que te gusta comer.",
-            "Empieza hoy mismo y experimenta resultados en solo 7 días."
-        ]
-    },
+    "description": """
+        La fórmula AIDA se aplica de manera flexible y estratégica, combinando 1-4 elementos para crear bullets impactantes y naturales:
+
+        1. **Atención** (A):
+           Ganchos de apertura poderosos:
+           - "¿Sabías que...?" + dato sorprendente
+           - Mini-historia disruptiva
+           - Idea contraintuitiva
+           - Descubrimiento inesperado
+           - Analogía poderosa
+           - "La mayoría no sabe que..."
+           - "Contrario a lo que piensas..."
+           - "Me sorprendió descubrir que..."
+
+        2. **Interés** (I):
+           Desarrollo del gancho inicial:
+           - Detalles específicos y relevantes
+           - Conexión problema-solución inesperada
+           - Beneficios únicos y memorables
+           - Puente situación actual-resultado
+           - "La razón es simple..."
+           - "Lo fascinante es que..."
+           - "Y lo mejor de todo..."
+           - "Lo que hace la diferencia es..."
+
+        3. **Deseo** (D):
+           Amplificación emocional:
+           - Imagen vivida del resultado
+           - Experiencia personalizada
+           - Prueba social natural
+           - Toque de exclusividad
+           - Conexión emocional profunda
+           - "Imagina poder..."
+           - "Piensa cómo sería..."
+           - "Esto significa que podrás..."
+
+        4. **Acción** (A):
+           Cierre natural:
+           - Siguiente paso simple
+           - Baja fricción para comenzar
+           - Gratificación inmediata
+           - Primer paso sencillo
+           - Seguridad fluida
+           - "Pruébalo hoy mismo..."
+           - "Comienza con un simple..."
+           - "Solo necesitas..."
+
+        Combinaciones estratégicas:
+        - A + I: Para despertar curiosidad y explicar el valor
+        - A + D: Para conectar problema con deseo
+        - I + D: Para construir deseo desde la lógica
+        - I + D + A: Para construir convicción y motivar
+        - A + I + D: Para educar, intrigar y crear anhelo
+
+        Cada bullet debe mantener un tono conversacional y evitar parecer una fórmula obvia.
+    """,
+    "examples": [
+        "• Un estudio con deportistas de élite reveló algo sorprendente los atletas que menos entrenaban tenían mejores resultados. La clave está en un ritual de recuperación de 8 minutos que ahora puedes usar en casa.", # A (dato sorprendente) + I (conexión problema-solución)
+
+        "• Mi cliente más exitoso solía dormir solo 4 horas por noche. Ahora duerme 8 y factura el doble, todo gracias a una rutina matutina que cambió su forma de trabajar.", # A (mini-historia) + I (beneficio único) + D (prueba social)
+
+        "• Como el bambú chino, que parece no crecer durante años y de repente se dispara hacia arriba, tu negocio está a punto de experimentar ese momento de explosión.", # A (analogía poderosa) + D (imagen vivida)
+
+        "• La técnica que transformó mi productividad apareció en el lugar más inesperado una clase de cocina italiana. Descubre cómo este método tan simple puede revolucionar tu forma de trabajar.", # A (descubrimiento inesperado) + I (beneficio único)
+
+        "• Los expertos en productividad estaban equivocados. Las mañanas no son el momento más importante del día. Descubre cuándo ocurre realmente la magia y aprovecha ese momento desde hoy.", # A (contraintuitivo) + I (detalle específico) + A (siguiente paso)
+
+        "• Imagina despertar cada mañana con tu bandeja de entrada vacía y tus tareas importantes ya organizadas. Este pequeño truco de 5 minutos lo hace posible.", # D (imagen vivida) + I (beneficio) + A (simplicidad)
+    ]
+},
     "formula_3_en_1": {
         "description": """
             La fórmula 3 en 1 para empezar a conectar con las personas combina:
