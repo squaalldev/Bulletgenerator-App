@@ -378,7 +378,7 @@ if submit:
             # Obtener la respuesta del modelo
             generated_benefits = generate_benefits(number_of_benefits, target_audience, product, temperature, selected_formula)
             col2.markdown(f"""
-                <div style="padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                <div style="padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
                     <h3>Beneficios Generados:</h3>
                     <p>{generated_benefits}</p>
                 </div>
