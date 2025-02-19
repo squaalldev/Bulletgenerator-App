@@ -286,14 +286,14 @@ st.markdown("""
         /* Ocultar botón de Fork, GitHub y menú de tres puntos */
         .stDeployButton {display: none;}
         [data-testid="stToolbar"] {display: none;}
-        .css-14xtw13 {display: visible;}
-        .css-pkbazv {display: visible;}
+        .css-14xtw13 {display: none;}
+        .css-pkbazv {display: none;}
 
         /* Ocultar footer */
         footer {visibility: hidden;}
 
         /* Ocultar header */
-        header {visibility: visible;}
+        header {visibility: none;}
 
         /* Ocultar marca de agua de Streamlit */
         #stStreamlitFooterContainer {visibility: hidden;}
@@ -305,7 +305,7 @@ st.markdown("""
         /* Reducir espacio superior */
         .block-container {
             padding-top: 1rem;
-            padding-bottom: 0rem;
+            padding-bottom: 2rem;
         }
 
         /* Ajustar espaciado del título */
