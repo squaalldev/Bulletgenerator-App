@@ -305,7 +305,7 @@ st.markdown("""
         /* Reducir espacio superior */
         .block-container {
             padding-top: 1rem;
-            padding-bottom: 5rem;
+            padding-bottom: 1rem;
         }
 
         /* Ajustar espaciado del título */
