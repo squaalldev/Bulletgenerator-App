@@ -293,7 +293,7 @@ st.markdown("""
         footer {visibility: hidden;}
 
         /* Ocultar header */
-        header {visibility: hidden;}
+        header {visibility: visible;}
 
         /* Ocultar marca de agua de Streamlit */
         #stStreamlitFooterContainer {visibility: hidden;}
