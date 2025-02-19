@@ -285,9 +285,9 @@ st.markdown("""
 
         /* Ocultar botón de Fork, GitHub y menú de tres puntos */
         .stDeployButton {display: none;}
-        [data-testid="stToolbar"] {display: visible;}
-        .css-14xtw13 {display: none;}
-        .css-pkbazv {display: none;}
+        [data-testid="stToolbar"] {display: none;}
+        .css-14xtw13 {display: visible;}
+        .css-pkbazv {display: visible;}
 
         /* Ocultar footer */
         footer {visibility: hidden;}
