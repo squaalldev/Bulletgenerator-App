@@ -284,8 +284,8 @@ st.markdown("""
         #MainMenu {visibility: visible;}
 
         /* Ocultar botón de Fork, GitHub y menú de tres puntos */
-        .stDeployButton {display: none;}
-        [data-testid="stToolbar"] {display: none;}
+        .stDeployButton {display: visible;}
+        [data-testid="stToolbar"] {display: visible;}
         .css-14xtw13 {display: none;}
         .css-pkbazv {display: none;}
 
