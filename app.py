@@ -281,7 +281,7 @@ st.sidebar.markdown(manual_content)
 st.markdown("""
     <style>
         /* Ocultar menú hamburguesa */
-        #MainMenu {visibility: hidden;}
+        #MainMenu {visibility: visible;}
 
         /* Ocultar botón de Fork, GitHub y menú de tres puntos */
         .stDeployButton {display: none;}
